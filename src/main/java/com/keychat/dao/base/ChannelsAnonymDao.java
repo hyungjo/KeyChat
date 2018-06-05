@@ -11,7 +11,7 @@ import com.keychat.dto.base.ChannelsAnonymModel;
 
 
 public class ChannelsAnonymDao {
-	// CHANNELS_ANONYM에서 EMAIL을 찾아 회원을 탈퇴 한다.
+	// CHANNELS_ANONYM에서 EMAIL을 찾아 회원을 탈퇴 한다.1
 		public static void dropChannelsAnonym(String email) throws SQLException{
 	    	Connection con = null;
 			PreparedStatement pstmt = null;
