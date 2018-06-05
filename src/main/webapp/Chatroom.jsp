@@ -1,7 +1,17 @@
-<!DOCTYPE html>
+<%--
+  Created by IntelliJ IDEA.
+  User: keh_a
+  Date: 2018-06-05
+  Time: ì˜¤í›„ 5:42
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta charset="EUC-KR">
+    <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+    <title>Insert title here</title>
+</head>
+<head>
     <title>Insert title here</title>
     <style>
         #back {
@@ -53,12 +63,12 @@
     </style>
 </head>
 <body>
-´Ğ³×ÀÓ :
+ë‹‰ë„¤ì„ :
 <input id="username" style="width: 10%;" type="text" />
 <input type="submit" value="connect" onclick="onOpen('message');" /> <br>
 <div id="back">
     <div id="title">
-        <h2> ´ëÈ­ Ã¢</h2>
+        <h2> ëŒ€í™” ì°½</h2>
     </div>
     <div id="content-box">
         <div id="contents">
@@ -93,7 +103,7 @@
 
     function closeSocket(){
         var user = document.getElementById("username").value.trim();
-        var jsonObj = {"user1" : user, "close" : "´ÔÀÌ ¹æ¿¡ ³ª°¬½À´Ï´Ù."};
+        var jsonObj = {"user1" : user, "close" : "ë‹˜ì´ ë°©ì— ë‚˜ê°”ìŠµë‹ˆë‹¤."};
         socket.send(JSON.stringify(jsonObj));
         socket.close();
     }
@@ -119,16 +129,16 @@
     }
 
     function onError(event){
-        alert("¿¬°á ¿¡·¯");
+        alert("ì—°ê²° ì—ëŸ¬");
     }
 
     function onOpen(event){
         var user = document.getElementById("username").value.trim();
         if(user == ""){
-            alert("´Ğ³×ÀÓÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+            alert("ë‹‰ë„¤ì„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
         }
         else{
-            var jsonObj = {"user2" : user, "con" : "´ÔÀÌ Á¢¼ÓÇß½À´Ï´Ù."};
+            var jsonObj = {"user2" : user, "con" : "ë‹˜ì´ ì ‘ì†í–ˆìŠµë‹ˆë‹¤."};
             socket.send(JSON.stringify(jsonObj));
         }
     }
@@ -142,7 +152,7 @@
         var hour = day.getHours();
         var min = day.getMinutes();
 
-        var str_time = hour + "½Ã " + min +"ºĞ";
+        var str_time = hour + "ì‹œ " + min +"ë¶„";
 
         if(msg1 != ""){
             var jsonObj = {"user" : user, "message" : msg1, "time" : str_time};
