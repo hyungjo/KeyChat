@@ -4,67 +4,117 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class UsersModel implements Serializable {
-    private String email;
-    private String password;
-    private String nickname;
-    private String job;
-    private String phone;
+	private String email;
+	private String password;
+	private String nicname;
+	private String job;
+	private String phone;
 
-    public String getEmail() {
-        return email;
-    }
+	public UsersModel() {
+		super();
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public UsersModel(String email, String password, String nicname, String job, String phone) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.nicname = nicname;
+		this.job = job;
+		this.phone = phone;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getNickname() {
-        return nickname;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getJob() {
-        return job;
-    }
+	public String getNicname() {
+		return nicname;
+	}
 
-    public void setJob(String job) {
-        this.job = job;
-    }
+	public void setNicname(String nicname) {
+		this.nicname = nicname;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public String getJob() {
+		return job;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	public void setJob(String job) {
+		this.job = job;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UsersModel that = (UsersModel) o;
-        return Objects.equals(getEmail(), that.getEmail()) &&
-                Objects.equals(getPassword(), that.getPassword()) &&
-                Objects.equals(getNickname(), that.getNickname()) &&
-                Objects.equals(getJob(), that.getJob()) &&
-                Objects.equals(getPhone(), that.getPhone());
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    @Override
-    public int hashCode() {
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-        return Objects.hash(getEmail(), getPassword(), getNickname(), getJob(), getPhone());
-    }
+	@Override
+	public String toString() {
+		return "users_dto [email=" + email + ", password=" + password + ", nicname=" + nicname + ", job=" + job
+				+ ", phone=" + phone + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((job == null) ? 0 : job.hashCode());
+		result = prime * result + ((nicname == null) ? 0 : nicname.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UsersModel other = (UsersModel) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (job == null) {
+			if (other.job != null)
+				return false;
+		} else if (!job.equals(other.job))
+			return false;
+		if (nicname == null) {
+			if (other.nicname != null)
+				return false;
+		} else if (!nicname.equals(other.nicname))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (phone == null) {
+			if (other.phone != null)
+				return false;
+		} else if (!phone.equals(other.phone))
+			return false;
+		return true;
+	}
 }

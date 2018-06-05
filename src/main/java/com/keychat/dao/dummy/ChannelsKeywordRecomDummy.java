@@ -2,5 +2,5 @@ package com.keychat.dao.dummy;
 
 import com.keychat.dao.base.ChannelsKeywordRecomDao;
 
-public class ChannelsKeywordRecomDummy implements ChannelsKeywordRecomDao {
+public class ChannelsKeywordRecomDummy {
 }
