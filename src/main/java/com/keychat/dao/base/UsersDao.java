@@ -11,10 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The interface Users dao.
- */
-public interface UsersDao {
+public class UsersDao {
 	// USERS 테이블에서 NICKNAME과 PHONE으로 EMAIL을 출력한다 insert(CustomerVo cvo).
 	public static ArrayList<String> findEmail(UsersModel user) throws SQLException {
 		Connection con = null;
