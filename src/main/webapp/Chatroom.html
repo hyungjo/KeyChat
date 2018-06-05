@@ -70,7 +70,7 @@
     <input type="submit" value="close" onclick="closeSocket();" />
 </div>
 <script>
-    var socket = new WebSocket("ws://localhost:9999/chat");
+    var socket = new WebSocket("ws://192.168.236.71:8060/Chatting/chat");
 
     var p = document.getElementById("contents");
 
@@ -104,6 +104,9 @@
         if(jsonObj.con != null){
             p.innerHTML += "<div style='text-align: center; background-color: bisque'>" + jsonObj.user2 + jsonObj.con + "</div> <br/>"
         }
+
+        var box = document.getElementById("content-box");
+        box.scrollTop = box.scrollHeight;
     }
 
     function onError(event){
@@ -135,11 +138,14 @@
         if(msg1 != ""){
             var jsonObj = {"user" : user, "message" : msg1, "time" : str_time};
             p.innerHTML += "<span style='float: right; border: 1px solid white; border-radius: 5px; background-color: aquamarine;'>"+ msg1 +"</span> <br/>"
-            p.innerHTML += "<span style='float: right; text-align: right;'>" + str_time + "</span> <br/>"
+            p.innerHTML += "<span style='float: right;'>" + str_time + "</span> <br/>"
             socket.send(JSON.stringify(jsonObj));
             inputMessage.value = "";
         }
         inputMessage.focus();
+
+        var box = document.getElementById("content-box");
+        box.scrollTop = box.scrollHeight;
     }
 </script>
 </body>
