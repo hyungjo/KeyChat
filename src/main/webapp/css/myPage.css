@@ -1,0 +1,16 @@
+@charset "UTF-8";
+/* Credit to bootsnipp.com for the css for the color graph */
+.colorgraph {
+    height: 5px;
+    border-top: 0;
+    background: #000066;
+    border-radius: 5px;
+}
+#change {
+    background: #000033;
+    color: white;
+}
+#login {
+    background: #bfbfbf;
+    color: white;
+}
