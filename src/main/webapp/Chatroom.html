@@ -66,13 +66,22 @@
         </div>
     </div>
     <input id="inputMessage" style="width: 65%;" type="text"/>
-    <input type="submit" value="send" onclick="send();" />
+    <input id="mybtn" type="submit" value="send" onclick="send();" />
     <input type="submit" value="close" onclick="closeSocket();" />
 </div>
 <script>
-    var socket = new WebSocket("ws://192.168.236.71:8060/Chatting/chat");
+    var socket = new WebSocket("ws://192.168.236.71:9999/chat");
 
     var p = document.getElementById("contents");
+    var sendmessage = document.getElementById("inputMessage");
+
+    sendmessage.addEventListener("keyup", function(event){
+        event.preventDefault();
+
+        if(event.keyCode == 13){
+            document.getElementById("mybtn").click();
+        }
+    });
 
     socket.onerror = function(message){
         onError(message);
