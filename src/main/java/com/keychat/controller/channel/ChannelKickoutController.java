@@ -1,4 +1,4 @@
-package com.keychat.controller.channelkeywordrecom;
+package com.keychat.controller.channel;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/channelKeywordRecom/create")
-public class ChannelKeywordRecomCreateController extends HttpServlet {
+@WebServlet(urlPatterns = "/channel/kickout")
+public class ChannelKickoutController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

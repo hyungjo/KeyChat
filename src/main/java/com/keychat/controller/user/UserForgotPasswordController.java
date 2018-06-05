@@ -1,4 +1,4 @@
-package com.keychat.controller.channels;
+package com.keychat.controller.user;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/d")
-public class ChannelDeleteController extends HttpServlet {
+@WebServlet(urlPatterns = "/user/forgotPassword")
+public class UserForgotPasswordController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

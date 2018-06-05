@@ -17,7 +17,7 @@ public interface ChannelsDao {
     public boolean createChannel(ChannelsModel createChannelModel);
 
     /**
-     * Read channels list.
+     * Read channel list.
      *
      * @param readChannelModel the read channel model
      * @return the list

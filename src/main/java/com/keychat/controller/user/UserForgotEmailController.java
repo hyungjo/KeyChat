@@ -1,4 +1,4 @@
-package com.keychat.controller.users;
+package com.keychat.controller.user;
 
 import com.ibm.watson.developer_cloud.http.ServiceCall;
 import com.ibm.watson.developer_cloud.http.ServiceCallback;
@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/users")
-public class UserGetAliasController extends HttpServlet {
+@WebServlet(urlPatterns = "/user/forgotEmail")
+public class UserForgotEmailController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
