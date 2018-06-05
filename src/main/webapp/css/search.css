@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+#email_search {
+    border : 1px solid #000066;
+    width: 500px;
+    padding-left: 19px;
+    padding-right: 48px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#password_search {
+    border : 1px solid #000066;
+    width: 500px;
+    padding-left: 19px;
+    padding-right: 48px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.nav {
+    position: absolute;
+}
