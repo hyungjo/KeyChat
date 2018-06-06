@@ -12,18 +12,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.ArrayList;
 
 
-@WebServlet(urlPatterns = "/chat/create")
-public class ChatHistoryCreateController extends HttpServlet {
+@WebServlet(urlPatterns = "/chat/read")
+public class ChatHistoryReadController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         ResponseModel res;
-        ChannelsChatHistoryModel channelsChatHistoryModel = JsonUtil.getModelFromJsonRequest(request, ChannelsChatHistoryModel.class);
 
-        if(ChannelsChatHistoryDao.createChatHistory(channelsChatHistoryModel))
-            res = new ResponseModel(200, "success", channelsChatHistoryModel.toString());
+        ChannelsChatHistoryModel channelsChatHistoryModel = JsonUtil.getModelFromJsonRequest(request, ChannelsChatHistoryModel.class);
+        System.out.println(channelsChatHistoryModel);
+        ArrayList<ChannelsChatHistoryModel> list = ChannelsChatHistoryDao.readChannelHistories(channelsChatHistoryModel);
+        if(list.size() != 0)
+            res = new ResponseModel(200, "success", list);
         else
             res = new ResponseModel(500, "fail", "Cannot create chat history");
 

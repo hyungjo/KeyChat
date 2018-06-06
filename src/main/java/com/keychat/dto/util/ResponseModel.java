@@ -3,9 +3,9 @@ package com.keychat.dto.util;
 public class ResponseModel {
     private int status;
     private String statusMsg;
-    private String result;
+    private Object result;
 
-    public ResponseModel(int status, String statusMsg, String result){
+    public ResponseModel(int status, String statusMsg, Object result){
         this.status = status;
         this.statusMsg = statusMsg;
         this.result = result;
