@@ -8,164 +8,229 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-    <title>Insert title here</title>
-</head>
-<head>
-    <title>Insert title here</title>
-    <style>
-        #back {
-            width: 30%;
-            height: 500px;
-            background-color: antiquewhite;
-        }
+		<meta charset="EUC-KR">
+		<title>Insert title here</title>
+        <style>
+        #wrapper{
+                position: absolute;
+                padding: 10px;
+                top: 10px;
+                left: 50%;
+                margin-left: -680px;
+                overflow: hidden;
+            }
+            
+            #content{
+                width: 450px;
+                float: left;
+                padding: 10px;
+            }
+            
+            #sidebar{
+                width: 200px;
+                height: 567px;
+                float: left;
+                padding: 10px;
+                margin-top: 45px;
+                overflow: auto;
+                background-color: antiquewhite;
+            }
+            
+            table caption{
+                font-weight: bold; 
+                height: 50px; 
+                margin-bottom: 15px;
+                line-height: 3.3; 
+                background-color: white;
+            }
+            
+            td{
+                padding-top: 5px;
+                font-size: 20px;
+                font-weight: bold;
+            }
+        
+            #back {
+                width: 450px;
+                height: 600px;
+                background-color: antiquewhite;
+            }
+            
+            #title {
+                padding-top: 5px;
+            }
+            
+            h2 {
+                text-align: center
+            }
+            
+            span {
+                height: 
+            }
+            
+            #content-box{
+                height: 75%;
+                background-color: white;
+                margin-left: 10px;
+                margin-right: 10px;
+                padding-left: 20px;
+                padding-right: 20px;
+                overflow: auto;
+            }
+            
+            .inputmessage{
+                width: 60%;
+                height: 30px;
+                margin-top: 10px;
+                margin-left: 10px;
+            }
+            
+            .sendbtn{
 
-        #title {
-            padding-top: 5px;
-        }
+                margin-left: 20px;
+                margin-top: 1px;
+                margin-right: 2px;
+            }
+            
+            input#username, input#inputMessage{
+                margin-top: 10px;
+                margin-left: 10px;
+            }
+            
+            div#contents{
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+                <div>
+                    <input id="username" style="width: 20%;" type="text"/>
+                    <input type="submit" value="connect" onclick="onOpen('message');">
+                </div>
+                <div id="back">  
+                    <div id="title">
+                        <h2> 대화 창</h2>
+                    </div> 
+                    <div id="content-box">
+                        <div id="contents"> 
 
-        h2 {
-            text-align: center
-        }
+                        </div>
+                    </div>  
+                    <input id="inputMessage" style="width: 30%;" type="text"/>
+                    <input id="mybtn" type="submit" value="send" onclick="send();" />
+                    <input type="submit" value="close" onclick="closeSocket();" />
+                </div>
+            </div>
 
-        #content-box{
-            height: 75%;
-            background-color: white;
-            margin-left: 10px;
-            margin-right: 10px;
-            padding-left: 20px;
-            padding-right: 20px;
-            overflow: auto;
-        }
-
-        .inputmessage{
-            width: 60%;
-            height: 20px;
-            margin-top: 10px;
-            margin-left: 10px;
-        }
-
-        .sendbtn{
-
-            margin-left: 20px;
-            margin-top: 1px;
-            margin-right: 2px;
-        }
-
-        input#username, input#inputMessage{
-            margin-top: 10px;
-            margin-left: 10px;
-        }
-
-        div#contents{
-            margin-top: 10px;
-        }
-    </style>
-</head>
-<body>
-닉네임 :
-<input id="username" style="width: 10%;" type="text" />
-<input type="submit" value="connect" onclick="onOpen('message');" /> <br>
-<div id="back">
-    <div id="title">
-        <h2> 대화 창</h2>
-    </div>
-    <div id="content-box">
-        <div id="contents">
-
+            <div id="sidebar">
+                <table style="width: 200px">
+                    <caption> 
+                        ● 채널 참여자 ● 
+                    </caption>
+                </table>
+                <div id="nickname">
+                        
+                </div>
+            </div>
         </div>
-    </div>
-    <input id="inputMessage" style="width: 65%;" type="text"/>
-    <input id="mybtn" type="submit" value="send" onclick="send();" />
-    <input type="submit" value="close" onclick="closeSocket();" />
-</div>
-<script>
-    var socket = new WebSocket("ws://192.168.236.71:9999/chat");
+        <script>
+            var socket = new WebSocket("ws://115.21.114.247:8080/Chatting/chat");
+            
+            var p = document.getElementById("contents");
+            var nick = document.getElementById("nickname");
+            
+            var sendmessage = document.getElementById("inputMessage");
 
-    var p = document.getElementById("contents");
-    var sendmessage = document.getElementById("inputMessage");
+            sendmessage.addEventListener("keyup", function(event){
+            event.preventDefault();
 
-    sendmessage.addEventListener("keyup", function(event){
-        event.preventDefault();
+            if(event.keyCode == 13){
+                document.getElementById("mybtn").click();
+                }
+            });
 
-        if(event.keyCode == 13){
-            document.getElementById("mybtn").click();
-        }
-    });
+            socket.onerror = function(message){
+                onError(message);
+            }
 
-    socket.onerror = function(message){
-        onError(message);
-    }
+            socket.onmessage = function(message){
+                onMessage(message);
+            }
 
-    socket.onmessage = function(message){
-        onMessage(message);
-    }
+            function closeSocket(){
+                var user = document.getElementById("username").value.trim();
+                if(user){
+                    var jsonObj = {"user1" : user, "close" : "님이 방에 나갔습니다."};
+                    socket.send(JSON.stringify(jsonObj));
+                }
+                socket.close();
+            }
 
-    function closeSocket(){
-        var user = document.getElementById("username").value.trim();
-        var jsonObj = {"user1" : user, "close" : "님이 방에 나갔습니다."};
-        socket.send(JSON.stringify(jsonObj));
-        socket.close();
-    }
+            function onMessage(event){
+                
+                
+                var jsonObj = JSON.parse(event.data);
+                if(jsonObj.user != null && jsonObj.message != null && jsonObj.time != null){
+                p.innerHTML += "<div style='padding-top: 15px; font-weight: bold; font-size: 18px'>"+jsonObj.user+"</div> <br/>"
+                p.innerHTML += "<div style='float: left; 1px solid white;order-radius: 5px; background-color: aquamarine; padding: 8px; margin-top: -15px'>"+ jsonObj.message +"</div> <br/>"
+                p.innerHTML += "<div style='margin-top: 6px'>" + jsonObj.time + "</div> <br/>"
+                }
 
-    function onMessage(event){
-        var jsonObj = JSON.parse(event.data);
-        if(jsonObj.user != null && jsonObj.message != null && jsonObj.time != null){
-            p.innerHTML += "<span style='padding-top: 15px; font-weight: bold; font-size: 18px'>"+jsonObj.user+"</span> <br/>"
-            p.innerHTML += "<span style='1px solid write; border-radius: 5px; background-color: aquamarine;'>"+ jsonObj.message +"</span> <br/>"
-            p.innerHTML += "<span>" + jsonObj.time + "</span> <br/>"
-        }
+                if(jsonObj.close != null){
+                    p.innerHTML += "<div style='text-align: center; background-color: bisque'>" + jsonObj.user1 + jsonObj.close + "</div> <br/>"
+                }
 
-        if(jsonObj.close != null){
-            p.innerHTML += "<div style='text-align: center; background-color: bisque'>" + jsonObj.user1 + jsonObj.close + "</div> <br/>"
-        }
+                if(jsonObj.con != null){
+                    p.innerHTML += "<div style='text-align: center; background-color: bisque'>" + jsonObj.user2 + jsonObj.con + "</div> <br/>"
+                    nick.innerHTML += "<tr> <td>" + jsonObj.user2 + "</td> </tr> <br>";
+                }
 
-        if(jsonObj.con != null){
-            p.innerHTML += "<div style='text-align: center; background-color: bisque'>" + jsonObj.user2 + jsonObj.con + "</div> <br/>"
-        }
+                var box = document.getElementById("content-box");
+                box.scrollTop = box.scrollHeight;
+            }
+            
+            function onError(event){
+                alert("연결 에러");
+            }
 
-        var box = document.getElementById("content-box");
-        box.scrollTop = box.scrollHeight;
-    }
+            function onOpen(event){
+                var user = document.getElementById("username").value.trim();
+                
+                if(user == ""){
+                    alert("닉네임을 입력해주세요.");
+                }
+                else{                         
+                    nick.innerHTML += "<tr> <td>" + user + "</td> </tr> <br>";
+                    var jsonObj = {"user2" : user, "con" : "님이 접속했습니다."};
+                    socket.send(JSON.stringify(jsonObj));
+                }
+            }
 
-    function onError(event){
-        alert("연결 에러");
-    }
+            function send(){
+                var user = document.getElementById("username").value.trim();
+                var sendmessage = document.getElementById("inputMessage");
+                var msg1 = sendmessage.value.trim();
+                var day = new Date();
 
-    function onOpen(event){
-        var user = document.getElementById("username").value.trim();
-        if(user == ""){
-            alert("닉네임을 입력해주세요.");
-        }
-        else{
-            var jsonObj = {"user2" : user, "con" : "님이 접속했습니다."};
-            socket.send(JSON.stringify(jsonObj));
-        }
-    }
+                var hour = day.getHours();
+                var min = day.getMinutes();
 
-    function send(){
-        var user = document.getElementById("username").value.trim();
-        var sendmessage = document.getElementById("inputMessage");
-        var msg1 = sendmessage.value.trim();
-        var day = new Date();
+                var str_time = hour + "시 " + min +"분";
 
-        var hour = day.getHours();
-        var min = day.getMinutes();
+                if(msg1 != ""){
+                    var jsonObj = {"user" : user, "message" : msg1, "time" : str_time};
+                    p.innerHTML += "<div style='text-align: right; float: right; 1px solid white; border-radius: 5px; background-color: aquamarine; padding: 8px;'>"+ msg1 +"</div> <br/>"
+                    p.innerHTML += "<div style='text-align: right; margin-top: 20px'>" + str_time + "</div> <br/>"
+                    socket.send(JSON.stringify(jsonObj));
+                    inputMessage.value = "";
+                }
+                inputMessage.focus();
 
-        var str_time = hour + "시 " + min +"분";
-
-        if(msg1 != ""){
-            var jsonObj = {"user" : user, "message" : msg1, "time" : str_time};
-            p.innerHTML += "<span style='float: right; border: 1px solid white; border-radius: 5px; background-color: aquamarine;'>"+ msg1 +"</span> <br/>"
-            p.innerHTML += "<span style='float: right;'>" + str_time + "</span> <br/>"
-            socket.send(JSON.stringify(jsonObj));
-            inputMessage.value = "";
-        }
-        inputMessage.focus();
-
-        var box = document.getElementById("content-box");
-        box.scrollTop = box.scrollHeight;
-    }
-</script>
-</body>
+                var box = document.getElementById("content-box");
+                box.scrollTop = box.scrollHeight;
+            }
+        </script>
+    </body>
 </html>
