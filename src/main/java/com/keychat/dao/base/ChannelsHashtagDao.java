@@ -85,7 +85,7 @@ public class ChannelsHashtagDao {
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getHashtag());//여기에 or연산....?
+			pstmt.setString(1, user.getHashtag());
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				list.add(rset.getString(1));
