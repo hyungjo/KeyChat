@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource
+            name="jdbc/myoracle" auth="Container"
+            type="javax.sql.DataSource"
+            driverClassName="oracle.jdbc.OracleDriver"
+            url="jdbc:oracle:thin:@127.0.0.1:1521:XE"
+            username="keychattest" password="keychattest"
+            maxActive="20" maxIdle="10"
+            maxWait="-1"/>
+</Context>
+        <!--
+        1. 테스트 환경에서 Database 설정하기
+        url="jdbc:oracle:thin:@127.0.0.1:1521:XE"
+        를
+        url="jdbc:oracle:thin:@192.168.236.75:1521:XE"
+        로 변경
+
+        2. 자신의 환경에서 Database 설정하기
+        [계정 생성]
+        command 실행 후,
+        sqlplus "/ as sysdba"
+        create user keychattest identified by keychattest;
+        grant connect, resource, dba to keychattest;
+
+        [테이블 생성]
+        DROP TABLE USERS;
+        CREATE TABLE USERS(
+            EMAIL VARCHAR2(50) NOT NULL,
+            PASSWORD VARCHAR2(50) NOT NULL,
+            NICKNAME VARCHAR2(50) NOT NULL,
+            JOB VARCHAR2(50),
+            PHONE VARCHAR2(20) NOT NULL,
+            CONSTRAINT USERS_PK PRIMARY KEY (EMAIL),
+            CONSTRAINT USERS_UNIQUE UNIQUE (NICKNAME)
+        );
+        DROP TABLE CHANNELS;
+        CREATE TABLE CHANNELS(
+            NAME VARCHAR2(50) NOT NULL,
+            LEADER VARCHAR2(50) NOT NULL,
+            PASSWORD VARCHAR2(4),
+            LIMIT_CAPACITY NUMBER(5),
+            LIMIT_TIME NUMBER(5),
+            LIMIT_ANONYM CHAR(1) NOT NULL,
+            CREATED_DATETIME TIMESTAMP NOT NULL,
+            CONSTRAINT CHANNELS_PK PRIMARY KEY(NAME)
+        );
+        DROP TABLE CHANNELS_CHAT_HISTORY;
+        DROP SEQUENCE CHANNELS_CHAT_HISTORY_ID_SEQ;
+        CREATE TABLE CHANNELS_CHAT_HISTORY(
+            CHANNELS_CHAT_HISTORY_ID NUMBER NOT NULL,
+            EMAIL VARCHAR2(50) NOT NULL,
+            CHANNEL_NAME VARCHAR2(50) NOT NULL,
+            CONTENTS VARCHAR2(100) NOT NULL,
+            SENT_DATETIME TIMESTAMP NOT NULL,
+            CONSTRAINT CHANNELS_CHAT_HISTORY_PK PRIMARY KEY (CHANNELS_CHAT_HISTORY_ID)
+        );
+        CREATE SEQUENCE CHANNELS_CHAT_HISTORY_ID_SEQ START WITH 1 INCREMENT BY 1;
+        DROP TABLE CHANNELS_ANONYM;
+        DROP TABLE CHANNELS_ANONYM_ID_SEQ;
+        CREATE TABLE CHANNELS_ANONYM(
+            CHANNELS_ANONYM_ID NUMBER NOT NULL,
+            ANONYM_NAME VARCHAR2(50) NOT NULL,
+            EMAIL VARCHAR2(50) NOT NULL,
+            CHANNEL_NAME VARCHAR2(50) NOT NULL,
+            CONSTRAINT CHANNELS_ANONYM_PK PRIMARY KEY(CHANNELS_ANONYM_ID)
+        );
+        CREATE SEQUENCE CHANNELS_ANONYM_ID_SEQ START WITH 1 INCREMENT BY 1;
+        DROP TABLE CHANNELS_FILEBOX;
+        DROP SEQUENCE CHANNELS_FILEBOX_ID_SEQ;
+        CREATE TABLE CHANNELS_FILEBOX(
+            CHANNELS_FILEBOX_ID NUMBER NOT NULL,
+            EMAIL VARCHAR(50) NOT NULL,
+            FILE_PATH VARCHAR(50) NOT NULL,
+            CHANNEL_NAME VARCHAR(50) NOT NULL,
+            CONSTRAINT CHANNELS_FILEBOX_PK PRIMARY KEY(CHANNELS_FILEBOX_ID)
+        );
+        CREATE SEQUENCE CHANNELS_FILEBOX_ID_SEQ START WITH 1 INCREMENT BY 1;
+        DROP TABLE CHANNELS_MEMO;
+        DROP SEQUENCE CHANNELS_MEMO_ID_SEQ;
+        CREATE TABLE CHANNELS_MEMO(
+            CHANNELS_MEMO_ID NUMBER NOT NULL,
+            EMAIL VARCHAR2(50) NOT NULL,
+            CONTENTS VARCHAR2(100) NOT NULL,
+            CONSTRAINT CHANNELS_MEMO_PK PRIMARY KEY(CHANNELS_MEMO_ID)
+        );
+        CREATE SEQUENCE CHANNELS_MEMO_ID_SEQ START WITH 1 INCREMENT BY 1;
+        DROP TABLE CHANNELS_KEYWORD_RECOM;
+        DROP SEQUENCE CHANNELS_KEYWORD_RECOM_ID_SEQ;
+        CREATE TABLE CHANNELS_KEYWORD_RECOM(
+            CHANNELS_KEYWORD_RECOM_ID NUMBER NOT NULL,
+            KEYWORD VARCHAR2(50) NOT NULL,
+            CHANNEL_NAME VARCHAR2(50) NOT NULL,
+            CREATED_DATETIME TIMESTAMP NOT NULL,
+            CONSTRAINT CHANNELS_KEYWORD_RECOM_PK PRIMARY KEY(CHANNELS_KEYWORD_RECOM_ID)
+        );
+        CREATE SEQUENCE CHANNELS_KEYWORD_RECOM_ID_SEQ START WITH 1 INCREMENT BY 1;
+        DROP TABLE CHANNELS_SCHEDULE;
+        DROP SEQUENCE CHANNELS_SCHEDULE_ID_SEQ;
+        CREATE TABLE CHANNELS_SCHEDULE(
+            CHANNELS_SCHEDULE_ID NUMBER NOT NULL,
+            SCHEDULE_NAME VARCHAR2(50) NOT NULL,
+            CHANNEL_NAME VARCHAR2(50) NOT NULL,
+            EMAIL VARCHAR2(50) NOT NULL,
+            START_DATETIME TIMESTAMP NOT NULL,
+            END_DATETIME TIMESTAMP NOT NULL,
+            CONSTRAINT CHANNELS_SCHEDULE_PK PRIMARY KEY(CHANNELS_SCHEDULE_ID)
+        );
+        CREATE SEQUENCE CHANNELS_SCHEDULE_ID_SEQ START WITH 1 INCREMENT BY 1 ;
+        DROP TABLE CHANNELS_HASHTAG;
+        DROP SEQUENCE CHANNELS_HASHTAG_ID_SEQ;
+        CREATE TABLE CHANNELS_HASHTAG(
+            CHANNELS_HASHTAG_ID NUMBER NOT NULL,
+            CHANNEL_NAME VARCHAR(50) NOT NULL,
+            HASHTAG VARCHAR(50) NOT NULL,
+            CONSTRAINT CHANNELS_HASHTAG_PK PRIMARY KEY(CHANNELS_HASHTAG_ID)
+        );
+        CREATE SEQUENCE CHANNELS_HASHTAG_ID_SEQ START WITH 1 INCREMENT BY 1;
+        DROP TABLE CHANNELS_JOIN;
+        DROP SEQUENCE CHANNELS_JOIN_ID_SEQ;
+        CREATE TABLE CHANNELS_JOIN(
+            CHANNELS_JOIN_ID NUMBER NOT NULL,
+            CHANNEL_NAME VARCHAR2(50) NOT NULL,
+            EMAIL VARCHAR2(50) NOT NULL,
+            JOINED_DATETIME TIMESTAMP NOT NULL,
+            CONSTRAINT CHANNELS_JOIN_PK PRIMARY KEY(CHANNELS_JOIN_ID)
+        );
+        CREATE SEQUENCE CHANNELS_JOIN_ID_SEQ START WITH 1 INCREMENT BY 1;
+        DROP TABLE CHANNELS_KICKOUT;
+        DROP SEQUENCE CHANNELS_KICKOUT_ID_SEQ;
+        CREATE TABLE CHANNELS_KICKOUT(
+            CHANNELS_KICKOUT_ID NUMBER NOT NULL,
+            CHANNEL_NAME VARCHAR2(50) NOT NULL,
+            EMAIL VARCHAR2(50) NOT NULL,
+            CONSTRAINT CHANNELS_KICKOUT_PK PRIMARY KEY(CHANNELS_KICKOUT_ID)
+        );
+        CREATE SEQUENCE CHANNELS_KICKOUT_ID_SEQ START WITH 1 INCREMENT BY 1;
+
+        [Dummy 데이터 추가]
+        insert into users values('aaa@naver.com', 'aa121', 'aaa', '회사원', '01000010001');
+        insert into users values('bbb@daum.net', 'aa122', 'bbb', '주부', '01000020002');
+        insert into users values('ccc@naver.com', 'aa123', 'ccc', '회사원', '01000030003');
+        insert into users values('ddd@naver.com', 'aa124', 'ddd', '회사원', '01000040004');
+        insert into users values('eee@naver.com', 'aa125', 'eee', '학생', '01000050005');
+        insert into users values('fff@google.com', 'aa126', 'fff', '회사원', '01000060006');
+        insert into users values('ggg@naver.com', 'aa127', 'ggg', '주부', '01000070007');
+        insert into users values('hhh@daum.net', 'aa128', 'hhh', '회사원', '01000080008');
+        insert into users values('iii@naver.com', 'aa129', 'iii', '주부', '01000090009');
+        insert into users values('jjj@naver.com', 'aa130', 'jjj', '회사원', '01000100010');
+        insert into channels values('회의 중', 'ccc@naver.com', null, 5, 120, 'T', systimestamp);
+        insert into channels values('자유', 'fff@google.com', '1552', 10, 60, 'F', systimestamp);
+        insert into channels values('심심한 사람~', 'jjj@naver.com', '1996', 7, 30, 'F', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'iii@naver.com', '자유', 'ㅎㅇ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'aaa@naver.com', '회의 중', 'ddd', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'iii@naver.com', '자유', '님들 뭐하삼?', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'bbb@daum.net', '심심한 사람~', 'ㅎㅇㅎㅇ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'aaa@naver.com', '회의 중', 'asdfj', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'hhh@daum.net', '회의 중', 'ㅂㅂㅂ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'bbb@daum.net', '심심한 사람~', 'ㅁㄴㅇㄹ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'hhh@daum.net', '심심한 사람~', 'ㅌㅊㅍ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'ggg@naver.com', '심심한 사람~', 'ㅌㅋㅊㅍ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'fff@google.com', '회의 중', 'ㄻㄴㅇ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'ggg@naver.com', '자유', 'ㅂㅈㄷㄱ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'eee@naver.com', '회의 중', 'ㅁㅁㅁ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'fff@google.com', '자유', 'ㅂㅂㅂㅈㄷㄱ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'eee@naver.com', '심심한 사람~', '일!', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'jjj@naver.com', '회의 중', 'ㅎㅎㅎ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'ddd@naver.com', '자유', 'ㅂㅇ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'ddd@naver.com', '회의 중', 'ㅂㅂㅂㅂ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'ccc@naver.com', '자유', '님들 뭐하삼?', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'bbb@daum.net', '심심한 사람~', 'ㅎㅇㅎㅇ', systimestamp);
+        insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.nextval, 'ccc@naver.com', '회의 중', 'asdfj', systimestamp);
+        insert into CHANNELS_ANONYM values(CHANNELS_ANONYM_ID_SEQ.nextval, 'Anonymity1234', 'ccc@naver.com', '회의 중');
+        insert into CHANNELS_ANONYM values(CHANNELS_ANONYM_ID_SEQ.nextval, 'Anonymity5426', 'fff@google.com', '회의 중');
+        insert into CHANNELS_ANONYM values(CHANNELS_ANONYM_ID_SEQ.nextval, 'Anonymity8845', 'bbb@daum.net', '심심한 사람~');
+        insert into CHANNELS_ANONYM values(CHANNELS_ANONYM_ID_SEQ.nextval, 'Anonymity8842', 'iii@daum.net', '자유');
+        insert into CHANNELS_ANONYM values(CHANNELS_ANONYM_ID_SEQ.nextval, 'Anonymity8841', 'ggg@daum.net', '심심한 사람~');
+        insert into channels_filebox values(CHANNELS_FILEBOX_ID_SEQ.nextval, 'iii@naver.com', '나경원1.jpg', '회의 중');
+        insert into channels_filebox values(CHANNELS_FILEBOX_ID_SEQ.nextval, 'iii@naver.com', '나경원2.jpg', '회의 중');
+        insert into channels_filebox values(CHANNELS_FILEBOX_ID_SEQ.nextval, 'ddd@naver.com', '고양이.jpg', '심심한 사람~');
+        insert into channels_filebox values(CHANNELS_FILEBOX_ID_SEQ.nextval, 'ccc@naver.com', '강아지.jpg', '자유');
+        insert into channels_filebox values(CHANNELS_FILEBOX_ID_SEQ.nextval, 'ccc@naver.com', '강아지.zip', '자유');
+        insert into channels_filebox values(CHANNELS_FILEBOX_ID_SEQ.nextval, 'hhh@daum.net', 'asdf.zip', '자유');
+        insert into channels_filebox values(CHANNELS_FILEBOX_ID_SEQ.nextval, 'iii@naver.com', '강아지3.zip', '심심한 사람~');
+        insert into channels_filebox values(CHANNELS_FILEBOX_ID_SEQ.nextval, 'ddd@naver.com', '강아지 모집 1탄.zip', '심심한 사람~');
+        insert into CHANNELS_MEMO values(CHANNELS_MEMO_ID_SEQ.nextval, 'ddd@naver.com', '나경원 애교쟁이');
+        insert into CHANNELS_MEMO values(CHANNELS_MEMO_ID_SEQ.nextval, 'eee@naver.com', '효줌마ㅎ');
+        insert into CHANNELS_MEMO values(CHANNELS_MEMO_ID_SEQ.nextval, 'aaa@naver.com', '첫 신고식날에 깽판 친 응호');
+        insert into CHANNELS_MEMO values(CHANNELS_MEMO_ID_SEQ.nextval, 'eee@naver.com', '효은이 넥슬라이스 장인');
+        insert into CHANNELS_MEMO values(CHANNELS_MEMO_ID_SEQ.nextval, 'ddd@naver.com', '서형조 딴다라라라따');
+        insert into CHANNELS_MEMO values(CHANNELS_MEMO_ID_SEQ.nextval, 'jjj@naver.com', '술 조절하자 현민이형');
+        insert into CHANNELS_KEYWORD_RECOM values(CHANNELS_KEYWORD_RECOM_ID_SEQ.nextval, 'ㅎㅇ', '자유', systimestamp);
+        insert into CHANNELS_KEYWORD_RECOM values(CHANNELS_KEYWORD_RECOM_ID_SEQ.nextval, 'ddd', '회의 중', systimestamp);
+        insert into CHANNELS_KEYWORD_RECOM values(CHANNELS_KEYWORD_RECOM_ID_SEQ.nextval, '님들', '자유', systimestamp);
+        insert into CHANNELS_KEYWORD_RECOM values(CHANNELS_KEYWORD_RECOM_ID_SEQ.nextval, '뭐하삼?', '자유', systimestamp);
+        insert into CHANNELS_KEYWORD_RECOM values(CHANNELS_KEYWORD_RECOM_ID_SEQ.nextval, 'ㅂㅂㅂ', '회의 중', systimestamp);
+        insert into CHANNELS_KEYWORD_RECOM values(CHANNELS_KEYWORD_RECOM_ID_SEQ.nextval, '일!', '심심한 사람~', systimestamp);
+        insert into CHANNELS_KEYWORD_RECOM values(CHANNELS_KEYWORD_RECOM_ID_SEQ.nextval, '님들', '자유', systimestamp);
+        insert into CHANNELS_SCHEDULE values(CHANNELS_SCHEDULE_ID_SEQ.nextval, 'test1', '자유', 'aaa@naver.com', '2018-05-31', '2018-06-01');
+        insert into CHANNELS_SCHEDULE values(CHANNELS_SCHEDULE_ID_SEQ.nextval, 'test2', '자유', 'aaa@naver.com', '2018-06-05', '2018-06-09');
+        insert into CHANNELS_SCHEDULE values(CHANNELS_SCHEDULE_ID_SEQ.nextval, 'test1', '회의 중', 'hhh@daum.net', '2018-05-20', '2018-05-25');
+        insert into CHANNELS_SCHEDULE values(CHANNELS_SCHEDULE_ID_SEQ.nextval, 'test2', '심심한 사람~', 'eee@naver.com', '2018-05-25', '2018-05-25');
+        insert into CHANNELS_SCHEDULE values(CHANNELS_SCHEDULE_ID_SEQ.nextval, 'test2', '심심한 사람~', 'bbb@daum.net', '2018-07-31', '2018-08-04');
+        insert into CHANNELS_SCHEDULE values(CHANNELS_SCHEDULE_ID_SEQ.nextval, 'test3', '심심한 사람~', 'bbb@daum.net', '2018-06-30', '2018-07-02');
+        insert into CHANNELS_HASHTAG values(CHANNELS_HASHTAG_ID_SEQ.nextval, '자유', 'test1');
+        insert into CHANNELS_HASHTAG values(CHANNELS_HASHTAG_ID_SEQ.nextval, '자유', 'test2');
+        insert into CHANNELS_HASHTAG values(CHANNELS_HASHTAG_ID_SEQ.nextval, '자유', 'test3');
+        insert into CHANNELS_HASHTAG values(CHANNELS_HASHTAG_ID_SEQ.nextval, '회의 중', 'test1');
+        insert into CHANNELS_HASHTAG values(CHANNELS_HASHTAG_ID_SEQ.nextval, '회의 중', 'test2');
+        insert into CHANNELS_HASHTAG values(CHANNELS_HASHTAG_ID_SEQ.nextval, '회의 중', 'test3');
+        insert into CHANNELS_HASHTAG values(CHANNELS_HASHTAG_ID_SEQ.nextval, '심심한 사람~', 'test1');
+        insert into CHANNELS_HASHTAG values(CHANNELS_HASHTAG_ID_SEQ.nextval, '심심한 사람~', 'test2');
+        insert into CHANNELS_HASHTAG values(CHANNELS_HASHTAG_ID_SEQ.nextval, '심심한 사람~', 'test3');
+        insert into CHANNELS_JOIN values(CHANNELS_JOIN_ID_SEQ.nextval, '자유', 'iii@naver.com', systimestamp);
+        insert into CHANNELS_JOIN values(CHANNELS_JOIN_ID_SEQ.nextval, '자유', 'ggg@naver.com', systimestamp);
+        insert into CHANNELS_JOIN values(CHANNELS_JOIN_ID_SEQ.nextval, '회의 중', 'aaa@naver.com', systimestamp);
+        insert into CHANNELS_JOIN values(CHANNELS_JOIN_ID_SEQ.nextval, '자유', 'fff@google.com', systimestamp);
+        insert into CHANNELS_JOIN values(CHANNELS_JOIN_ID_SEQ.nextval, '심심한 사람~', 'bbb@daum.net', systimestamp);
+        insert into CHANNELS_JOIN values(CHANNELS_JOIN_ID_SEQ.nextval, '회의 중', 'fff@google.com', systimestamp);
+        insert into CHANNELS_JOIN values(CHANNELS_JOIN_ID_SEQ.nextval, '자유', 'ggg@naver.com', systimestamp);
+        insert into CHANNELS_JOIN values(CHANNELS_JOIN_ID_SEQ.nextval, '심심한 사람~', 'ggg@naver.com', systimestamp);
+        insert into CHANNELS_KICKOUT values(CHANNELS_KICKOUT_ID_SEQ.nextval, '자유', 'aaa@naver.com');
+        insert into CHANNELS_KICKOUT values(CHANNELS_JOIN_ID_SEQ.nextval, '자유', 'ggg@naver.com');
+        insert into CHANNELS_KICKOUT values(CHANNELS_JOIN_ID_SEQ.nextval, '회의 중', 'aaa@naver.com');
+        insert into CHANNELS_KICKOUT values(CHANNELS_JOIN_ID_SEQ.nextval, '자유', 'fff@google.com');
+        insert into CHANNELS_KICKOUT values(CHANNELS_JOIN_ID_SEQ.nextval, '심심한 사람~', 'bbb@daum.net');
+        insert into CHANNELS_KICKOUT values(CHANNELS_JOIN_ID_SEQ.nextval, '회의 중', 'fff@google.com');
+        insert into CHANNELS_KICKOUT values(CHANNELS_JOIN_ID_SEQ.nextval, '자유', 'ggg@naver.com');
+        insert into CHANNELS_KICKOUT values(CHANNELS_JOIN_ID_SEQ.nextval, '심심한 사람~', 'ggg@naver.com');
+        -->

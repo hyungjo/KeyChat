@@ -17,7 +17,8 @@ public class DBUtil {
 			Context envContext			
 			= (Context)initContext.lookup("java:/comp/env");
 			source = (DataSource)envContext.lookup("jdbc/myoracle");
-		} catch (NamingException e) {			
+		} catch (NamingException e) {
+			System.out.println("ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
 			e.printStackTrace();
 		}	
 	}

@@ -3,7 +3,6 @@ package com.keychat.dao.base;
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.UsersModel;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
