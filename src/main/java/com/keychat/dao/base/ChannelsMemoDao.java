@@ -29,15 +29,15 @@ public class ChannelsMemoDao {
 		}
 	}
 	// 메모를 저장할 때 insert문 쿼리 발생
-	public static void insertMemo(ChannelsMemoModel user) throws SQLException {
+	public static void insertMemo(String email, String contents) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "insert into channels_memo values(channels_memo_id_seq.nextval, ?, ?)";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getEmail());
-			pstmt.setString(2, user.getContents());
+			pstmt.setString(1, email);
+			pstmt.setString(2, contents);
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();

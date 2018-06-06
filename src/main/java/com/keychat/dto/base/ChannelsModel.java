@@ -9,12 +9,12 @@ public class ChannelsModel implements Serializable{
 	private int password;
 	private int limit_capacity;
 	private int limit_time;
-	private int limit_anonym;
+	private String limit_anonym;
 	private Date created_datetime;
 	public ChannelsModel() {
 		super();
 	}
-	public ChannelsModel(String name, String leader, int password, int limit_capacity, int limit_time, int limit_anonym,
+	public ChannelsModel(String name, String leader, int password, int limit_capacity, int limit_time, String limit_anonym,
 			Date created_datetime) {
 		super();
 		this.name = name;
@@ -55,10 +55,10 @@ public class ChannelsModel implements Serializable{
 	public void setLimit_time(int limit_time) {
 		this.limit_time = limit_time;
 	}
-	public int getLimit_anonym() {
+	public String getLimit_anonym() {
 		return limit_anonym;
 	}
-	public void setLimit_anonym(int limit_anonym) {
+	public void setLimit_anonym(String limit_anonym) {
 		this.limit_anonym = limit_anonym;
 	}
 	public Date getCreated_datetime() {
@@ -79,7 +79,7 @@ public class ChannelsModel implements Serializable{
 		int result = 1;
 		result = prime * result + ((created_datetime == null) ? 0 : created_datetime.hashCode());
 		result = prime * result + ((leader == null) ? 0 : leader.hashCode());
-		result = prime * result + limit_anonym;
+		result = prime * result + ((limit_anonym == null) ? 0 : limit_anonym.hashCode());
 		result = prime * result + limit_capacity;
 		result = prime * result + limit_time;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -105,7 +105,10 @@ public class ChannelsModel implements Serializable{
 				return false;
 		} else if (!leader.equals(other.leader))
 			return false;
-		if (limit_anonym != other.limit_anonym)
+		if (limit_anonym == null) {
+			if (other.limit_anonym != null)
+				return false;
+		} else if (!limit_anonym.equals(other.limit_anonym))
 			return false;
 		if (limit_capacity != other.limit_capacity)
 			return false;
@@ -120,5 +123,6 @@ public class ChannelsModel implements Serializable{
 			return false;
 		return true;
 	}
+
 	
 }

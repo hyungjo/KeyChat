@@ -194,18 +194,18 @@ public class UsersDao {
 		}
 	}
 	// USERS 테이블에 EMAIL, PASSWORD, NICKNAME, JOB, PHONE을 추가한다. 회원가입
-	public static void insertUsers(UsersModel user) throws SQLException {
+	public static void insertUsers(String email, String password, String channel_name, String job, String phone) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "INSERT INTO USERS VALUES (? ,? ,? ,?, ?)";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getEmail());
-			pstmt.setString(2, user.getPassword());
-			pstmt.setString(3, user.getNicname());
-			pstmt.setString(4, user.getJob());
-			pstmt.setString(5, user.getPhone());
+			pstmt.setString(1, email);
+			pstmt.setString(2, password);
+			pstmt.setString(3, channel_name);
+			pstmt.setString(4, job);
+			pstmt.setString(5, phone);
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();

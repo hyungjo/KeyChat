@@ -12,15 +12,15 @@ import com.keychat.dto.base.ChannelsHashtagModel;
 
 public class ChannelsHashtagDao {
 	//CHANNELS_HASHTAG에 HASHTAG을 추가한다.
-	public static void insertHashtag(ChannelsHashtagModel user) throws SQLException {
+	public static void insertHashtag(String channel_name, String hashtag) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "INSERT INTO CHANNELS_HASHTAG VALUES (?, ?) ";
+		String query = "INSERT INTO CHANNELS_HASHTAG VALUES (CHANNELS_HASHTAG_ID_SEQ.nextval, ?, ?) ";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getChannel_name());
-			pstmt.setString(2, user.getHashtag());
+			pstmt.setString(1, channel_name);
+			pstmt.setString(2, hashtag);
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();

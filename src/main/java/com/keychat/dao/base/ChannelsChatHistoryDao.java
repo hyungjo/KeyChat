@@ -1,6 +1,7 @@
 package com.keychat.dao.base;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,17 +30,16 @@ public class ChannelsChatHistoryDao {
 			}
 		}
 		//socket 통신으로 메시지를 띄워올려준 다음 키워드 추천을 위한 insert문 쿼리 전송
-		public static void insertUsers(ChannelsChatHistoryModel user) throws SQLException {
+		public static void insertUsers(String email, String channel_name, String contents) throws SQLException {
 			Connection con = null;
 			PreparedStatement pstmt = null;
-			String query = "insert into channels_chat_history values(?, ?, ?, ?)";
+			String query = "insert into channels_chat_history values('CHANNELS_CHAT_HISTORY_ID_SEQ.nextval', ?, ?, ?, 'systimestamp')";
 			try {
 				con = DBUtil.getConnection();
 				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, user.getChannels_chat_history_id());
-				pstmt.setString(2, user.getEmail());
-				pstmt.setString(3, user.getContents());
-				pstmt.setDate(4, user.getSent_datetime());
+				pstmt.setString(1, email);
+				pstmt.setString(2, channel_name);
+				pstmt.setString(3, contents);
 				pstmt.executeUpdate();
 			} catch (SQLException s) {
 				s.printStackTrace();

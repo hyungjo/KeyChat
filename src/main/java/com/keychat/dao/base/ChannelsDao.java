@@ -58,26 +58,26 @@ public class ChannelsDao {
 	}
 
 	// CHANNELS에 NAME, PASSWORD, LIMIT_CAPACITY, LIMIT_TIME, LIMIT_ANONYM을 추가한다.
-	public static void insertChannel(ChannelsModel user) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		String query = "INSERT INTO CHANNELS VALUES (? ,? ,? ,?, ?)";
-		try {
-			con = DBUtil.getConnection();
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getName());
-			pstmt.setInt(2, user.getPassword());
-			pstmt.setInt(3, user.getLimit_capacity());
-			pstmt.setInt(4, user.getLimit_time());
-			pstmt.setInt(5, user.getLimit_anonym());
-			pstmt.executeUpdate();
-		} catch (SQLException s) {
-			s.printStackTrace();
-			throw s;
-		} finally {
-			DBUtil.close(pstmt, con);
+	public static void insertChannel(String name, String leader, int password, int capacity, String anonym) throws SQLException {
+		   Connection con = null;
+		   PreparedStatement pstmt = null;
+		   String query = "INSERT INTO CHANNELS VALUES (? ,? ,? ,?, ?, 'systimestamp')";
+		   try {
+		      con = DBUtil.getConnection();
+		      pstmt = con.prepareStatement(query);
+		      pstmt.setString(1, name);
+		      pstmt.setString(2, leader);
+		      pstmt.setInt(3, password);
+		      pstmt.setInt(4, capacity);
+		      pstmt.setString(5, anonym);
+		      pstmt.executeUpdate();
+		   } catch (SQLException s) {
+		      s.printStackTrace();
+		      throw s;
+		   } finally {
+		      DBUtil.close(pstmt, con);
+		   }
 		}
-	}
 
 	// LEADER로 검색해서 CHANNELS테이블에서 NAME을 CREATED_DATETIME을 내림차순으로 출력한다.
 	public static ArrayList<String> nameCreatedDesc(ChannelsModel user) throws SQLException {
@@ -130,14 +130,14 @@ public class ChannelsDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<ChannelsModel> allList = new ArrayList<ChannelsModel>();
-		String sql = "select limit_anonym from channels";
+		String sql = "select * from channels";
 		try {
 			conn = DBUtil.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				allList.add(new ChannelsModel(rset.getString(1), rset.getString(2), rset.getInt(3), rset.getInt(4),
-						rset.getInt(5), rset.getInt(6), rset.getDate(7)));
+						rset.getInt(5), rset.getString(6), rset.getDate(7)));
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -161,7 +161,7 @@ public class ChannelsDao {
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				allList.add(new ChannelsModel(rset.getString(1), rset.getString(2), rset.getInt(3), rset.getInt(4),
-						rset.getInt(5), rset.getInt(6), rset.getDate(7)));
+						rset.getInt(5), rset.getString(6), rset.getDate(7)));
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
