@@ -11,95 +11,95 @@
 		<meta charset="EUC-KR">
 		<title>Insert title here</title>
         <style>
-        #wrapper{
-                position: absolute;
-                padding: 10px;
-                top: 10px;
-                left: 50%;
-                margin-left: -680px;
-                overflow: hidden;
-            }
-            
-            #content{
-                width: 450px;
-                float: left;
-                padding: 10px;
-            }
-            
-            #sidebar{
-                width: 200px;
-                height: 567px;
-                float: left;
-                padding: 10px;
-                margin-top: 45px;
-                overflow: auto;
-                background-color: antiquewhite;
-            }
-            
-            table caption{
-                font-weight: bold; 
-                height: 50px; 
-                margin-bottom: 15px;
-                line-height: 3.3; 
-                background-color: white;
-            }
-            
-            td{
-                padding-top: 5px;
-                font-size: 20px;
-                font-weight: bold;
-            }
-        
-            #back {
-                width: 450px;
-                height: 600px;
-                background-color: antiquewhite;
-            }
-            
-            #title {
-                padding-top: 5px;
-            }
-            
-            h2 {
-                text-align: center
-            }
-            
-            span {
-                height: 
-            }
-            
-            #content-box{
-                height: 75%;
-                background-color: white;
-                margin-left: 10px;
-                margin-right: 10px;
-                padding-left: 20px;
-                padding-right: 20px;
-                overflow: auto;
-            }
-            
-            .inputmessage{
-                width: 60%;
-                height: 30px;
-                margin-top: 10px;
-                margin-left: 10px;
-            }
-            
-            .sendbtn{
+            #wrapper{
+                    position: absolute;
+                    padding: 10px;
+                    top: 10px;
+                    left: 50%;
+                    margin-left: -680px;
+                    overflow: hidden;
+                }
 
-                margin-left: 20px;
-                margin-top: 1px;
-                margin-right: 2px;
-            }
-            
-            input#username, input#inputMessage{
-                margin-top: 10px;
-                margin-left: 10px;
-            }
-            
-            div#contents{
-                margin-top: 10px;
-            }
+                #content{
+                    width: 450px;
+                    float: left;
+                    padding: 10px;
+                }
+
+                #sidebar{
+                    width: 200px;
+                    height: 567px;
+                    float: left;
+                    padding: 10px;
+                    margin-top: 45px;
+                    overflow: auto;
+                    background-color: antiquewhite;
+                }
+
+                table caption{
+                    font-weight: bold; 
+                    height: 50px; 
+                    margin-bottom: 15px;
+                    line-height: 3.3; 
+                    background-color: white;
+                }
+
+                td{
+                    padding-top: 5px;
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+                #back {
+                    width: 450px;
+                    height: 600px;
+                    background-color: antiquewhite;
+                }
+
+                #title {
+                    padding-top: 5px;
+                }
+
+                h2 {
+                    text-align: center
+                }
+
+                span {
+                    height: 
+                }
+
+                #content-box{
+                    height: 75%;
+                    background-color: white;
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    overflow: auto;
+                }
+
+                .inputmessage{
+                    width: 60%;
+                    height: 30px;
+                    margin-top: 10px;
+                    margin-left: 10px;
+                }
+
+                .sendbtn{
+
+                    margin-left: 20px;
+                    margin-top: 1px;
+                    margin-right: 2px;
+                }
+
+                input#username, input#inputMessage{
+                    margin-top: 10px;
+                    margin-left: 10px;
+                }
+
+                div#contents{
+                    margin-top: 10px;
+                }
         </style>
     </head>
     <body>
@@ -136,7 +136,7 @@
             </div>
         </div>
         <script>
-            var socket = new WebSocket("ws://192.168.236.71:9999/chat");
+            var socket = new WebSocket("ws://localhost:9999/chat");
             
             var p = document.getElementById("contents");
             var nick = document.getElementById("nickname");
@@ -173,9 +173,9 @@
                 
                 var jsonObj = JSON.parse(event.data);
                 if(jsonObj.user != null && jsonObj.message != null && jsonObj.time != null){
-                p.innerHTML += "<div style='padding-top: 15px; font-weight: bold; font-size: 18px'>"+jsonObj.user+"</div> <br/>"
-                p.innerHTML += "<div style='float: left; 1px solid white;order-radius: 5px; background-color: aquamarine; padding: 8px; margin-top: -15px'>"+ jsonObj.message +"</div> <br/>"
-                p.innerHTML += "<div style='margin-top: 6px'>" + jsonObj.time + "</div> <br/>"
+                    p.innerHTML += "<div style='font-weight: bold; font-size: 18px'>"+jsonObj.user+"</div> <br/>"
+                    p.innerHTML += "<div style='float: left; 1px solid white; border-radius: 15px; background-color: aquamarine; padding: 8px; margin-top: -15px; margin-left: -5px'>"+ jsonObj.message +"</div>"
+                    p.innerHTML += "<div style='margin-top: 26px; margin-bottom: 10px;'>" + jsonObj.time + "</div>"
                 }
 
                 if(jsonObj.close != null){
@@ -218,16 +218,21 @@
                 var min = day.getMinutes();
 
                 var str_time = hour + "시 " + min +"분";
-
-                if(msg1 != ""){
-                    var jsonObj = {"user" : user, "message" : msg1, "time" : str_time};
-                    p.innerHTML += "<div style='text-align: right; float: right; 1px solid white; border-radius: 5px; background-color: aquamarine; padding: 8px;'>"+ msg1 +"</div> <br/>"
-                    p.innerHTML += "<div style='text-align: right; margin-top: 20px'>" + str_time + "</div> <br/>"
-                    socket.send(JSON.stringify(jsonObj));
+                
+                if(user == ""){
+                    alert('닉네임을 입력해주세요.');
                     inputMessage.value = "";
+                } else{
+                    if(msg1 != ""){
+                        var jsonObj = {"user" : user, "message" : msg1, "time" : str_time};
+                        p.innerHTML += "<div style='text-align: right; float: right; 1px solid white; border-radius: 15px; background-color: aquamarine; padding: 8px;'>" + msg1 + "</div> <br/>"
+                        p.innerHTML += "<div style='text-align: right; margin-top: 20px'>" + str_time + "</div> <br/>"
+                        socket.send(JSON.stringify(jsonObj));
+                        inputMessage.value = "";
+                    }
+                    inputMessage.focus();
                 }
-                inputMessage.focus();
-
+                
                 var box = document.getElementById("content-box");
                 box.scrollTop = box.scrollHeight;
             }
