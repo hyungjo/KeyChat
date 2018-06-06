@@ -40,7 +40,7 @@ public class ChatHistoryCreateController extends HttpServlet {
         boolean success = false;
         ResponseModel res;
 
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
         ChannelsChatHistoryModel chatHistory = gson.fromJson(name, ChannelsChatHistoryModel.class);
         try {
             success = ChannelsChatHistoryDao.createChatHistory(chatHistory);
