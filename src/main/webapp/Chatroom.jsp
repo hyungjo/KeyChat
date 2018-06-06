@@ -136,7 +136,7 @@
             </div>
         </div>
         <script>
-            var socket = new WebSocket("ws://115.21.114.247:8080/Chatting/chat");
+            var socket = new WebSocket("ws://192.168.236.71:9999/chat");
             
             var p = document.getElementById("contents");
             var nick = document.getElementById("nickname");
