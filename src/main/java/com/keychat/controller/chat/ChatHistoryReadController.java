@@ -22,12 +22,14 @@ public class ChatHistoryReadController extends HttpServlet {
         ResponseModel res;
 
         ChannelsChatHistoryModel channelsChatHistoryModel = JsonUtil.getModelFromJsonRequest(request, ChannelsChatHistoryModel.class);
-        System.out.println(channelsChatHistoryModel);
         ArrayList<ChannelsChatHistoryModel> list = ChannelsChatHistoryDao.readChannelHistories(channelsChatHistoryModel);
-        if(list.size() != 0)
+
+        if(list.size() >= 1)
             res = new ResponseModel(200, "success", list);
+        else if(list.size() == 0)
+            res = new ResponseModel(200, "success", "No result");
         else
-            res = new ResponseModel(500, "fail", "Cannot create chat history");
+            res = new ResponseModel(500, "fail", "Cannot read chat history");
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
-
+import java.sql.Timestamp;
 
 @WebServlet(urlPatterns = "/chat/create")
 public class ChatHistoryCreateController extends HttpServlet {
@@ -21,6 +20,7 @@ public class ChatHistoryCreateController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         ResponseModel res;
         ChannelsChatHistoryModel channelsChatHistoryModel = JsonUtil.getModelFromJsonRequest(request, ChannelsChatHistoryModel.class);
+        channelsChatHistoryModel.setSent_datetime(new Timestamp(System.currentTimeMillis()));
 
         if(ChannelsChatHistoryDao.createChatHistory(channelsChatHistoryModel))
             res = new ResponseModel(200, "success", channelsChatHistoryModel.toString());

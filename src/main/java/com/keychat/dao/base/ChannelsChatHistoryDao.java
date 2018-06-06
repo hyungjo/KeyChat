@@ -41,7 +41,7 @@ public class ChannelsChatHistoryDao {
 			pstmt.setString(1, channelsChatHistoryModel.getEmail());
 			pstmt.setString(2, channelsChatHistoryModel.getChannel_name());
 			pstmt.setString(3, channelsChatHistoryModel.getContents());
-			pstmt.setDate(4, channelsChatHistoryModel.getSent_datetime());
+			pstmt.setTimestamp(4, channelsChatHistoryModel.getSent_datetime());
 			int insertedRowCount = pstmt.executeUpdate();
 			if(insertedRowCount > 0)
 				success = true;
@@ -70,7 +70,7 @@ public class ChannelsChatHistoryDao {
 														rset.getString(2),
 														rset.getString(3),
 														rset.getString(4),
-														rset.getDate(5)));
+														rset.getTimestamp(5)));
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();

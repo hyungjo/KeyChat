@@ -12,10 +12,11 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 
 public class JsonUtil {
-    public static <T> T getModelFromJsonRequest(HttpServletRequest request, Class<T> classOfT) throws JsonSyntaxException, IOException {
+    public static <T> T getModelFromJsonRequest(HttpServletRequest request, Class<T> classOfT) throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(request.getInputStream()));
         StringBuilder builder = new StringBuilder();
         String buffer;
+
         while ((buffer = input.readLine()) != null) {
             if (builder.length() > 0) {
                 builder.append("\n");
@@ -28,8 +29,8 @@ public class JsonUtil {
         String jsonRequest = element.getAsJsonObject().get("requestMsg").getAsJsonObject().toString();
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
-
         Object object = gson.fromJson(jsonRequest, (Type)classOfT);
+
         return Primitives.wrap(classOfT).cast(object);
     }
 }
