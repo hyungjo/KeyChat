@@ -24,10 +24,8 @@ public class ChatHistoryReadController extends HttpServlet {
         ChannelsChatHistoryModel channelsChatHistoryModel = JsonUtil.getModelFromJsonRequest(request, ChannelsChatHistoryModel.class);
         ArrayList<ChannelsChatHistoryModel> list = ChannelsChatHistoryDao.readChannelHistories(channelsChatHistoryModel);
 
-        if(list.size() >= 1)
+        if(list.size() >= 0)
             res = new ResponseModel(200, "success", list);
-        else if(list.size() == 0)
-            res = new ResponseModel(200, "success", "No result");
         else
             res = new ResponseModel(500, "fail", "Cannot read chat history");
 

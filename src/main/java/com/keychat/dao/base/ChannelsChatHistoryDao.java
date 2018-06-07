@@ -49,6 +49,7 @@ public class ChannelsChatHistoryDao {
 			s.printStackTrace();
 		} finally {
 			DBUtil.close(pstmt, con);
+
 			return success;
 		}
 	}
@@ -77,6 +78,7 @@ public class ChannelsChatHistoryDao {
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
+
 		return list;
 	}
 
