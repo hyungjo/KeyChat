@@ -1,21 +1,21 @@
 package com.keychat.dto.base;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ChannelsChatHistoryModel implements Serializable {
 	private int channels_chat_history_id;
 	private String email;
 	private String channel_name;
 	private String contents;
-	private Date sent_datetime;
+	private Timestamp sent_datetime;
 
 	public ChannelsChatHistoryModel() {
 		super();
 	}
 
 	public ChannelsChatHistoryModel(int channels_chat_history_id, String email, String channel_name, String contents,
-			Date sent_datetime) {
+									Timestamp sent_datetime) {
 		super();
 		this.channels_chat_history_id = channels_chat_history_id;
 		this.email = email;
@@ -56,11 +56,11 @@ public class ChannelsChatHistoryModel implements Serializable {
 		this.contents = contents;
 	}
 
-	public Date getSent_datetime() {
+	public Timestamp getSent_datetime() {
 		return sent_datetime;
 	}
 
-	public void setSent_datetime(Date sent_datetime) {
+	public void setSent_datetime(Timestamp sent_datetime) {
 		this.sent_datetime = sent_datetime;
 	}
 
