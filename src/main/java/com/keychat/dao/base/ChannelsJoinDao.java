@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelsJoinModel;
 
-
 public class ChannelsJoinDao  {
 	//CHANNELS_JOIN에서 EMAIL을 찾아 회원을 탈퇴 한다. 
 	public static void dropChannelsJoin(String email) throws SQLException{
@@ -28,44 +27,29 @@ public class ChannelsJoinDao  {
 			DBUtil.close(pstmt, con);
 		}
 	}
-	
-	public static void descChannelName(ChannelsJoinModel user) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		String query = "select channel_name, count(*) from channels_join group by channel_name order by count(*) desc";
-		try {
-			con = DBUtil.getConnection();
-			pstmt = con.prepareStatement(query);
-			pstmt.executeQuery();
-		} catch (SQLException s) {
-			s.printStackTrace();
-			throw s;
-		} finally {
-			DBUtil.close(pstmt, con);
-		}
-	}
-	//최근순 출력
-	public static ArrayList<String> descCreated(ChannelsJoinModel user) throws SQLException {
-		Connection con = null;
+	//시청인원순 출력
+	public static ArrayList<ChannelsJoinModel> descChannelName() throws SQLException {
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "select name, created_datetime from channels order by CREATED_DATETIME";
-		ArrayList<String> list = null;
+		ArrayList<ChannelsJoinModel> allList = new ArrayList<ChannelsJoinModel>();
+		String sql = "select * from channels_join order by count(*) desc";
 		try {
-			con = DBUtil.getConnection();
-			pstmt = con.prepareStatement(query);
+			conn = DBUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				list.add(rset.getString(1));
+				allList.add(new ChannelsJoinModel(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getDate(4)));
 			}
-		} catch (SQLException s) {
-			s.printStackTrace();
-			throw s;
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			throw sqle;
 		} finally {
-			DBUtil.close(pstmt, con);
+			DBUtil.close(rset, pstmt, conn);
 		}
-		return list;
+		return allList;
 	}
+	
 	//	EMAIL로 검색해서 CHANNELS_JOIN테이블에서  CHANNEL_NAME을 JOINED_DATETIME을 내림차순으로 출력한다.
 	public static ArrayList<String> nameJoinedDesc(ChannelsJoinModel user) throws SQLException {
 		Connection con = null;

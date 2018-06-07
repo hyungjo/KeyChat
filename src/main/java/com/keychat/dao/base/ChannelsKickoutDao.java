@@ -27,15 +27,15 @@ public class ChannelsKickoutDao {
 			}
 		}
 		//	 강퇴 DB에 insert문 쿼리 발생
-		public static void insertUsers(ChannelsKickoutModel user) throws SQLException {
+		public static void insertUsers(String channel_name, String email) throws SQLException {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			String query = "insert into channels_kickout values(channels_kickout_id_seq.nextval, ?, ?)";
 			try {
 				con = DBUtil.getConnection();
 				pstmt = con.prepareStatement(query);
-				pstmt.setString(1, user.getChannel_name());
-				pstmt.setString(2, user.getEmail());
+				pstmt.setString(1, channel_name);
+				pstmt.setString(2, email);
 				pstmt.executeUpdate();
 			} catch (SQLException s) {
 				s.printStackTrace();

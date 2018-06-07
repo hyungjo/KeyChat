@@ -30,16 +30,16 @@ public class ChannelsFileboxDao {
 	}
 
 	// 업로드시 CHANNELS_FILEBOX TABLE에서 INSERT문 쿼리 발생
-	public static void insertFile(ChannelsFileboxModel user) throws SQLException {
+	public static void insertFile(String email, String file_path, String channel_name) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "insert into channels_filebox values(channels_filebox_id_seq.nextval, ?, ?, ?)";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getEmail());
-			pstmt.setString(2, user.getFile_path());
-			pstmt.setString(3, user.getChannel_name());
+			pstmt.setString(1, email);
+			pstmt.setString(2, file_path);
+			pstmt.setString(3, channel_name);
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();

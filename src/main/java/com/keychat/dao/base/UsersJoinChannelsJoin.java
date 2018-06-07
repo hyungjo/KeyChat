@@ -23,7 +23,6 @@ public class UsersJoinChannelsJoin {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, user.getChannel_name());
 			rset = pstmt.executeQuery();
-			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				list.add(rset.getString(1));
 			}
