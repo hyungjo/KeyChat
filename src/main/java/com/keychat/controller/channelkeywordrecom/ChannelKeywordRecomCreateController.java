@@ -1,16 +1,15 @@
 package com.keychat.controller.channelkeywordrecom;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
 import com.ibm.watson.developer_cloud.http.ServiceCall;
 import com.ibm.watson.developer_cloud.http.ServiceCallback;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
@@ -30,7 +29,8 @@ public class ChannelKeywordRecomCreateController extends HttpServlet {
 
     }*/
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @SuppressWarnings("unchecked")
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
                 "2018-03-16",
                 "cbb20eb6-c3cb-42bf-96db-7438bc3d87aa",
@@ -71,32 +71,34 @@ public class ChannelKeywordRecomCreateController extends HttpServlet {
                 .build();
         
         
-
-        //Sync
-//        AnalysisResults res = service
-//                .analyze(parameters)
-//                .execute();
-
-        //Async
-        
-        
         ServiceCall call = service.analyze(parameters);
         call.enqueue(new ServiceCallback<AnalysisResults>() {
-            @Override public void onResponse(AnalysisResults res) {
-                System.out.println(res);
-                Gson gson = new Gson();
-                
-                Map<String, String> entities = new HashMap<String, String>();
-                Map<String, String> keywords = new HashMap<String, String>();
-                Map<String, String> categories = new HashMap<String, String>();
-                
-                /*entities = (Map<String, String>) gson.fromJson(res, res.entities);*/
+			@Override public void onResponse(AnalysisResults res) {
+            	int size = res.getKeywords().size();
+            	for (int i = 0; i<size; i++) {
+				String keyword1 = res.getKeywords().get(i).getText();
+				System.out.println(keyword1);
+				
+				request.setAttribute("keyword1", keyword1);
+            	}
+            	
+            	int size2 = res.getEntities().size();
+            	for (int i = 0; i<size2; i++	) {
+				String keyword2 = res.getEntities().get(i).getText();
+				System.out.println(keyword2);
+				request.setAttribute("keyword2", keyword2);
+            	}
+            	
+            	String key = res.getKeywords().get(0).getText();
+            	request.setAttribute("key", key);
+            	
             }
             @Override public void onFailure(Exception e) {
                 e.printStackTrace();
             }
         });
     }
+    
 
    /* @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
