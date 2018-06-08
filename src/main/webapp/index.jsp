@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/mainPage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainPage.css">
+
     <title>Insert title here</title>
 <body>
 <div class="site-wrapper">
@@ -29,7 +30,7 @@
             </div>
 
             <div class="inner_cover">
-                <img class="mainPic" src="/img/pic.jpg">
+                <img class="mainPic" src="${pageContext.request.contextPath}/img/pic.jpg">
             </div>
 
             <div class="mastfoot">

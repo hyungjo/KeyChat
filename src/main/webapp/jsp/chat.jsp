@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <!------ Include the above in your HEAD tag ---------->
-    <link rel="stylesheet" href="Chat.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/chat.css">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <title>채널</title>
 </head>
