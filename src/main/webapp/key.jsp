@@ -11,7 +11,7 @@
 <body>
 
 
-<% String key = (String)request.getAttribute("keyword1"); 
+<% String key = (String)request.getAttribute("text"); 
 %>
 
 <%= key %>
