@@ -1,5 +1,6 @@
 var socket = new WebSocket("ws://localhost:9999/chat");
 
+var a = document.getElementById("aaa");
 var p = document.getElementById("contents");
 //var nick = document.getElementById("nickname");
 
@@ -26,6 +27,7 @@ function closeSocket(){
     if(user){
         var jsonObj = {"user1" : user, "close" : "님이 방에 나갔습니다."};
         socket.send(JSON.stringify(jsonObj));
+        a.style.display = 'none';
     }
     socket.close();
 }
@@ -59,6 +61,8 @@ function onError(event){
 
 function onOpen(event){
     var user = document.getElementById("username").value.trim();
+    var user2 = document.getElementById("username");
+    var btn_con = document.getElementById("con");
 
     if(user == ""){
         alert("닉네임을 입력해주세요.");
@@ -66,6 +70,9 @@ function onOpen(event){
     else{
         //nick.innerHTML += "<tr> <td>" + user + "</td> </tr> <br>";
         var jsonObj = {"user2" : user, "con" : "님이 접속했습니다."};
+        user2.style.display = 'none';
+        a.innerHTML += user + "님이 접속하셨습니다.";
+        btn_con.style.display='none';
         socket.send(JSON.stringify(jsonObj));
     }
 }

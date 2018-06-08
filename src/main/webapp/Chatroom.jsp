@@ -184,8 +184,9 @@
                 <div class="panel-heading">
                     <div id="dd">
                         <br>
-                        닉네임 : <input id="username" style="width: 20%;" type="text"/>
-                        <input type="submit" value="connect" onclick="onOpen('message');">
+                        <input id="username" style="width: 20%;" type="text"/>
+                        <input id="con" type="submit" value="connect" onclick="onOpen('message');">
+                        <div id="aaa"> </div> <br>
                     </div>
                     <nav class="navbar">
                         <form class="form-inline">
@@ -195,7 +196,7 @@
                             <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기" aria-label="Search">
                             <button id="btn_search" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
                         </form>
-                        <button type="button" class="btn btn-ligh" onclick="window.closed">X</button>
+                        <button type="button" class="btn btn-ligh" onclick="closeSocket();">X</button>
                     </nav>
                 </div>
                 <div id="back">
