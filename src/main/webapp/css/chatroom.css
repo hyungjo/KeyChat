@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+#container{
+    position: relative;
+}
+
+#title{
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.panel-footer{
+    margin-top: 45px;
+}
+
+#Search{
+    width: 215px;
+}
+
+#btn-chat{
+    width: 75px;
+    height: 50px;
+}
+
+.panel{
+    height: 600px;
+}
+
+#back {
+    width: 450px;
+    height: 700px;
+}
+
+#content-box{
+    height: 75%;
+    background-color: azure;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: auto;
+}
+
+@media screen and (max-width:786px){
+    .panel-footer{
+        margin-top: 4rem;
+    }
+
+    #dd{
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    #Search{
+        width: 210px;
+    }
+
+    #btn_search{
+        margin-left: 10px;
+    }
+
+    .panel{
+        height: 590px;
+    }
+}
