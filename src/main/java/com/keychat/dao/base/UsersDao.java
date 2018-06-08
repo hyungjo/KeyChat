@@ -21,7 +21,7 @@ public class UsersDao {
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getNicname());
+			pstmt.setString(1, user.getNickname());
 			pstmt.setString(2, user.getPhone());
 			pstmt.executeQuery();
 			while (rset.next()) {
@@ -128,7 +128,7 @@ public class UsersDao {
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getNicname());
+			pstmt.setString(1, user.getNickname());
 			pstmt.setString(2, user.getEmail());
 			pstmt.setString(3, user.getPassword());
 			pstmt.executeQuery();
@@ -194,24 +194,28 @@ public class UsersDao {
 		}
 	}
 	// USERS 테이블에 EMAIL, PASSWORD, NICKNAME, JOB, PHONE을 추가한다. 회원가입
-	public static void insertUsers(String email, String password, String channel_name, String job, String phone) throws SQLException {
+	public static boolean createUser(UsersModel usersModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		boolean success = false;
 		String query = "INSERT INTO USERS VALUES (? ,? ,? ,?, ?)";
+		System.out.println(usersModel);
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, email);
-			pstmt.setString(2, password);
-			pstmt.setString(3, channel_name);
-			pstmt.setString(4, job);
-			pstmt.setString(5, phone);
+			pstmt.setString(1, usersModel.getEmail());
+			pstmt.setString(2, usersModel.getPassword());
+			pstmt.setString(3, usersModel.getNickname());
+			pstmt.setString(4, usersModel.getJob());
+			pstmt.setString(5, usersModel.getPhone());
 			pstmt.executeUpdate();
+			success = true;
 		} catch (SQLException s) {
 			s.printStackTrace();
-			throw s;
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
+
+		return success;
 	}
 }
