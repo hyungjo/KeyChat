@@ -67,8 +67,8 @@
 }
 
 #chat-me-message{
-    text-align: right;
     float: right;
+    text-align: left;
     word-break: break-all;
     word-wrap: break-word;
     border: 1px solid white;
@@ -85,6 +85,7 @@
 
 #chat-con, #chat-close{
     width: 100%;
+    margin-top: 15px;
     font-weight: bold;
     text-align: center;
     border-radius: 10px;
