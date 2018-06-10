@@ -6,7 +6,7 @@ import java.util.Objects;
 public class UsersModel implements Serializable {
 	private String email;
 	private String password;
-	private String nicname;
+	private String nickname;
 	private String job;
 	private String phone;
 
@@ -18,7 +18,7 @@ public class UsersModel implements Serializable {
 		super();
 		this.email = email;
 		this.password = password;
-		this.nicname = nicname;
+		this.nickname = nicname;
 		this.job = job;
 		this.phone = phone;
 	}
@@ -39,12 +39,12 @@ public class UsersModel implements Serializable {
 		this.password = password;
 	}
 
-	public String getNicname() {
-		return nicname;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setNicname(String nicname) {
-		this.nicname = nicname;
+	public void setNickname(String nicname) {
+		this.nickname = nickname;
 	}
 
 	public String getJob() {
@@ -65,7 +65,7 @@ public class UsersModel implements Serializable {
 
 	@Override
 	public String toString() {
-		return "users_dto [email=" + email + ", password=" + password + ", nicname=" + nicname + ", job=" + job
+		return "users_dto [email=" + email + ", password=" + password + ", nickname=" + nickname + ", job=" + job
 				+ ", phone=" + phone + "]";
 	}
 
@@ -75,7 +75,7 @@ public class UsersModel implements Serializable {
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((job == null) ? 0 : job.hashCode());
-		result = prime * result + ((nicname == null) ? 0 : nicname.hashCode());
+		result = prime * result + ((nickname == null) ? 0 : nickname.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
 		return result;
@@ -100,10 +100,10 @@ public class UsersModel implements Serializable {
 				return false;
 		} else if (!job.equals(other.job))
 			return false;
-		if (nicname == null) {
-			if (other.nicname != null)
+		if (nickname == null) {
+			if (other.nickname != null)
 				return false;
-		} else if (!nicname.equals(other.nicname))
+		} else if (!nickname.equals(other.nickname))
 			return false;
 		if (password == null) {
 			if (other.password != null)

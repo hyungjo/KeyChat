@@ -58,12 +58,15 @@ public class ChannelsChatHistoryDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT * FROM CHANNELS_CHAT_HISTORY WHERE CHANNEL_NAME=?";
+		String query = "SELECT * FROM CHANNELS_CHAT_HISTORY WHERE CHANNEL_NAME=? " +
+				"AND SENT_DATETIME >= TO_TIMESTAMP('2000-01-01', 'YYYY-MM-DD HH24:MI:SS.FF6') " +
+				"AND SENT_DATETIME <= TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS.FF6')";
 		ArrayList<ChannelsChatHistoryModel> list = new ArrayList<ChannelsChatHistoryModel>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, channelsChatHistoryModel.getChannel_name());
+			pstmt.setString(2, channelsChatHistoryModel.getSent_datetime().toString());
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 
