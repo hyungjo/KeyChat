@@ -15,16 +15,15 @@ import com.keychat.dto.base.ChannelsHashtagModel;
 @WebServlet(urlPatterns = "/channelHashmap/delete")
 public class ChannelHashmapDeleteController extends HttpServlet {
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
-        String channel_name = req.getParameter("channel_name").trim();
-        String hashtag = req.getParameter("hashtag").trim();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String channel_name = request.getParameter("channel_name").trim();
+        String hashtag = request.getParameter("hashtag").trim();
         ChannelsHashtagModel user = new ChannelsHashtagModel(0, channel_name, hashtag);
 	       try {
 	    	   ChannelsHashtagDao.deleteHashtag(user);
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      }
-	       req.getRequestDispatcher("#").forward(req, resp);
+	       request.getRequestDispatcher("#").forward(request, response);
     }
 }

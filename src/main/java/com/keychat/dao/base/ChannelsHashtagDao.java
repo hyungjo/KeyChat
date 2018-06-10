@@ -125,12 +125,12 @@ public class ChannelsHashtagDao {
 	public static void deleteHashtag(ChannelsHashtagModel user) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "DELETE FROM CHANNELS_HASHTAG WEHRE CHANNEL_NAME = ?";
+		String query = "DELETE FROM CHANNELS_HASHTAG WHERE CHANNEL_NAME = ?";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, user.getChannel_name());
-			pstmt.executeQuery();
+			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();
 			throw s;
