@@ -98,17 +98,39 @@ public class ChannelsHashtagDao {
 		}
 		return list;
 	}
-	//where 절에 모든 조건을 만족하면 update문 쿼리 발생 (방장만 수정 가능)
-	public static void updateHashtag(ChannelsHashtagModel user) throws SQLException {
+	//채널이름으로 hashtag들을 검색한다
+	public static ArrayList<String> findHashes(String channel_name) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "UPDATE CHANNELS_HASHTAG SET HASHTAG = ? WEHRE CHANNEL_NAME = ?";
+		ResultSet rset = null;
+		String query = "SELECT HASHTAG FROM CHANNELS_HASHTAG where CHANNEL_NAME=?";
+		ArrayList<String> list = null;
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getHashtag());
-			pstmt.setString(2, user.getChannel_name());
-			pstmt.executeQuery();
+			pstmt.setString(1, channel_name);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				list.add(rset.getString(1));
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+			throw s;
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return list;
+	}
+	//where 절에 모든 조건을 만족하면 update문 쿼리 발생 (방장만 수정 가능)
+	public static void deleteHashtag(ChannelsHashtagModel user) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "DELETE FROM CHANNELS_HASHTAG WHERE CHANNEL_NAME = ?";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, user.getChannel_name());
+			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();
 			throw s;
