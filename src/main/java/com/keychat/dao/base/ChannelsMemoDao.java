@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelsMemoModel;
+import com.keychat.dto.base.UsersModel;
 
 
 public class ChannelsMemoDao {
@@ -20,7 +21,7 @@ public class ChannelsMemoDao {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, email);
-			pstmt.executeQuery();
+			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();
 			throw s;
@@ -68,5 +69,22 @@ public class ChannelsMemoDao {
 			DBUtil.close(pstmt, con);
 		}
 		return list;
+	}
+	public static void updateMemo(ChannelsMemoModel user) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE ChannelsMemoDao SET contents=? WHERE EMAIL=?";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, user.getContents());
+			pstmt.setString(2, user.getEmail());
+			pstmt.executeQuery();
+		} catch (SQLException s) {
+			s.printStackTrace();
+			throw s;
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
 	}
 }

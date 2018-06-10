@@ -88,7 +88,7 @@ public class ChannelsChatHistoryDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "select contents from channels_chat_history where content like '%?%' and like '%?' and like '?%'";
-		ArrayList<String> list = null;
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
