@@ -22,8 +22,10 @@ public class UserSignupController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         ResponseModel res;
         UsersModel usersModel = JsonUtil.getModelFromJsonRequest(request, UsersModel.class);
+        boolean isExist = UsersDao.isExistUser(usersModel) &&
+                UsersDao.isExistNickname(usersModel);
 
-        if(UsersDao.createUser(usersModel))
+        if(!isExist && UsersDao.createUser(usersModel))
             res = new ResponseModel(200, "success", usersModel);
         else
             res = new ResponseModel(500, "fail", "Cannot create user");
@@ -31,9 +33,5 @@ public class UserSignupController extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(new Gson().toJson(res));
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

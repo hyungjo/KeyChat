@@ -177,22 +177,27 @@ public class UsersDao {
 		}
 	}
 	// USERS테이블에서 현재의 EMAIL을 찾아 회원을 탈퇴 한다.
-    public static void dropUsers(String em) throws SQLException{
+    public static boolean dropUser(UsersModel usersModel){
     	Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "DELETE FROM USERS WHERE EMAIL=?";
+		boolean success = false;
+
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, em);
-			pstmt.executeQuery();
+			pstmt.setString(1, usersModel.getEmail());
+			pstmt.executeUpdate();
+			success = true;
 		} catch (SQLException s) {
 			s.printStackTrace();
-			throw s;
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
+
+		return success;
 	}
+
 	// USERS 테이블에 EMAIL, PASSWORD, NICKNAME, JOB, PHONE을 추가한다. 회원가입
 	public static boolean createUser(UsersModel usersModel) {
 		Connection con = null;
@@ -217,5 +222,132 @@ public class UsersDao {
 		}
 
 		return success;
+	}
+
+	public static boolean isExistUser(UsersModel usersModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "SELECT EMAIL FROM USERS WHERE EMAIL=?";
+		boolean success = false;
+		int rowCount = 0;
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, usersModel.getEmail());
+			ResultSet rset = pstmt.executeQuery();
+			if(rset.next()){
+				String existUser = rset.getString(1);
+				if(existUser != null || !existUser.equals(""))
+					success = true;
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+
+		return success;
+	}
+
+    public static boolean isExistNickname(UsersModel usersModel) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        String query = "SELECT NICKNAME FROM USERS WHERE NICKNAME=?";
+        boolean success = false;
+        int rowCount = 0;
+
+        try {
+            con = DBUtil.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, usersModel.getNickname());
+            ResultSet rset = pstmt.executeQuery();
+            if(rset.next()){
+                String existUser = rset.getString(1);
+                if(existUser != null || !existUser.equals(""))
+                    success = true;
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            DBUtil.close(pstmt, con);
+        }
+
+        return success;
+    }
+
+	public static boolean isExactPassword(UsersModel usersModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "SELECT PASSWORD FROM USERS WHERE EMAIL=? AND PASSWORD=?";
+		boolean success = false;
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, usersModel.getEmail());
+			pstmt.setString(2, usersModel.getPassword());
+			ResultSet rset = pstmt.executeQuery();
+			if(rset.next()){
+				String existUser = rset.getString(1);
+				if(existUser != null)
+					success = true;
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+
+		return success;
+	}
+
+	public static boolean updateUser(UsersModel user) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE USERS SET PASSWORD = ?, PHONE = ?, JOB = ? WHERE EMAIL = ?";
+		boolean success = false;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, user.getPassword());
+			pstmt.setString(2, user.getPhone());
+			pstmt.setString(3, user.getJob());
+			pstmt.setString(4, user.getEmail());
+			int updateRowCount = pstmt.executeUpdate();
+			if(updateRowCount >= 1) {
+				success = true;
+				System.out.println("Updated User.");
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+
+		return success;
+	}
+
+	public static UsersModel getUser(UsersModel usersModel) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList allList = new ArrayList();
+		String sql = "SELECT * FROM USERS WHERE EMAIL = ?";
+		UsersModel existUser = null;
+		try {
+			conn = DBUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, usersModel.getEmail());
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				existUser = new UsersModel(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4),rset.getString(5));
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			DBUtil.close(rset, pstmt, conn);
+		}
+		return existUser;
 	}
 }
