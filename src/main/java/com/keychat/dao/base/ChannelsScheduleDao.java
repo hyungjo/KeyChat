@@ -2,11 +2,13 @@ package com.keychat.dao.base;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.keychat.controller.util.DBUtil;
+import com.keychat.dto.base.ChannelsMemoModel;
 import com.keychat.dto.base.ChannelsScheduleModel;
-
 
 public class ChannelsScheduleDao {
 	//	 메모 삭제시 년도를 비교해서 delete문 쿼리 발생
@@ -19,7 +21,7 @@ public class ChannelsScheduleDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, channel_name);
 			pstmt.setString(2, schedule_name);
-			pstmt.executeQuery();
+			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();
 			throw s;
@@ -69,5 +71,28 @@ public class ChannelsScheduleDao {
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
+	}
+	//Channels_schedule테이블에서 channels_name을 검색한다.
+	public static ArrayList<String> selectSchedule(ChannelsScheduleModel user) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select channels_schedule from where schedule_name = ?";
+		ArrayList<String> list = null;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, user.getSchedule_name());
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				list.add(rset.getString(1));
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+			throw s;
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return list;
 	}
 }

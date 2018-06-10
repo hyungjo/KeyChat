@@ -5,25 +5,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.keychat.dao.base.ChannelsHashtagDao;
+import com.keychat.dao.base.ChannelsMemoDao;
+import com.keychat.dto.base.ChannelsHashtagModel;
+
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/channelMemo/delete")
 public class ChannelMemoDeleteController extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
-    }
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		super.doDelete(req, resp);
+		String email = req.getParameter("email").trim();
+		try {
+			ChannelsMemoDao.dropChannelsMemo(email);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		req.getRequestDispatcher("#").forward(req, resp);
+	}
 }
