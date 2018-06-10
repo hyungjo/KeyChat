@@ -37,18 +37,18 @@ function onMessage(event){
 
     var jsonObj = JSON.parse(event.data);
     if(jsonObj.user != null && jsonObj.message != null && jsonObj.time != null){
-        p.innerHTML += "<div style='font-weight: bold; font-size: 18px'>"+jsonObj.user+"</div> <br/>"
-        p.innerHTML += "<div style='float: left; 1px solid white; border-radius: 15px; background-color: aquamarine; padding: 8px; margin-top: -15px; margin-left: -5px'>"+ jsonObj.message +"</div>"
-        p.innerHTML += "<div style='margin-top: 26px; margin-bottom: 10px;'>" + jsonObj.time + "</div>"
+        p.innerHTML += "<div id='chat-user'>" + jsonObj.user + "</div> <br/>";
+        p.innerHTML += "<div id='chat-user-message'>" + jsonObj.message + "</div>";
+        p.innerHTML += "<div id='chat-user-time'>" + jsonObj.time + "</div>";
     }
 
     if(jsonObj.close != null){
-        p.innerHTML += "<div style='text-align: center; background-color: bisque'>" + jsonObj.user1 + jsonObj.close + "</div> <br/>"
+        p.innerHTML += "<div id='chat-close'>" + jsonObj.user1 + jsonObj.close + "</div> <br/>"
     }
 
     if(jsonObj.con != null){
-        p.innerHTML += "<div style='text-align: center; background-color: bisque'>" + jsonObj.user2 + jsonObj.con + "</div> <br/>"
-        //nick.innerHTML += "<tr> <td>" + jsonObj.user2 + "</td> </tr> <br>";
+        p.innerHTML += "<div id='chat-con'>" + jsonObj.user2 + jsonObj.con + "</div> <br/>"
+        // nick.innerHTML += "<tr> <td>" + jsonObj.user2 + "</td> </tr> <br>";
     }
 
     var box = document.getElementById("content-box");
@@ -94,8 +94,8 @@ function send(){
     } else{
         if(msg1 != ""){
             var jsonObj = {"user" : user, "message" : msg1, "time" : str_time};
-            p.innerHTML += "<div style='text-align: right; float: right; 1px solid white; border-radius: 15px; background-color: aquamarine; padding: 8px;'>" + msg1 + "</div> <br/>"
-            p.innerHTML += "<div style='text-align: right; margin-top: 20px'>" + str_time + "</div> <br/>"
+            p.innerHTML += "<div id='chat-me-message'>" + msg1 + "</div> <br/>";
+            p.innerHTML += "<div id='chat-me-time'>" + str_time + "</div> <br/>";
             socket.send(JSON.stringify(jsonObj));
             inputMessage.value = "";
         }

@@ -32,6 +32,10 @@
     height: 700px;
 }
 
+#contents{
+    padding-top: 10px;
+}
+
 #content-box{
     height: 75%;
     background-color: azure;
@@ -40,6 +44,51 @@
     padding-left: 20px;
     padding-right: 20px;
     overflow: auto;
+}
+
+#chat-user{
+    font-weight: bold;
+    font-size: 18px
+}
+
+#chat-user-message{
+    float: left;
+    word-break: break-all;
+    word-wrap: break-word;
+    border: 1px solid white;
+    border-radius: 15px;
+    background-color: beige;
+    padding: 8px; margin-top: -20px; margin-left: -5px
+}
+
+#chat-user-time{
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+#chat-me-message{
+    text-align: right;
+    float: right;
+    word-break: break-all;
+    word-wrap: break-word;
+    border: 1px solid white;
+    border-radius: 15px;
+    background-color: bisque;
+    padding: 8px;
+}
+
+#chat-me-time{
+    text-align: right;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+#chat-con, #chat-close{
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    background-color: blanchedalmond;
 }
 
 @media screen and (max-width:786px){
