@@ -39,7 +39,7 @@ public class ChannelsJoinDao  {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				allList.add(new ChannelsJoinModel(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getDate(4)));
+				allList.add(new ChannelsJoinModel(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getTimestamp(4)));
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -49,7 +49,37 @@ public class ChannelsJoinDao  {
 		}
 		return allList;
 	}
-	
+
+
+
+	public static ArrayList<ChannelsJoinModel> getMyChannels(ChannelsJoinModel channelsJoinModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "SELECT * FROM CHANNELS_JOIN WHERE EMAIL = ?";
+		ArrayList<ChannelsJoinModel> list = new ArrayList<>();
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelsJoinModel.getEmail());
+			ResultSet rset = pstmt.executeQuery();
+			while(rset.next()){
+				list.add(new ChannelsJoinModel(
+					rset.getInt(1),
+					rset.getString(2),
+					rset.getString(3),
+					rset.getTimestamp(4)
+				));
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+
+		return list;
+	}
+
 	//	EMAIL로 검색해서 CHANNELS_JOIN테이블에서  CHANNEL_NAME을 JOINED_DATETIME을 내림차순으로 출력한다.
 	public static ArrayList<String> nameJoinedDesc(ChannelsJoinModel user) throws SQLException {
 		Connection con = null;

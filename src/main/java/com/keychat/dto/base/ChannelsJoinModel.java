@@ -2,18 +2,19 @@ package com.keychat.dto.base;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
-public class ChannelsJoinModel  implements Serializable{
+public class ChannelsJoinModel implements Serializable{
 	private int channels_join_id;
 	private String channel_name;
 	private String email;
-	private Date joined_datetime;
+	private Timestamp joined_datetime;
 
 	public ChannelsJoinModel() {
 		super();
 	}
 
-	public ChannelsJoinModel(int channels_join_id, String channel_name, String email, Date joined_datetime) {
+	public ChannelsJoinModel(int channels_join_id, String channel_name, String email, Timestamp joined_datetime) {
 		super();
 		this.channels_join_id = channels_join_id;
 		this.channel_name = channel_name;
@@ -45,11 +46,11 @@ public class ChannelsJoinModel  implements Serializable{
 		this.email = email;
 	}
 
-	public Date getJoined_datetime() {
+	public Timestamp getJoined_datetime() {
 		return joined_datetime;
 	}
 
-	public void setJoined_datetime(Date joined_datetime) {
+	public void setJoined_datetime(Timestamp joined_datetime) {
 		this.joined_datetime = joined_datetime;
 	}
 
