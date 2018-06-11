@@ -11,6 +11,8 @@
     <meta charset="EUC-KR">
     <title>Insert title here</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <!--
@@ -189,19 +191,17 @@
                         <div id="aaa"> </div> <br>
                     </div>
                     <nav class="navbar">
-                        <form class="form-inline">
-                            <div id="title">
-                                채널 이름
-                            </div>
-                            <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기" aria-label="Search">
-                            <button id="btn_search" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-                        </form>
+                        <div id="title">
+                            채널 이름
+                        </div>
+                        <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기" aria-label="Search">
+                        <button id="btn_search" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
                         <button type="button" class="btn btn-ligh" onclick="closeSocket();">X</button>
                     </nav>
                 </div>
                 <div id="back">
                     <div id="content-box">
-                        <div id="contents">
+                        <div id="message-box">
 
                         </div>
                     </div>

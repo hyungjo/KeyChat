@@ -1,7 +1,7 @@
 var socket = new WebSocket("ws://localhost:9999/chat");
 
 var a = document.getElementById("aaa");
-var p = document.getElementById("contents");
+var p = document.getElementById("message-box");
 //var nick = document.getElementById("nickname");
 
 var sendmessage = document.getElementById("inputMessage");
@@ -22,6 +22,16 @@ socket.onmessage = function(message){
     onMessage(message);
 }
 
+$('#Search').keydown(function(event){
+    if(event.which == 13){
+        $('#btn_search').click();
+    }
+});
+
+$('#btn_search').click(function(){
+    $('.mess').removeHighlight().highlight($('#Search').val());
+})
+
 function closeSocket(){
     var user = document.getElementById("username").value.trim();
     if(user){
@@ -38,7 +48,7 @@ function onMessage(event){
     var jsonObj = JSON.parse(event.data);
     if(jsonObj.user != null && jsonObj.message != null && jsonObj.time != null){
         p.innerHTML += "<div id='chat-user'>" + jsonObj.user + "</div> <br/>";
-        p.innerHTML += "<div id='chat-user-message'>" + jsonObj.message + "</div>";
+        p.innerHTML += "<div id='chat-user-message' class='mess'>" + jsonObj.message + "</div>";
         p.innerHTML += "<div id='chat-user-time'>" + jsonObj.time + "</div>";
     }
 
@@ -94,7 +104,7 @@ function send(){
     } else{
         if(msg1 != ""){
             var jsonObj = {"user" : user, "message" : msg1, "time" : str_time};
-            p.innerHTML += "<div id='chat-me-message'>" + msg1 + "</div> <br/>";
+            p.innerHTML += "<div id='chat-me-message' class='mess'>" + msg1 + "</div> <br/>";
             p.innerHTML += "<div id='chat-me-time'>" + str_time + "</div> <br/>";
             socket.send(JSON.stringify(jsonObj));
             inputMessage.value = "";
