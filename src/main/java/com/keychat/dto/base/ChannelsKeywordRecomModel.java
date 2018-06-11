@@ -1,20 +1,20 @@
 package com.keychat.dto.base;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class ChannelsKeywordRecomModel implements Serializable{
 	private int channels_keyword_recom_id;
 	private String keyword;
 	private String channel_name;
-	private Date created_datetime;
+	private Timestamp created_datetime;
 
 	public ChannelsKeywordRecomModel() {
 		super();
 	}
 
 	public ChannelsKeywordRecomModel(int channels_keyword_recom_id, String keyword, String channel_name,
-			Date created_datetime) {
+			Timestamp created_datetime) {
 		super();
 		this.channels_keyword_recom_id = channels_keyword_recom_id;
 		this.keyword = keyword;
@@ -46,11 +46,11 @@ public class ChannelsKeywordRecomModel implements Serializable{
 		this.channel_name = channel_name;
 	}
 
-	public Date getCreated_datetime() {
+	public Timestamp getCreated_datetime() {
 		return created_datetime;
 	}
 
-	public void setCreated_datetime(Date created_datetime) {
+	public void setCreated_datetime(Timestamp created_datetime) {
 		this.created_datetime = created_datetime;
 	}
 
