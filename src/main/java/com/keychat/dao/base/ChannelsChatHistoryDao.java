@@ -49,7 +49,6 @@ public class ChannelsChatHistoryDao {
 			s.printStackTrace();
 		} finally {
 			DBUtil.close(pstmt, con);
-
 			return success;
 		}
 	}
@@ -58,15 +57,12 @@ public class ChannelsChatHistoryDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT * FROM CHANNELS_CHAT_HISTORY WHERE CHANNEL_NAME=? " +
-				"AND SENT_DATETIME >= TO_TIMESTAMP('2000-01-01', 'YYYY-MM-DD HH24:MI:SS.FF6') " +
-				"AND SENT_DATETIME <= TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS.FF6')";
+		String query = "SELECT * FROM CHANNELS_CHAT_HISTORY WHERE CHANNEL_NAME=?";
 		ArrayList<ChannelsChatHistoryModel> list = new ArrayList<ChannelsChatHistoryModel>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, channelsChatHistoryModel.getChannel_name());
-			pstmt.setString(2, channelsChatHistoryModel.getSent_datetime().toString());
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 
@@ -91,7 +87,7 @@ public class ChannelsChatHistoryDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "select contents from channels_chat_history where content like '%?%' and like '%?' and like '?%'";
-		ArrayList<String> list = new ArrayList<String>();
+		ArrayList<String> list = null;
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);

@@ -8,23 +8,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ibm.watson.developer_cloud.assistant.v1.model.WorkspaceCollection;
-import com.ibm.watson.developer_cloud.http.ServiceCall;
-import com.ibm.watson.developer_cloud.http.ServiceCallback;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalysisResults;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.AnalyzeOptions;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.CategoriesOptions;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.EntitiesOptions;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Features;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsOptions;
-import com.ibm.watson.developer_cloud.service.model.GenericModel;
-
-import okhttp3.Headers;
+import com.google.gson.Gson;
+import com.keychat.controller.util.JsonUtil;
+import com.keychat.dao.base.ChannelsKeywordRecomDao;
+import com.keychat.dto.base.ChannelsKeywordRecomModel;
+import com.keychat.dto.util.ResponseModel;
 
 @WebServlet(urlPatterns = "/channelKeywordRecom/create")
 public class ChannelKeywordRecomCreateController extends HttpServlet {
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		ResponseModel res;
+		ChannelsKeywordRecomModel channelsKeywordRecomModel = JsonUtil.getModelFromJsonRequest(request, ChannelsKeywordRecomModel.class);
+		boolean saveKeyword = ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel);
+			if(saveKeyword)
+				res = new ResponseModel(200, "success", channelsKeywordRecomModel);
+			else
+				res = new ResponseModel(500, "fail", "Cannot create user");
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(new Gson().toJson(res));
     }
 }
