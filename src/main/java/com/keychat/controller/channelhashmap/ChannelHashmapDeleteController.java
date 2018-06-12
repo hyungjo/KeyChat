@@ -16,7 +16,8 @@ import com.keychat.dto.base.ChannelsHashtagModel;
 public class ChannelHashmapDeleteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String channel_name = request.getParameter("channel_name").trim();
+    	request.setCharacterEncoding("UTF-8");
+    	String channel_name = request.getParameter("channel_name").trim();
         String hashtag = request.getParameter("hashtag").trim();
         ChannelsHashtagModel user = new ChannelsHashtagModel(0, channel_name, hashtag);
 	       try {

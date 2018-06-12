@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/MyPage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPage.css">
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-            <form role="form">
+            <form role="form" action="user/info">
                 <h2>내 정보</h2>
                 <hr class="colorgraph">
                 <div class="form-group">
-                    이메일 :
+                    이메일 : ${ requestScope.user.getemail() }
                 </div>
                 <div class="form-group">
                     닉네임 : <input type="text" name="nickname" id="nickname" class="form-control input-lg" placeholder="닉네임" tabindex="3">

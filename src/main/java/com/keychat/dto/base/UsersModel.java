@@ -43,7 +43,7 @@ public class UsersModel implements Serializable {
 		return nickname;
 	}
 
-	public void setNickname(String nicname) {
+	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
 

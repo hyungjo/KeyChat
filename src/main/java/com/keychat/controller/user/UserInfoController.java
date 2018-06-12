@@ -23,8 +23,10 @@ public class UserInfoController extends HttpServlet {
             UsersModel usersModel = JsonUtil.getModelFromJsonRequest(request, UsersModel.class);
             boolean isExist = UsersDao.isExactPassword(usersModel);
             UsersModel user = UsersDao.getUser(usersModel);
-            if(isExist && user != null)
+            if(isExist && user != null) {
                 res = new ResponseModel(200, "success", user);
+                request.setAttribute("user", user);
+            }	
             else
                 res = new ResponseModel(500, "fail", "Cannot create user");
 
