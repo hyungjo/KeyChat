@@ -19,6 +19,7 @@ import java.util.List;
 public class UserInfoController extends HttpServlet {
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             request.setCharacterEncoding("UTF-8");
+            System.out.println("00000000000");
             ResponseModel res;
             UsersModel usersModel = JsonUtil.getModelFromJsonRequest(request, UsersModel.class);
             boolean isExist = UsersDao.isExactPassword(usersModel);
