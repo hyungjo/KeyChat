@@ -16,8 +16,8 @@ public class UsersJoinChannelsJoin {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "select a.nickname from users a join channels_join b on ( a.email = b.email ) where b.channel_name = ? group by a.nickname'";
-		ArrayList<String> list = null;
+		String query = "select a.nickname from users a join channels_join b on ( a.email = b.email ) where b.channel_name = ? group by a.nickname";
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);

@@ -8,30 +8,32 @@ import java.util.ArrayList;
 
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelsJoinChannelsHashtagModel;
+import com.keychat.dto.base.ChannelsModel;
 
 
 public class ChannelsJoinChannelsHashtag {
 	// 채팅 창에 방 정보를 출력하기 위해서는 SELECT문을 쓴다. (join문 포함)
-	public static ArrayList<String> roomSelect(ChannelsJoinChannelsHashtagModel user) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String query = "SELECT A.NAME, B.HASHTAG, A.LIMIT_CAPACITY, A.LIMIT_TIME, A.LIMIT_ANONYM FROM CHANNELS A JOIN CHANNELS_HASHTAG B ON(A.NAME = B.CHANNEL_NAME) WHERE A.NAME = ?";
-		ArrayList<String> list = null;
-		try {
-			con = DBUtil.getConnection();
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getName());
-			rset = pstmt.executeQuery();
-			while (rset.next()) {
-				list.add(rset.getString(1));
+	public static ArrayList<ChannelsModel> roomSelect(String name) throws SQLException {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			ArrayList<ChannelsModel> allList = new ArrayList<ChannelsModel>();
+			String query = "SELECT * FROM CHANNELS WHERE NAME=?";
+			try {
+				con = DBUtil.getConnection();
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, name);
+				rset = pstmt.executeQuery();
+				while (rset.next()) {
+					allList.add(new ChannelsModel(rset.getString(1), rset.getString(2), rset.getString(3), rset.getInt(4),
+							rset.getInt(5), rset.getString(6), rset.getTimestamp(7)));
+				}
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+				throw sqle;
+			} finally {
+				DBUtil.close(rset, pstmt, con);
 			}
-		} catch (SQLException s) {
-			s.printStackTrace();
-			throw s;
-		} finally {
-			DBUtil.close(pstmt, con);
+			return allList;
 		}
-		return list;
-	}
 }
