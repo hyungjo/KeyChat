@@ -104,7 +104,7 @@ public class ChannelsHashtagDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "SELECT HASHTAG FROM CHANNELS_HASHTAG where CHANNEL_NAME=?";
-		ArrayList<String> list = null;
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -125,11 +125,12 @@ public class ChannelsHashtagDao {
 	public static void deleteHashtag(ChannelsHashtagModel user) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "DELETE FROM CHANNELS_HASHTAG WHERE CHANNEL_NAME = ?";
+		String query = "DELETE FROM CHANNELS_HASHTAG WHERE CHANNEL_NAME = ? AND HASHTAG = ?";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, user.getChannel_name());
+			pstmt.setString(2, user.getHashtag());
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();

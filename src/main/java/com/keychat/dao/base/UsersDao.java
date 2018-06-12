@@ -332,7 +332,6 @@ public class UsersDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList allList = new ArrayList();
 		String sql = "SELECT * FROM USERS WHERE EMAIL = ?";
 		UsersModel existUser = null;
 		try {
