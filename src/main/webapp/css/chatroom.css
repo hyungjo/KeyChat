@@ -92,6 +92,11 @@
     background-color: blanchedalmond;
 }
 
+.highlight {
+    color: white;
+    background-color: black;
+}
+
 @media screen and (max-width:786px){
     .panel-footer{
         margin-top: 5.5rem;
