@@ -1,12 +1,13 @@
 package com.keychat.dao.base;
 
-import com.keychat.controller.util.DBUtil;
-import com.keychat.dto.base.ChannelsJoinModel;
-import com.keychat.dto.base.ChannelsModel;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+
+import com.keychat.controller.util.DBUtil;
+import com.keychat.dto.base.ChannelsModel;
 
 /**
  * The interface Channels dao.
@@ -153,7 +154,7 @@ public class ChannelsDao {
 			DBUtil.close(pstmt, con);
 		}
 
-		return channelsModel;
+		return channelsModel1;
 	}
 
 	// LEADER로 검색해서 CHANNELS테이블에서 NAME을 CREATED_DATETIME을 내림차순으로 출력한다.
@@ -162,7 +163,7 @@ public class ChannelsDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "SELECT NAME FROM CHANNELS WHERE LEADER=? ORDER BY CREATED_DATETIME DESC";
-		ArrayList<String> list = null;
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -202,27 +203,27 @@ public class ChannelsDao {
 	}
 
 	// CHANNELS TABLE에 LIMIT_ANONYM 칼람명 값만 조회한다.
-	public static ArrayList<ChannelsModel> findLimitAnonym() throws SQLException {
-		Connection conn = null;
+	public static String findLimitAnonym(String name) throws SQLException {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<ChannelsModel> allList = new ArrayList<ChannelsModel>();
-		String sql = "select * from channels";
+		String list = null;
+		String query = "SELECT LIMIT_ANONYM FROM CHANNELS WHERE NAME=?";
 		try {
-			conn = DBUtil.getConnection();
-			pstmt = conn.prepareStatement(sql);
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, name);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				allList.add(new ChannelsModel(rset.getString(1), rset.getString(2), rset.getString(3), rset.getInt(4),
-						rset.getInt(5), rset.getString(6), rset.getTimestamp(7)));
+				list = rset.getString(1);
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			throw sqle;
 		} finally {
-			DBUtil.close(rset, pstmt, conn);
+			DBUtil.close(rset, pstmt, con);
 		}
-		return allList;
+		return list;
 	}
 
 	// 최근순 출력

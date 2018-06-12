@@ -15,7 +15,7 @@ public class ChannelsHashtagDao {
 	public static void insertHashtag(String channel_name, String hashtag) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "INSERT INTO CHANNELS_HASHTAG VALUES (CHANNELS_HASHTAG_ID_SEQ.nextval, ?, ?) ";
+		String query = "INSERT INTO CHANNELS_HASHTAG VALUES(CHANNELS_HASHTAG_ID_SEQ.nextval, ?, ?)";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
