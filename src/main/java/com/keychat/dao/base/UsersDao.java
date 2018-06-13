@@ -1,6 +1,7 @@
 package com.keychat.dao.base;
 
 import com.keychat.controller.util.DBUtil;
+import com.keychat.dto.base.SignModel;
 import com.keychat.dto.base.UsersModel;
 
 import java.sql.Connection;
@@ -276,7 +277,7 @@ public class UsersDao {
         return success;
     }
 
-	public static boolean isExactPassword(UsersModel usersModel) {
+	public static boolean isExactPassword(SignModel usersModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "SELECT PASSWORD FROM USERS WHERE EMAIL=? AND PASSWORD=?";
@@ -305,7 +306,7 @@ public class UsersDao {
 	public static boolean updateUser(UsersModel user) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "UPDATE USERS SET PASSWORD = ?, PHONE = ?, JOB = ? WHERE EMAIL = ?";
+		String query = "UPDATE USERS SET PASSWORD = ?, PHONE = ?, JOB = ?, NICKNAME = ? WHERE EMAIL = ?";
 		boolean success = false;
 		try {
 			con = DBUtil.getConnection();
@@ -313,7 +314,8 @@ public class UsersDao {
 			pstmt.setString(1, user.getPassword());
 			pstmt.setString(2, user.getPhone());
 			pstmt.setString(3, user.getJob());
-			pstmt.setString(4, user.getEmail());
+			pstmt.setString(4, user.getNickname());
+			pstmt.setString(5, user.getEmail());
 			int updateRowCount = pstmt.executeUpdate();
 			if(updateRowCount >= 1) {
 				success = true;
@@ -328,7 +330,7 @@ public class UsersDao {
 		return success;
 	}
 
-	public static UsersModel getUser(UsersModel usersModel) {
+	public static UsersModel getUser(SignModel usersModel) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
