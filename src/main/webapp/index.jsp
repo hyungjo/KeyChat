@@ -113,6 +113,7 @@
             type: 'POST',
             url: '${pageContext.request.contextPath}/user/signin',
             data: JSON.stringify(reqJson),
+            async: false,
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 $("#loginBtn").toggle();
