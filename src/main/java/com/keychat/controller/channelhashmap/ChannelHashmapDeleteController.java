@@ -20,11 +20,10 @@ public class ChannelHashmapDeleteController extends HttpServlet {
     	String channel_name = request.getParameter("channel_name").trim();
         String hashtag = request.getParameter("hashtag").trim();
         ChannelsHashtagModel user = new ChannelsHashtagModel(0, channel_name, hashtag);
-	       try {
-	    	   ChannelsHashtagDao.deleteHashtag(user);
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      }
-	       request.getRequestDispatcher("#").forward(request, response);
+        try {
+        	ChannelsHashtagDao.deleteHashtag(user);
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        } request.getRequestDispatcher("#").forward(request, response);
     }
 }

@@ -52,11 +52,11 @@ public class ChannelsJoinDao  {
 
 
 
-	public static ArrayList<ChannelsJoinModel> getMyChannels(ChannelsJoinModel channelsJoinModel) {
+	public static ArrayList<String> getMyChannels(ChannelsJoinModel channelsJoinModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "SELECT * FROM CHANNELS_JOIN WHERE EMAIL = ?";
-		ArrayList<ChannelsJoinModel> list = new ArrayList<>();
+		ArrayList<String> list = new ArrayList<String>();
 
 		try {
 			con = DBUtil.getConnection();
@@ -64,19 +64,13 @@ public class ChannelsJoinDao  {
 			pstmt.setString(1, channelsJoinModel.getEmail());
 			ResultSet rset = pstmt.executeQuery();
 			while(rset.next()){
-				list.add(new ChannelsJoinModel(
-					rset.getInt(1),
-					rset.getString(2),
-					rset.getString(3),
-					rset.getTimestamp(4)
-				));
+				list.add(rset.getString(1));
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
-
 		return list;
 	}
 

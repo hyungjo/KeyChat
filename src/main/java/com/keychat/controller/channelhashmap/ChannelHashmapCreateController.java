@@ -16,12 +16,11 @@ public class ChannelHashmapCreateController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");   
 		String channel_name = request.getParameter("channel_name").trim();
-	       String hashtag = request.getParameter("hashtag").trim();
-	       try {
-	         ChannelsHashtagDao.insertHashtag(channel_name, hashtag);
-	      } catch (SQLException e) {
-	         e.printStackTrace();
+	    String hashtag = request.getParameter("hashtag").trim();
+	    try {
+	    	ChannelsHashtagDao.insertHashtag(channel_name, hashtag);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
 	    }request.getRequestDispatcher("#").forward(request, response);
-
 	}
 }
