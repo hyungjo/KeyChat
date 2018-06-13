@@ -19,17 +19,24 @@ import com.keychat.dto.util.ResponseModel;
 @WebServlet(urlPatterns = "/channelKeywordRecom/list")
 public class ChannelKeywordRecomListController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.setCharacterEncoding("UTF-8");
-		ResponseModel res;
-		ChannelsKeywordRecomModel channelsKeywordRecomModel = JsonUtil.getModelFromJsonRequest(request, ChannelsKeywordRecomModel.class);
-		ArrayList<String> saveKeyword = ChannelsKeywordRecomDao.findKeyword(channelsKeywordRecomModel);
-		if(saveKeyword != null)
-			res = new ResponseModel(200, "success", saveKeyword);
-		else
-			res = new ResponseModel(500, "fail", "Cannot create user");
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(res));
-		
+    	request.setCharacterEncoding("UTF-8");   
+		String keyword = request.getParameter("keylist").trim();
+		String channel_name = request.getParameter("channel_name").trim();
+		ChannelsKeywordRecomModel channelsKeywordRecomModel = new ChannelsKeywordRecomModel(0, keyword, channel_name, null);
+		String nonkeyword = "분석된 키워드가 존재하지 않습니다.";
+		boolean result;
+		try {
+			result = ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel);
+			if(result) {//키워드리스트 보내기
+				ArrayList<String> list = ChannelsKeywordRecomDao.findKeyword(channelsKeywordRecomModel);
+				request.setAttribute("list", list);
+			}else {//분석된 키워드가 존재하지 않습니다 출력.
+				request.setAttribute("nonkeyword", nonkeyword);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//분석된 키워드가 존재하지 않습니다 출력.
+			request.setAttribute("nonkeyword", nonkeyword);
+		}
     }
 }

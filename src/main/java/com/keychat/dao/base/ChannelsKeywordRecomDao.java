@@ -11,7 +11,7 @@ import com.keychat.dto.base.ChannelsKeywordRecomModel;
 
 public class ChannelsKeywordRecomDao {
 	//키워드값을 받아와서 키워드테이블에 저장한다
-	public static boolean saveKeyword(ChannelsKeywordRecomModel channelsKeywordRecomModel) {
+	public static boolean saveKeyword(ChannelsKeywordRecomModel channelsKeywordRecomModel) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "INSERT INTO CHANNELS_KEYWORD_RECOM VALUES (CHANNELS_JOIN_ID_SEQ.nextval, ?, ?, ?)";
@@ -24,6 +24,7 @@ public class ChannelsKeywordRecomDao {
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();
+			throw s;
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
@@ -31,7 +32,7 @@ public class ChannelsKeywordRecomDao {
 	}
 	
 	// 채널 참여자가 보낸 메시지를 가지고 분석해서 가장 많은 분포도를 group by로 묶고 count(*)으로 인기 순위를 나타낸다.
-		public static ArrayList<String> findKeyword(ChannelsKeywordRecomModel channelsKeywordRecomModel) {
+		public static ArrayList<String> findKeyword(ChannelsKeywordRecomModel channelsKeywordRecomModel) throws SQLException {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
@@ -47,6 +48,7 @@ public class ChannelsKeywordRecomDao {
 				}
 			} catch (SQLException s) {
 				s.printStackTrace();
+				throw s;
 			} finally {
 				DBUtil.close(pstmt, con);
 			}

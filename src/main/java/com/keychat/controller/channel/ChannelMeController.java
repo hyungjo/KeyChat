@@ -22,7 +22,7 @@ public class ChannelMeController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         ResponseModel res;
         ChannelsJoinModel channelsJoinModel = JsonUtil.getModelFromJsonRequest(request, ChannelsJoinModel.class);
-        ArrayList<ChannelsJoinModel> existChannelModel = ChannelsJoinDao.getMyChannels(channelsJoinModel);
+        ArrayList<String> existChannelModel = ChannelsJoinDao.getMyChannels(channelsJoinModel);
 
         if(existChannelModel != null)
             res = new ResponseModel(200, "success", existChannelModel);
