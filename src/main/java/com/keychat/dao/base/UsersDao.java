@@ -13,18 +13,18 @@ import java.util.List;
 
 public class UsersDao {
 	// USERS 테이블에서 NICKNAME과 PHONE으로 EMAIL을 출력한다 insert(CustomerVo cvo).
-	public static ArrayList<String> findEmail(UsersModel user) throws SQLException {
+	public static ArrayList<String> findEmail(String nickname, String phone) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "SELECT EMAIL FROM USERS WHERE NICKNAME=? AND PHONE=?";
-		ArrayList<String> list = null;
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getNickname());
-			pstmt.setString(2, user.getPhone());
-			pstmt.executeQuery();
+			pstmt.setString(1, nickname);
+			pstmt.setString(2, phone);
+			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				list.add(rset.getString(1));
 			}
@@ -37,23 +37,44 @@ public class UsersDao {
 		return list;
 	}
 	// USERS 테이블에서 NICKNAME과 PHONE, EMAIL으로 PASSWORD를 업데이트한다.
-	public static void updatePassword(UsersModel user) throws SQLException {
+	public static ArrayList<String> findPassword(String email, String phone) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "UPDATE USERS SET PASSWORD = ? WHERE EMAIL=? and PHONE= ?";
+		ResultSet rset = null;
+		String query = "SELECT PASSWORD FROM USERS WHERE EMAIL=? and PHONE= ?";
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getPassword());
-			pstmt.setString(2, user.getEmail());
-			pstmt.setString(3, user.getPhone());
-			pstmt.executeQuery();
+			pstmt.setString(1, email);
+			pstmt.setString(2, phone);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				list.add(rset.getString(1));
+			}
 		} catch (SQLException s) {
 			s.printStackTrace();
 			throw s;
 		} finally {
 			DBUtil.close(pstmt, con);
-		}
+		}return list;
+	}
+	public static boolean rePassword(String email, String password) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "UPDATE USERS SET PASSWORD=? WHERE EMAIL=?";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, password);
+			pstmt.setString(2, email);
+			pstmt.executeUpdate();
+		} catch (SQLException s) {
+			s.printStackTrace();
+			throw s;
+		} finally {
+			DBUtil.close(pstmt, con);
+		}return true;
 	}
 	// USERS 테이블에서 EMAIL과 PASSWORD으로 로그인을 한다.
 	public static ArrayList<String> login(UsersModel user) throws SQLException {
