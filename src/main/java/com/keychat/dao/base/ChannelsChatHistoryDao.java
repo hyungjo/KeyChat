@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelsChatHistoryModel;
@@ -49,7 +50,6 @@ public class ChannelsChatHistoryDao {
 			s.printStackTrace();
 		} finally {
 			DBUtil.close(pstmt, con);
-
 			return success;
 		}
 	}
@@ -88,7 +88,7 @@ public class ChannelsChatHistoryDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "select contents from channels_chat_history where content like '%?%' and like '%?' and like '?%'";
-		ArrayList<String> list = null;
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -105,5 +105,35 @@ public class ChannelsChatHistoryDao {
 			DBUtil.close(pstmt, con);
 		}
 		return list;
+	}
+	
+	public static String getHistory(String channel_name) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<String> list = new ArrayList<String>();
+		String listString = null;
+		String query = "SELECT CONTENTS FROM CHANNELS_CHAT_HISTORY WHERE CHANNEL_NAME=? AND ROWNUM<=50 ORDER BY 1";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channel_name);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				list.add(rset.getString(1));
+			}
+			
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		/*String[] contents = list.toArray(new String[list.size()]);
+		return contents;*/
+		for (String s : list) {
+		    listString += s + "\t";
+		}
+
+		return listString;
 	}
 }

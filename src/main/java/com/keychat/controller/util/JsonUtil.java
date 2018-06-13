@@ -10,10 +10,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 
 public class JsonUtil {
     public static <T> T getModelFromJsonRequest(HttpServletRequest request, Class<T> classOfT) throws IOException {
-        BufferedReader input = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        BufferedReader input = new BufferedReader(new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8));
         StringBuilder builder = new StringBuilder();
         String buffer;
 
@@ -25,7 +26,7 @@ public class JsonUtil {
         }
 
         JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(new String(builder.toString().getBytes("8859_1"),"euc-kr"));
+        JsonElement element = parser.parse(builder.toString());
         String jsonRequest = element.getAsJsonObject().get("requestMsg").getAsJsonObject().toString();
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();

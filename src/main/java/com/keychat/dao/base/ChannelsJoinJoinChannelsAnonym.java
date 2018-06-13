@@ -17,13 +17,12 @@ public class ChannelsJoinJoinChannelsAnonym {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			String query = "select b.anonym_name from channels_join a join channels_anonym b on a.channel_name = b.channel_name where b.channel_name = ? group by b.anonym_name";
-			ArrayList<String> list = null;
+			ArrayList<String> list = new ArrayList<String>();
 			try {
 				con = DBUtil.getConnection();
 				pstmt = con.prepareStatement(query);
 				pstmt.setString(1, user.getChannel_name());
 				rset = pstmt.executeQuery();
-				list = new ArrayList();
 				while(rset.next()) {
 					list.add(rset.getString(1));
 				}
