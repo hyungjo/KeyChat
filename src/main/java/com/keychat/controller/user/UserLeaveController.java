@@ -3,6 +3,7 @@ package com.keychat.controller.user;
 import com.google.gson.Gson;
 import com.keychat.controller.util.JsonUtil;
 import com.keychat.dao.base.UsersDao;
+import com.keychat.dto.base.SignModel;
 import com.keychat.dto.base.UsersModel;
 import com.keychat.dto.util.ResponseModel;
 
@@ -19,7 +20,8 @@ public class UserLeaveController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         ResponseModel res;
         UsersModel usersModel = JsonUtil.getModelFromJsonRequest(request, UsersModel.class);
-        boolean isExist = UsersDao.isExactPassword(usersModel);
+        SignModel signModel = new SignModel(usersModel.getEmail(), usersModel.getPassword());
+        boolean isExist = UsersDao.isExactPassword(signModel);
         boolean isUpdated = UsersDao.dropUser(usersModel);
 
         if(isExist && isUpdated)

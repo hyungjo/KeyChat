@@ -10,4 +10,13 @@ public class ResponseModel {
         this.statusMsg = statusMsg;
         this.result = result;
     }
+
+    @Override
+    public String toString() {
+        return "ResponseModel{" +
+                "status=" + status +
+                ", statusMsg='" + statusMsg + '\'' +
+                ", result=" + result +
+                '}';
+    }
 }

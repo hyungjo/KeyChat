@@ -3,6 +3,7 @@ package com.keychat.controller.user;
         import com.google.gson.Gson;
         import com.keychat.controller.util.JsonUtil;
         import com.keychat.dao.base.UsersDao;
+        import com.keychat.dto.base.SignModel;
         import com.keychat.dto.base.UsersModel;
         import com.keychat.dto.util.ResponseModel;
 
@@ -19,17 +20,19 @@ public class UserUpdateController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         ResponseModel res;
         UsersModel usersModel = JsonUtil.getModelFromJsonRequest(request, UsersModel.class);
+        SignModel signModel = new SignModel(usersModel.getEmail(), usersModel.getPassword());
         boolean isExist = !UsersDao.isExistNickname(usersModel) &&
-                UsersDao.isExactPassword(usersModel);
+                UsersDao.isExactPassword(signModel);
         boolean isUpdated = UsersDao.updateUser(usersModel);
 
-        if(isExist && isUpdated)
+        if(isExist && isUpdated){
             res = new ResponseModel(200, "success", usersModel);
-        else
-            res = new ResponseModel(500, "fail", "Cannot create user");
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(new Gson().toJson(res));
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(new Gson().toJson(res));
+         }
+        else {
+            response.sendError(500, new ResponseModel(500, "fail", "Cannot signout user").toString());
+        }
     }
 }

@@ -25,12 +25,12 @@ public class UserSignoutController extends HttpServlet {
         if(loginUser != null) {
             session.invalidate();
             res = new ResponseModel(200, "success", loginUser);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(new Gson().toJson(res));
         }
-        else
-            res = new ResponseModel(500, "fail", "Cannot signout user");
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(new Gson().toJson(res));
+        else {
+            response.sendError(500, new ResponseModel(500, "fail", "Cannot signout user").toString());
+        }
     }
 }

@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="com.keychat.dto.base.UsersModel"%>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainPage.css">
 
-    <title>Insert title here</title>
+    <title>KeyChat Service</title>
 <body>
 <div class="site-wrapper">
     <div class="site-wrapper-inner">
@@ -18,13 +20,13 @@
                     <h3 class="masthead-brand">KEY(로고)</h3>
                     <ul class="nav center_menu">
                         <li><a href="#">채널</a></li>
-
                         <li><a href="#">공지사항</a></li>
                     </ul>
                     <ul class="nav masthead-nav">
-                        <li><a href="#">Login</a></li>
-
-                        <li><a href="#">회원가입</a></li>
+                        <li id="loginBtn"><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
+                        <li id="nicknameField" style="display: none"><a href="#" id="nickname"></a></li>
+                        <li id="logoutBtn" style="display: none"><a href="#" onclick="logout()">로그아웃</a></li>
+                        <li id="signupBtn">회원가입</li>
                     </ul>
                 </div>
             </div>
@@ -36,7 +38,6 @@
             <div class="mastfoot">
                 <div class="inner">
                     <!-- Validation -->
-
                     <p>
                         <a href="#">
                             <small>회사소개</small></a>
@@ -56,8 +57,96 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="emailInput" type="text" class="form-control" name="Username" placeholder="이메일">
+                <input id="passwordInput" type="password" class="form-control" name="Password" placeholder="비밀번호">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="login()">로그인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+<script>
+    function setUserNickname() {
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/user/info',
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $("#nickname").text(response.result.nickname);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    }
+
+    function login(){
+        var reqJson = {requestMsg: {
+                            email: $("#emailInput").val(),
+                            password: $("#passwordInput").val()
+            }};
+
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/user/signin',
+            data: JSON.stringify(reqJson),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $("#loginBtn").toggle();
+                $("#logoutBtn").toggle();
+                $("#signupBtn").toggle();
+                $("#nicknameField").toggle();
+                console.log(response);
+                alert("로그인 성공");
+                setUserNickname();
+            },
+            error: function (response) {
+                console.log(response);
+                alert("로그인 실패");
+            }
+        });
+    }
+
+    function logout(){
+        $.ajax({
+            type: 'POST',
+            url: '${pageContext.request.contextPath}/user/signout',
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $("#loginBtn").toggle();
+                $("#logoutBtn").toggle();
+                $("#signupBtn").toggle();
+                $("#nicknameField").toggle();
+                alert("로그아웃 성공");
+            },
+            error: function (response) {
+                alert("로그아웃 실패");
+            }
+        });
+    }
+</script>
 </body>
 </html>
