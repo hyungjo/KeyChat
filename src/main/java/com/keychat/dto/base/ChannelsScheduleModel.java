@@ -2,21 +2,22 @@ package com.keychat.dto.base;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ChannelsScheduleModel  implements Serializable {
 	private int channels_schedule_id;
 	private String schedule_name;
 	private String channel_name;
 	private String email;
-	private Date start_datetime;
-	private Date end_datetime;
+	private Timestamp start_datetime;
+	private Timestamp end_datetime;
 
 	public ChannelsScheduleModel() {
 		super();
 	}
 
 	public ChannelsScheduleModel(int channels_schedule_id, String schedule_name, String channel_name, String email,
-			Date start_datetime, Date end_datetime) {
+			Timestamp start_datetime, Timestamp end_datetime) {
 		super();
 		this.channels_schedule_id = channels_schedule_id;
 		this.schedule_name = schedule_name;
@@ -58,25 +59,25 @@ public class ChannelsScheduleModel  implements Serializable {
 		this.email = email;
 	}
 
-	public Date getStart_datetime() {
+	public Timestamp getStart_datetime() {
 		return start_datetime;
 	}
 
-	public void setStart_datetime(Date start_datetime) {
+	public void setStart_datetime(Timestamp start_datetime) {
 		this.start_datetime = start_datetime;
 	}
 
-	public Date getEnd_datetime() {
+	public Timestamp getEnd_datetime() {
 		return end_datetime;
 	}
 
-	public void setEnd_datetime(Date end_datetime) {
+	public void setEnd_datetime(Timestamp end_datetime) {
 		this.end_datetime = end_datetime;
 	}
 
 	@Override
 	public String toString() {
-		return "channels_schedule_dto [channels_schedule_id=" + channels_schedule_id + ", schedule_name="
+		return "ChannelsScheduleModel [channels_schedule_id=" + channels_schedule_id + ", schedule_name="
 				+ schedule_name + ", channel_name=" + channel_name + ", email=" + email + ", start_datetime="
 				+ start_datetime + ", end_datetime=" + end_datetime + "]";
 	}
@@ -132,5 +133,4 @@ public class ChannelsScheduleModel  implements Serializable {
 			return false;
 		return true;
 	}
-	
 }
