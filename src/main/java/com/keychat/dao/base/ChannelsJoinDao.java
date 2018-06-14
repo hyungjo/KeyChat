@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelsJoinModel;
+import com.keychat.dto.base.ChannelsModel;
+import com.keychat.dto.base.UsersModel;
 
 public class ChannelsJoinDao  {
 	//CHANNELS_JOIN에서 EMAIL을 찾아 회원을 탈퇴 한다. 
@@ -95,6 +97,41 @@ public class ChannelsJoinDao  {
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
+		return list;
+	}
+
+	public static ArrayList<ChannelsModel> getChannelsByUser(UsersModel usersModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select channels.name, channels.leader, channels.password, channels.limit_capacity, channels.limit_time, channels.limit_anonym, channels.created_datetime " +
+				"from channels, channels_join " +
+				"where channels_join.email=? and channels_join.channel_name = channels.name ";
+
+		ArrayList<ChannelsModel> list = new ArrayList<>();
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, usersModel.getEmail());
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				list.add(new ChannelsModel(
+						rset.getString(1),
+						rset.getString(2),
+						rset.getString(3),
+						rset.getInt(4),
+						rset.getInt(5),
+						rset.getString(6),
+						rset.getTimestamp(7)
+				));
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+
 		return list;
 	}
 }
