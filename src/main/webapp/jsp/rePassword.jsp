@@ -93,7 +93,7 @@
                         <span class="input-group-text" id="validationTooltipUsernamePrepend">R</span>
                     </div>
                     <input type="password" class="input-lg form-control" name="password2" id="password2" placeholder="비밀번호 확인" autocomplete="off">
-                </div>
+                </div> 
                 <div class="row">
                     <div class="col-sm-12">
                         <span id="pwmatch" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Passwords Match
