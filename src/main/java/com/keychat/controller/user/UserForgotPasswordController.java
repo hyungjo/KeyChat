@@ -21,6 +21,7 @@ public class UserForgotPasswordController extends HttpServlet {
     	try {
 			String res = UsersDao.findPassword(email, phone).toString();
 			if (res != null) {
+				request.setAttribute("email", email);
 				request.getRequestDispatcher("/jsp/rePassword.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {

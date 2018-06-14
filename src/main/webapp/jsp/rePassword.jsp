@@ -81,7 +81,8 @@
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <form method="post" id="passwordForm" action="${pageContext.request.contextPath}/user/updatePassword">
-                <div class="input-group">
+            <input type="hidden" name="email" value="${ requestScope.email }">                
+            <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="validationTooltipUsernamePrepend">N</span>
                     </div>
