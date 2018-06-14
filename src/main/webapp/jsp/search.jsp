@@ -11,33 +11,32 @@
     <title>Insert title here</title>
 </head>
 <body>
-
 <ul class="nav">
+
     <li>
         <div id="email_search" class="line">
             <h4>이메일 찾기</h4><p></p>
-            <div >
+            <form action="${pageContext.request.contextPath}/user/forgotEmail" method="POST" accept-charset="UTF-8">
+            <div>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="validationTooltipUsernamePrepend">닉네임</span>
                     </div>
-                    <input type="text" class="form-control" id="validationTooltipUsername" placeholder="닉네임" aria-describedby="validationTooltipUsernamePrepend" required>
-                    <div class="invalid-tooltip">닉네임을 입력하세요.</div>
+                    <input type="text" class="form-control" name="nickname" placeholder="닉네임" aria-describedby="validationTooltipUsernamePrepend" required>
                 </div>
                 &nbsp;
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="validationTooltipUsernamePrepend">번호</span>
                     </div>
-                    <input type="text" class="form-control" id="validationTooltipUsername" placeholder="핸드폰번호" aria-describedby="validationTooltipUsernamePrepend" required>
-                    <div class="invalid-tooltip">핸드폰번호를 입력하세요.</div>
+                    <input type="text" class="form-control" name="phone" placeholder="핸드폰번호" aria-describedby="validationTooltipUsernamePrepend" required>
                 </div>
                 &nbsp;
             </div>
-            <button class="btn btn-primary" type="submit">이메일찾기</button>
+            <button class="btn" id="ebt" type="submit">이메일찾기</button></form>
         </div>
     </li>
-    <li>
+    <li><form action="${pageContext.request.contextPath}/user/forgotPassword" method="POST" accept-charset="UTF-8">
         <div id="password_search" class="line">
             <h4>비밀번호 찾기</h4><p></p>
             <div>
@@ -45,21 +44,19 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
                     </div>
-                    <input type="text" class="form-control" id="validationTooltipUsername" placeholder="이메일" aria-describedby="validationTooltipUsernamePrepend" required>
-                    <div class="invalid-tooltip">이메일을 입력하세요.</div>
+                    <input type="text" class="form-control" name="email" placeholder="이메일" aria-describedby="validationTooltipUsernamePrepend" required>
                 </div>
                 &nbsp;
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="validationTooltipUsernamePrepend">번호</span>
                     </div>
-                    <input type="text" class="form-control" id="validationTooltipUsername" placeholder="핸드폰번호" aria-describedby="validationTooltipUsernamePrepend" required>
-                    <div class="invalid-tooltip">핸드폰번호를 입력하세요.</div>
+                    <input type="text" class="form-control" name="phone" placeholder="핸드폰번호" aria-describedby="validationTooltipUsernamePrepend" required>
                 </div>
                 &nbsp;
             </div>
-            <button class="btn btn-primary" type="submit">비밀번호찾기</button>
-        </div>
+            <button class="btn" id="pbt" type="submit">비밀번호찾기</button>
+        </div></form>
     </li>
 </ul>
 

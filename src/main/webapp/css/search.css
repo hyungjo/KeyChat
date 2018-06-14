@@ -21,3 +21,8 @@
 .nav {
     position: absolute;
 }
+
+#ebt, #pbt {
+	background-color: #000066;
+	color: white;
+}

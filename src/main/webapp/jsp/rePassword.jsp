@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="rePassword.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/rePassword.css">
     <title>Insert title here</title>
 </head>
 <body>
@@ -80,22 +80,12 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
-            <form method="post" id="passwordForm">
+            <form method="post" id="passwordForm" action="${pageContext.request.contextPath}/user/updatePassword">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="validationTooltipUsernamePrepend">N</span>
                     </div>
                     <input type="password" class="input-lg form-control" name="password" id="password" placeholder="새 비밀번호" autocomplete="off">
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <span id="8char" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> 8 Characters Long<br>
-                        <span id="ucase" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> One Uppercase Letter
-                    </div>
-                    <div class="col-sm-6">
-                        <span id="lcase" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> One Lowercase Letter<br>
-                        <span id="num" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> One Number
-                    </div>
                 </div>
                 &nbsp;
                 <div class="input-group">
@@ -103,7 +93,7 @@
                         <span class="input-group-text" id="validationTooltipUsernamePrepend">R</span>
                     </div>
                     <input type="password" class="input-lg form-control" name="password2" id="password2" placeholder="비밀번호 확인" autocomplete="off">
-                </div>
+                </div> 
                 <div class="row">
                     <div class="col-sm-12">
                         <span id="pwmatch" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Passwords Match

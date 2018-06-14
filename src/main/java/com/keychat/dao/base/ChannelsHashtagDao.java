@@ -34,7 +34,7 @@ public class ChannelsHashtagDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "SELECT CHANNEL_NAME FROM CHANNELS_HASHTAG WHERE HASHTAG=?";
-		ArrayList<String> list = null;
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
