@@ -58,7 +58,7 @@ public class ChannelsHashtagDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "SELECT CHANNEL_NAME, HASHTAG FROM CHANNELS_HASHTAG where CHANNEL_NAME like '%?%'";
-		ArrayList<String> list = null;
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -81,7 +81,7 @@ public class ChannelsHashtagDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "SELECT CHANNEL_NAME, HASHTAG FROM CHANNELS_HASHTAG where HASHTAG like '%?%'";
-		ArrayList<String> list = null;
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -138,5 +138,27 @@ public class ChannelsHashtagDao {
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
+	}
+	//전체 해쉬태그 인기순위로 가져오기
+	public static ArrayList<String> getHotHashtag() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<String> list = new ArrayList<String>();
+		String query = "SELECT HASHTAG, COUNT(*) FROM CHANNELS_HASHTAG WHERE ROWNUM<=5 GROUP BY HASHTAG ORDER BY COUNT(*) DESC";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				list.add(rset.getString(1));
+			}
+			
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return list;
 	}
 }

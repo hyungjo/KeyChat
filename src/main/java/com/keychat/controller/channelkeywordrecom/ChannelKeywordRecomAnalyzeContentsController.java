@@ -1,6 +1,7 @@
 package com.keychat.controller.channelkeywordrecom;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,8 @@ import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.En
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Features;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsOptions;
 import com.keychat.dao.base.ChannelsChatHistoryDao;
+import com.keychat.dao.base.ChannelsKeywordRecomDao;
+import com.keychat.dto.base.ChannelsKeywordRecomModel;
 
 @WebServlet(urlPatterns = "/channelKeywordRecom/analyzeContents")
 public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
@@ -67,16 +70,22 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
 
 				int size = res.getKeywords().size();
             	for (int i = 0; i<size; i++) {
-				String keyword1 = res.getKeywords().get(i).getText().toString();
-				keylist.add(keyword1);
+					String keyword1 = res.getKeywords().get(i).getText().toString();
+					keylist.add(keyword1);
+				
+					int size2 = res.getEntities().size();
+	            	for (int j = 0; j<size2; j++) {
+						String keyword2 = res.getEntities().get(j).getText().toString();
+						ChannelsKeywordRecomModel channelsKeywordRecomModel1 = new ChannelsKeywordRecomModel(0, keyword1, channel_name, null);
+						ChannelsKeywordRecomModel channelsKeywordRecomModel2 = new ChannelsKeywordRecomModel(0, keyword2, channel_name, null);
+						try {
+							ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel1);
+							ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel2);
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+	            	}
             	}
-            	
-            	int size2 = res.getEntities().size();
-            	for (int i = 0; i<size2; i++) {
-				String keyword2 = res.getEntities().get(i).getText().toString();
-				keylist.add(keyword2);
-            	}
-            	
             	int size3 = res.getCategories().size();
             	for (int i = 0; i<size3; i++) {
 				String keyword2 = res.getCategories().get(i).toString();
