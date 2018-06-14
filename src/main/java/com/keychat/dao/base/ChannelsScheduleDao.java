@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.keychat.controller.util.DBUtil;
@@ -30,18 +31,18 @@ public class ChannelsScheduleDao {
 		}
 	}
 	//메모 생성시 insert문 쿼리 발생
-	public static void insertSchedule(ChannelsScheduleModel user) throws SQLException {
+	public static void insertSchedule(ChannelsScheduleModel channelsScheduleModel) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "insert into channels_schedule values(channels_schedule_id_seq.nextval, ?, ?, ?, ?, ?)";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getSchedule_name());
-			pstmt.setString(2, user.getChannel_name());
-			pstmt.setString(3, user.getEmail());
-			pstmt.setDate(4, user.getStart_datetime());
-			pstmt.setDate(5, user.getEnd_datetime());
+			pstmt.setString(1, channelsScheduleModel.getSchedule_name());
+			pstmt.setString(2, channelsScheduleModel.getChannel_name());
+			pstmt.setString(3, channelsScheduleModel.getEmail());
+			pstmt.setTimestamp(4, channelsScheduleModel.getStart_datetime());
+			pstmt.setTimestamp(5, channelsScheduleModel.getEnd_datetime());
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();
@@ -59,8 +60,8 @@ public class ChannelsScheduleDao {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, user.getSchedule_name());
-			pstmt.setDate(2, user.getStart_datetime());
-			pstmt.setDate(3, user.getEnd_datetime());
+			pstmt.setTimestamp(2, user.getStart_datetime());
+			pstmt.setTimestamp(3, user.getEnd_datetime());
 			pstmt.setString(4, user.getSchedule_name());
 			pstmt.setString(5, user.getChannel_name());
 			pstmt.setString(6, user.getEmail());
