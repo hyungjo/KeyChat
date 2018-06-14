@@ -17,19 +17,14 @@ public class UpdatePassword extends HttpServlet {
     	request.setCharacterEncoding("UTF-8");
     	String email = request.getParameter("email");
     	String password = request.getParameter("password");
-    	String password2 = request.getParameter("password2");
-    	System.out.println(email);
-    	System.out.println(password);
-    	System.out.println(password2);
-    	if (password.equals(password2)) {
-	    	try {
-				boolean res = UsersDao.rePassword(email, password);
-				if (res) {
-					request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+    	System.out.println("0000000000");
+    	try {
+			boolean res = UsersDao.rePassword(email, password);
+			if (res) {
+				request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
 			}
-    	}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 }
