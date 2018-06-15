@@ -1,17 +1,3 @@
-function setUserNickname() {
-    $.ajax({
-        type: 'POST',
-        url: '/user/info',
-        contentType: 'application/json; charset=utf-8',
-        success: function (response) {
-            $("#nickname").text(response.result.nickname);
-        },
-        error: function (response) {
-            console.log(response);
-        }
-    });
-}
-
 function login(){
     var reqJson = {requestMsg: {
             email: $("#emailInput").val(),
