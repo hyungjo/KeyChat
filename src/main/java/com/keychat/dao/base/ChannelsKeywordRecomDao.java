@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.keychat.controller.util.DBUtil;
+import com.keychat.dto.base.ChannelsCategoriesModel;
 import com.keychat.dto.base.ChannelsKeywordRecomModel;
 
 public class ChannelsKeywordRecomDao {
@@ -14,7 +15,7 @@ public class ChannelsKeywordRecomDao {
 	public static boolean saveKeyword(ChannelsKeywordRecomModel channelsKeywordRecomModel) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "INSERT INTO CHANNELS_KEYWORD_RECOM VALUES (CHANNELS_JOIN_ID_SEQ.nextval, ?, ?, SYSTIMESTAMP)";
+		String query = "INSERT INTO CHANNELS_KEYWORD_RECOM VALUES (CHANNELS_KEYWORD_RECOM_ID_SEQ.nextval, ?, ?, SYSTIMESTAMP)";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -31,26 +32,71 @@ public class ChannelsKeywordRecomDao {
 	}
 	
 	// 채널 참여자가 보낸 메시지를 가지고 분석해서 가장 많은 분포도를 group by로 묶고 count(*)으로 인기 순위를 나타낸다.
-		public static ArrayList<String> findKeyword(String channel_name) throws SQLException {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
-			String query = "select KEYWORD, count(*) from CHANNELS_KEYWORD_RECOM where CHANNEL_NAME = ? group by KEYWORD order by count(*) desc";
-			ArrayList<String> list = new ArrayList<String>();
-			try {
-				con = DBUtil.getConnection();
-				pstmt = con.prepareStatement(query);
-				pstmt.setString(1, channel_name);
-				rset = pstmt.executeQuery();
-				while (rset.next()) {
-					list.add(rset.getString(1));
-				}
-			} catch (SQLException s) {
-				s.printStackTrace();
-				throw s;
-			} finally {
-				DBUtil.close(pstmt, con);
+	public static ArrayList<String> findKeyword(String channel_name) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select KEYWORD, count(*) from CHANNELS_KEYWORD_RECOM where CHANNEL_NAME = ? group by KEYWORD order by count(*) desc";
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channel_name);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				list.add(rset.getString(1));
 			}
-			return list;
+		} catch (SQLException s) {
+			s.printStackTrace();
+			throw s;
+		} finally {
+			DBUtil.close(pstmt, con);
 		}
+		return list;
+	}
+	//카테고리 DB에 저장
+	public static boolean saveCategory(ChannelsCategoriesModel channelsCategoriesModel) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "INSERT INTO CHANNELS_CATEGORIES VALUES (CHANNELS_CATEGORIES_ID_SEQ.nextval, ?, ?, SYSTIMESTAMP)";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelsCategoriesModel.getCategories());
+			pstmt.setString(2, channelsCategoriesModel.getChannel_name());
+			pstmt.executeUpdate();
+		} catch (SQLException s) {
+			s.printStackTrace();
+			throw s;
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return true;
+	}
+	//카테고리 불러오기
+	public static ArrayList<String[]> findCategory(String channel_name) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "SELECT CATEGORIES, COUNT(*), DATETIME FROM CHANNELS_KEYWORD_RECOM WHERE CHANNEL_NAME = ? AND LOWNUM<=3 ORDER BY DATETIME DESC";
+		ArrayList<String[]> list = new ArrayList<String[]>();
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channel_name);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				list.add(String(rset.getString(1), rset.getString(2)));
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+			throw s;
+		} finally {
+			DBUtil.close(pstmt, con);
+		}return list;
+	}
+
+	private static java.lang.String[] String(java.lang.String string2, java.lang.String string3) {
+		return null;
+	}
 }
