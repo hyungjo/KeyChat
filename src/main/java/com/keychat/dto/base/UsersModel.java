@@ -14,14 +14,16 @@ public class UsersModel implements Serializable {
 		super();
 	}
 
-	public UsersModel(String email, String password, String nicname, String job, String phone) {
+
+	public UsersModel(String email, String password, String nickname, String job, String phone) {
 		super();
 		this.email = email;
 		this.password = password;
-		this.nickname = nicname;
+		this.nickname = nickname;
 		this.job = job;
 		this.phone = phone;
 	}
+
 
 	public String getEmail() {
 		return email;
