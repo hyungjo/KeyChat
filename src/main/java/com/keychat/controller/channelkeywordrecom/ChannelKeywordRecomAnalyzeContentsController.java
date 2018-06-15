@@ -31,7 +31,8 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
     	String channel_name = request.getParameter("channel_name").trim();
     	String contents = ChannelsChatHistoryDao.getHistory(channel_name);
-    	
+    	System.out.println(channel_name);
+    	System.out.println(contents);
     	NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
                 "2018-03-16",
                 "cbb20eb6-c3cb-42bf-96db-7438bc3d87aa",
@@ -71,16 +72,22 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
 				int size = res.getKeywords().size();
             	for (int i = 0; i<size; i++) {
 					String keyword1 = res.getKeywords().get(i).getText().toString();
-					keylist.add(keyword1);
-				
+					System.out.println(keyword1);
+					ChannelsKeywordRecomModel channelsKeywordRecomModel1 = new ChannelsKeywordRecomModel(0, keyword1, channel_name, null);
+					try {
+						ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel1);
+						System.out.println("000111000");
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 					int size2 = res.getEntities().size();
 	            	for (int j = 0; j<size2; j++) {
 						String keyword2 = res.getEntities().get(j).getText().toString();
-						ChannelsKeywordRecomModel channelsKeywordRecomModel1 = new ChannelsKeywordRecomModel(0, keyword1, channel_name, null);
+						System.out.println(keyword2);
 						ChannelsKeywordRecomModel channelsKeywordRecomModel2 = new ChannelsKeywordRecomModel(0, keyword2, channel_name, null);
 						try {
-							ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel1);
 							ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel2);
+							System.out.println("00000");
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
@@ -91,9 +98,6 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
 				String keyword2 = res.getCategories().get(i).toString();
 				categories.add(keyword2);
             	}
-            	System.out.println(keylist);
-            	request.setAttribute("keylist", keylist);
-            	request.setAttribute("categories", categories);
             }
             @Override public void onFailure(Exception e) {
                 e.printStackTrace();

@@ -113,7 +113,7 @@ public class ChannelsChatHistoryDao {
 		ResultSet rset = null;
 		ArrayList<String> list = new ArrayList<String>();
 		String listString = null;
-		String query = "SELECT CONTENTS FROM CHANNELS_CHAT_HISTORY WHERE CHANNEL_NAME=? AND ROWNUM<=50 ORDER BY 1";
+		String query = "SELECT CONTENTS, SENT_DATETIME FROM CHANNELS_CHAT_HISTORY WHERE CHANNEL_NAME=? AND ROWNUM<=50 ORDER BY 2 DESC";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
