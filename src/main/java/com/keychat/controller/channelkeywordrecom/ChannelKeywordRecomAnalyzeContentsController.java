@@ -21,6 +21,7 @@ import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Fe
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsOptions;
 import com.keychat.dao.base.ChannelsChatHistoryDao;
 import com.keychat.dao.base.ChannelsKeywordRecomDao;
+import com.keychat.dto.base.ChannelsCategoriesModel;
 import com.keychat.dto.base.ChannelsKeywordRecomModel;
 
 @WebServlet(urlPatterns = "/channelKeywordRecom/analyzeContents")
@@ -66,9 +67,6 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
         call.enqueue(new ServiceCallback<AnalysisResults>() {
 			@Override 
 			public void onResponse(AnalysisResults res) {
-				ArrayList<String> keylist = new ArrayList<String>();
-				ArrayList<String> categories = new ArrayList<String>();
-
 				int size = res.getKeywords().size();
             	for (int i = 0; i<size; i++) {
 					String keyword1 = res.getKeywords().get(i).getText().toString();
@@ -76,7 +74,6 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
 					ChannelsKeywordRecomModel channelsKeywordRecomModel1 = new ChannelsKeywordRecomModel(0, keyword1, channel_name, null);
 					try {
 						ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel1);
-						System.out.println("000111000");
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -87,7 +84,6 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
 						ChannelsKeywordRecomModel channelsKeywordRecomModel2 = new ChannelsKeywordRecomModel(0, keyword2, channel_name, null);
 						try {
 							ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel2);
-							System.out.println("00000");
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
@@ -95,9 +91,15 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
             	}
             	int size3 = res.getCategories().size();
             	for (int i = 0; i<size3; i++) {
-				String keyword2 = res.getCategories().get(i).toString();
-				categories.add(keyword2);
-            	}
+            		String category = res.getCategories().get(i).toString();
+            		String word1 = category.split("/")[0];
+					ChannelsCategoriesModel channelsCategoriesModel = new ChannelsCategoriesModel(0, word1, channel_name, null);
+					try {
+						ChannelsKeywordRecomDao.saveCategory(channelsCategoriesModel);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
             }
             @Override public void onFailure(Exception e) {
                 e.printStackTrace();
