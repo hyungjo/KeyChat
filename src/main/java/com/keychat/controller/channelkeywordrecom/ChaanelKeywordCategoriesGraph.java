@@ -30,8 +30,20 @@ public class ChaanelKeywordCategoriesGraph extends HttpServlet {
 	    	String[] categories3 = categories.get(2);
 	    	String category3 = categories3[0];
 	    	int num3 = Integer.valueOf(categories3[1]);
+	    	
+	    	double per1 = Math.floor(num1/(num1+num2+num3));
+	    	double per2 = Math.floor(num2/(num1+num2+num3));
+	    	double per3 = Math.floor(num3/(num1+num2+num3));
+	    	
+	    	request.setAttribute("category1", category1);
+	    	request.setAttribute("category2", category2);
+	    	request.setAttribute("category3", category3);
+	    	
+	    	request.setAttribute("per1", per1);
+	    	request.setAttribute("per2", per2);
+	    	request.setAttribute("per3", per3);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}request.getRequestDispatcher("/jsp/CategoriesGraph.jsp").forward(request, response);
 	}
 }

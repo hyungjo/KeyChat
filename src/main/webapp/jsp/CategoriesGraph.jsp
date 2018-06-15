@@ -16,12 +16,11 @@
 Morris.Donut({
 	element : 'donut_example',
 	data : [
-		{label : '응호', value : 25},
-		{label : '현민', value : 40},
-		{label : '형조', value : 25},
-		{label : '효은', value : 10}
+		{label : '${requestScope.category1}', value : ${requestScope.per1}},
+		{label : '${requestScope.category2}', value : ${requestScope.per2}},
+		{label : '${requestScope.category3}', value : ${requestScope.per3}},
 	],
-	colors : ["#30a1ec", "#76bdee", "#387bb4", "#c4dafe"],
+	colors : ["#30a1ec", "#76bdee", "#c4dafe"],
 	formatter : function(y) {return y+"%"}
 });
 </script>
