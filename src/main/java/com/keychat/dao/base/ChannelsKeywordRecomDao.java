@@ -14,13 +14,12 @@ public class ChannelsKeywordRecomDao {
 	public static boolean saveKeyword(ChannelsKeywordRecomModel channelsKeywordRecomModel) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "INSERT INTO CHANNELS_KEYWORD_RECOM VALUES (CHANNELS_JOIN_ID_SEQ.nextval, ?, ?, ?)";
+		String query = "INSERT INTO CHANNELS_KEYWORD_RECOM VALUES (CHANNELS_JOIN_ID_SEQ.nextval, ?, ?, SYSTIMESTAMP)";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, channelsKeywordRecomModel.getKeyword());
 			pstmt.setString(2, channelsKeywordRecomModel.getChannel_name());
-			pstmt.setString(3, channelsKeywordRecomModel.getCreated_datetime().toString());
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();
@@ -32,7 +31,7 @@ public class ChannelsKeywordRecomDao {
 	}
 	
 	// 채널 참여자가 보낸 메시지를 가지고 분석해서 가장 많은 분포도를 group by로 묶고 count(*)으로 인기 순위를 나타낸다.
-		public static ArrayList<String> findKeyword(ChannelsKeywordRecomModel channelsKeywordRecomModel) throws SQLException {
+		public static ArrayList<String> findKeyword(String channel_name) throws SQLException {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
@@ -41,7 +40,7 @@ public class ChannelsKeywordRecomDao {
 			try {
 				con = DBUtil.getConnection();
 				pstmt = con.prepareStatement(query);
-				pstmt.setString(1, channelsKeywordRecomModel.getChannel_name());
+				pstmt.setString(1, channel_name);
 				rset = pstmt.executeQuery();
 				while (rset.next()) {
 					list.add(rset.getString(1));

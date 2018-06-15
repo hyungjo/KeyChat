@@ -20,19 +20,13 @@ import com.keychat.dto.util.ResponseModel;
 public class ChannelKeywordRecomListController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	request.setCharacterEncoding("UTF-8");   
-		String keyword = request.getParameter("keylist").trim();
 		String channel_name = request.getParameter("channel_name").trim();
-		ChannelsKeywordRecomModel channelsKeywordRecomModel = new ChannelsKeywordRecomModel(0, keyword, channel_name, null);
+		System.out.println(channel_name);
 		String nonkeyword = "분석된 키워드가 존재하지 않습니다.";
-		boolean result;
 		try {
-			result = ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel);
-			if(result) {//키워드리스트 보내기
-				ArrayList<String> list = ChannelsKeywordRecomDao.findKeyword(channelsKeywordRecomModel);
-				request.setAttribute("list", list);
-			}else {//분석된 키워드가 존재하지 않습니다 출력.
-				request.setAttribute("nonkeyword", nonkeyword);
-			}
+			ArrayList<String> list = ChannelsKeywordRecomDao.findKeyword(channel_name);
+			request.setAttribute("list", list);
+			System.out.println(list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			//분석된 키워드가 존재하지 않습니다 출력.
