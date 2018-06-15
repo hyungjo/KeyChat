@@ -12,6 +12,7 @@ package com.keychat.controller.user;
         import javax.servlet.http.HttpServlet;
         import javax.servlet.http.HttpServletRequest;
         import javax.servlet.http.HttpServletResponse;
+        import javax.servlet.http.HttpSession;
         import java.io.IOException;
 
 @WebServlet(urlPatterns = "/user/update")
@@ -19,20 +20,22 @@ public class UserUpdateController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         ResponseModel res;
+
         UsersModel usersModel = JsonUtil.getModelFromJsonRequest(request, UsersModel.class);
-        SignModel signModel = new SignModel(usersModel.getEmail(), usersModel.getPassword());
-        boolean isExist = !UsersDao.isExistNickname(usersModel) &&
-                UsersDao.isExactPassword(signModel);
+        HttpSession session = request.getSession();
+        UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
+
+        boolean isExist = !UsersDao.isExistNickname(usersModel);
         boolean isUpdated = UsersDao.updateUser(usersModel);
 
-        if(isExist && isUpdated){
+        if(isExist && isUpdated && loginUser != null){
             res = new ResponseModel(200, "success", usersModel);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(new Gson().toJson(res));
          }
         else {
-            response.sendError(500, new ResponseModel(500, "fail", "Cannot signout user").toString());
+            response.sendError(500, new ResponseModel(500, "fail", "Cannot update user").toString());
         }
     }
 }

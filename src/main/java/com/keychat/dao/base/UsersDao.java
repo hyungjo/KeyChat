@@ -284,10 +284,8 @@ public class UsersDao {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, usersModel.getNickname());
             ResultSet rset = pstmt.executeQuery();
-            if(rset.next()){
-                String existUser = rset.getString(1);
-                if(existUser != null || !existUser.equals(""))
-                    success = true;
+            if(rset.getRow() >= 1){
+            	success = true;
             }
         } catch (SQLException s) {
             s.printStackTrace();
