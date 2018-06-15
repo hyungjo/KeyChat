@@ -9,9 +9,13 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/about.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/channels.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
     <script src="${pageContext.request.contextPath}/js/index.js"></script>
     <script src="${pageContext.request.contextPath}/js/myPage.js"></script>
+    <script src="${pageContext.request.contextPath}/js/channels.js"></script>
 
     <title>KeyChat Service</title>
 </head>
@@ -28,38 +32,29 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
+                    <a class="nav-link" href="${pageContext.request.contextPath}/index.jsp">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/jsp/about.jsp">About</a>
                 </li>
-                <% if(session.getAttribute("loginUser") != null) { %>
-                <li class="nav-item" id="loginBtn">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Sign In</a>
+                <% if(((UsersModel)session.getAttribute("loginUser")) != null) { %>
+                <li class="nav-item" id="channelBtn">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/jsp/channels.jsp">Channels</a>
                 </li>
-                <li class="nav-item" id="nicknameField" style="display: none;">
+                <li class="nav-item" id="nicknameField">
                     <a class="nav-link" href="${pageContext.request.contextPath}/jsp/myPage.jsp" id="nickname"><%=((UsersModel)session.getAttribute("loginUser")).getNickname()%></a>
                 </li>
-                <li class="nav-item" id="logoutBtn" style="display: none;">
+                <li class="nav-item" id="logoutBtn">
                     <a class="nav-link" href="#" onclick="logout()">Sign Out</a>
-                </li>
-                <li class="nav-item" id="signupBtn">
-                    <a class="nav-link" href="#">Sign Up</a>
                 </li>
                 <% } else { %>
                 <li class="nav-item" id="loginBtn">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Sign In</a>
                 </li>
-                <li class="nav-item" id="nicknameField" style="display: none;">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/jsp/myPage.jsp" id="nickname"></a>
-                </li>
-                <li class="nav-item" id="logoutBtn" style="display: none;">
-                    <a class="nav-link" href="#" onclick="logout()">Sign Out</a>
-                </li>
                 <li class="nav-item" id="signupBtn">
-                    <a class="nav-link" href="#">Sign Up</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/jsp/register.jsp">Sign Up</a>
                 </li>
                 <% } %>
             </ul>

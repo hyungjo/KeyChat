@@ -25,13 +25,15 @@ function login(){
         async: false,
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
-            $("#loginBtn").toggle();
-            $("#logoutBtn").toggle();
-            $("#signupBtn").toggle();
-            $("#nicknameField").toggle();
+            // $("#loginBtn").toggle();
+            // $("#logoutBtn").toggle();
+            // $("#signupBtn").toggle();
+            // $("#channelBtn").toggle();
+            // $("#nicknameField").toggle();
             console.log(response);
             alert("로그인 성공");
-            setUserNickname();
+            location.reload();
+            // setUserNickname();
         },
         error: function (response) {
             console.log(response);
@@ -46,11 +48,14 @@ function logout(){
         url: '/user/signout',
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
-            $("#loginBtn").toggle();
-            $("#logoutBtn").toggle();
-            $("#signupBtn").toggle();
-            $("#nicknameField").toggle();
+            // $("#loginBtn").toggle();
+            // $("#logoutBtn").toggle();
+            // $("#signupBtn").toggle();
+            // $("#channelBtn").toggle();
+            // $("#nicknameField").toggle();
+
             alert("로그아웃 성공");
+            window.location.replace("/");
         },
         error: function (response) {
             alert("로그아웃 실패");
