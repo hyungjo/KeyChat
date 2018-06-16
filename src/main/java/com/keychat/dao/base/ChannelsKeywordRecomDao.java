@@ -78,15 +78,21 @@ public class ChannelsKeywordRecomDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT CATEGORIES, COUNT(*), DATETIME FROM CHANNELS_KEYWORD_RECOM WHERE CHANNEL_NAME = ? AND LOWNUM<=3 ORDER BY DATETIME DESC";
+		String query = "SELECT CATEGORIES, COUNT(*) FROM (SELECT CATEGORIES, DATETIME FROM CHANNELS_CATEGORIES WHERE CHANNEL_NAME = ? AND ROWNUM<=3 ORDER BY DATETIME DESC) GROUP BY CATEGORIES";
 		ArrayList<String[]> list = new ArrayList<String[]>();
+		
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, channel_name);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				list.add(String(rset.getString(1), rset.getString(2)));
+				String a = rset.getString(1);
+				String b = rset.getString(2);
+				String[] li = new String[2];
+				li[0] = a;
+				li[1] = b;
+				list.add(li);
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();
@@ -96,7 +102,5 @@ public class ChannelsKeywordRecomDao {
 		}return list;
 	}
 
-	private static java.lang.String[] String(java.lang.String string2, java.lang.String string3) {
-		return null;
-	}
+	
 }

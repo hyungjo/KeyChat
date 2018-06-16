@@ -11,6 +11,23 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 </head>
 <body>
+
+<form action="${pageContext.request.contextPath}/channelKeywordRecom/list" method="POST">
+<input type="text" name="channel_name" value="자유">
+<input type="submit">
+</form>
+
+<a href="https://www.google.co.kr/search?q=${requestScope.keyword1}">${requestScope.keyword1}</a>
+<a href="https://www.google.co.kr/search?q=${requestScope.keyword2}">${requestScope.keyword2}</a>
+<a href="https://www.google.co.kr/search?q=${requestScope.keyword3}">${requestScope.keyword3}</a>
+<a href="https://www.google.co.kr/search?q=${requestScope.keyword4}">${requestScope.keyword4}</a>
+<a href="https://www.google.co.kr/search?q=${requestScope.keyword5}">${requestScope.keyword5}</a>
+<a href="https://www.google.co.kr/search?q=${requestScope.keyword6}">${requestScope.keyword6}</a>
+<a href="https://www.google.co.kr/search?q=${requestScope.keyword7}">${requestScope.keyword7}</a>
+<a href="https://www.google.co.kr/search?q=${requestScope.keyword8}">${requestScope.keyword8}</a>
+<a href="https://www.google.co.kr/search?q=${requestScope.keyword9}">${requestScope.keyword9}</a>
+<a href="https://www.google.co.kr/search?q=${requestScope.keyword10}">${requestScope.keyword10}</a>
+
 <div id="donut_example" style="height: 250px;"></div>
 <script>
 Morris.Donut({
