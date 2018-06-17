@@ -1,9 +1,17 @@
 var socket;
-var channelName = $("channelName").val();
-
 function chatInit(){
     // var channelName = document.getElementById("channelName");
+
+    var channelName = prompt();
     socket = new WebSocket("ws://localhost:9999/chat/" + channelName);
+
+    socket.onerror = function(message){
+        onError(message);
+    }
+
+    socket.onmessage = function(message){
+        onMessage(message);
+    }
 }
 
 var a = document.getElementById("aaa");
@@ -20,13 +28,7 @@ sendmessage.addEventListener("keyup", function(event){
     }
 });
 
-socket.onerror = function(message){
-    onError(message);
-}
 
-socket.onmessage = function(message){
-    onMessage(message);
-}
 
 $('#Search').keydown(function(event){
     if(event.which == 13){

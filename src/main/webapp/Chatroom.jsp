@@ -186,8 +186,8 @@
                     <div id="dd">
                         <br>
                         <input id="username" style="width: 20%;" type="text"/>
-                        <input id="channelName" style="width: 20%;" type="text"/>
-                        <input type="button" value="connect" onclick="chatInit();">
+                        <input id="channelName" style="width: 20%;" type="text" value="a"/>
+                        <input type="button" value="소켓 연결" onclick="chatInit();">
                         <input id="con" type="submit" value="connect" onclick="onOpen('message');">
                         <div id="aaa"> </div> <br>
                     </div>
