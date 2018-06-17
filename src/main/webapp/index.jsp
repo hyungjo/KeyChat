@@ -31,32 +31,4 @@
     </div>
 </section>
 
-<!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <%--<div class="modal-header">--%>
-            <%--<h5 class="modal-title" id="exampleModalLabel">로그인</h5>--%>
-            <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
-            <%--<span aria-hidden="true">&times;</span>--%>
-            <%--</button>--%>
-            <%--</div>--%>
-            <div class="modal-body modal-form form-signin">
-                <h3 class="form-signin-heading">로그인</h3>
-                <hr class="colorgraph"><br>
-
-                <input type="text" class="form-control" id="emailInput" placeholder="이메일">
-                <input type="password" class="form-control" id="passwordInput" placeholder="비밀번호">
-
-                <button class="btn btn-lg btn-block" id="login" data-dismiss="modal" onclick="login()">로그인</button>
-            </div>
-            <%--<div class="modal-footer">--%>
-            <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
-            <%--<button type="button" class="btn btn-lg btn-block" data-dismiss="modal" onclick="login()">로그인</button>--%>
-            <%--<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="login()">로그인</button>--%>
-            <%--</div>--%>
-        </div>
-    </div>
-</div>
-
 <jsp:include page="footer.jsp" flush="false"/>

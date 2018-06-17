@@ -1,4 +1,10 @@
-var socket = new WebSocket("ws://localhost:9999/chat");
+var socket;
+var channelName = $("channelName").val();
+
+function chatInit(){
+    // var channelName = document.getElementById("channelName");
+    socket = new WebSocket("ws://localhost:9999/chat/" + channelName);
+}
 
 var a = document.getElementById("aaa");
 var p = document.getElementById("message-box");
