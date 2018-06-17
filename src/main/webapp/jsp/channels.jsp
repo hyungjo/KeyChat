@@ -12,15 +12,15 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="">새 채널 생성</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Search ... ">
+                <input type="text" id="channel-search2" class="form-control" placeholder="Search ... ">
             </div>
 
             <table style="width: 100%" border="1" id="channel_table">
-                <tr class="tr">
+                <tr class="tr1">
                     <td class="num" rowspan="2"> 1 </td>
                     <td class="channel-title"> Naimish Sakhpara </td>
                 </tr>
-                <tr class="td">
+                <tr class="tr2">
                     <td class="channel-leader"> Hello </td>
                 </tr>
             </table>
@@ -45,7 +45,7 @@
                     <p class="h4">채널 검색</p>
                 </div>
                 <div class="form-group col-3">
-                    <input class="form-control input-lg" id="channel-search" type="text" onkeyup="myFunction()">
+                    <input class="form-control input-lg" id="channel-search" type="text" onkeyup="myFunction1()">
                 </div>
                 <div class="alert alert-success" role="alert">
                     <h4 class="alert-heading">Hot 태그</h4>
@@ -171,9 +171,10 @@
         getMyChannel();
     });
 
-    $('.form-control').keydown(function(event){
+    $('#channel-search2').keydown(function(event){
         if(event.which == 13){
-            $('.media-heading').removeHighlight().highlight($('.form-control').val());
+            $('.channel-title').removeHighlight().highlight($('#channel-search2').val());
+            myFunction2();
             // var result = $('.form-control').value;
             // var str = $('.media-heading')[result].childNodes[0].nodeValue;
             // //td[번호]를 읽어와 안의 값을 str에 저장
@@ -181,7 +182,7 @@
         }
     });
 
-    function myFunction() {
+    function myFunction1() {
         var input, filter, table, tr, td, i;
         input = document.getElementById("channel-search");
         filter = input.value.toUpperCase();
@@ -199,4 +200,24 @@
         }
     }
 
+    function myFunction2() {
+        var input, filter, table, tr1, tr2, td, i;
+        input = document.getElementById("channel-search2");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("channel_table");
+        tr1 = table.getElementsByClassName("tr1");
+        tr2 = table.getElementsByClassName("tr2");
+        for (i = 0; i < tr1.length; i++) {
+            td = tr1[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr1[i].style.display = "";
+                    tr2[i].style.display = "";
+                } else {
+                    tr1[i].style.display = "none";
+                    tr2[i].style.display = "none";
+                }
+            }
+        }
+    }
 </script>
