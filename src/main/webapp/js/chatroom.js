@@ -4,7 +4,7 @@ function chatInit(){
 
     var channelName = $("#channelRoom").val();
     // var channelName = prompt();
-    socket = new WebSocket("ws://localhost:9999/chat/" + channelName);
+    socket = new WebSocket("ws://58.127.165.240:9999/chat/" + channelName);
 
     socket.onerror = function(message){
         onError(message);
@@ -38,7 +38,7 @@ $('#Search').keydown(function(event){
 });
 
 $('#btn_search').click(function(){
-    $('.mess').removeHighlight().highlight($('#Search').val());
+    // $('.mess').removeHighlight().highlight($('#Search').val());
 })
 
 function closeSocket(){

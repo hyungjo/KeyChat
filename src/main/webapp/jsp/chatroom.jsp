@@ -226,7 +226,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>
+<%--<script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>--%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/chatroom.js"></script>
 </body>
 </html>
