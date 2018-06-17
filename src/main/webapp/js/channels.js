@@ -90,13 +90,33 @@ function getChannels() {
                     "            <a href=\"#\" class=\"edit\" title=\"Edit\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE254;</i></a>\n" +
                     "            <a href=\"#\" class=\"delete\" title=\"Delete\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE872;</i></a>\n" +
                     "            </td>\n" +
-                    "            </tr>";   ;
+                    "            </tr>";
             });
             $("#channelsListRow").append(channelsListRow);
             alert("채널 리스트 성공")
         },
         error: function (response) {
             alert("채널 리스트 실패");
+        }
+    });
+}
+
+function getHotHashtags() {
+    $.ajax({
+        type: 'POST',
+        url: '/channel/hotHashtag',
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            var hothashtagslist = "";
+            $.each(response.result, function (index, value) {
+                console.log(index + " " + value);
+                hothashtagslist += "<a href=\"#\">" + index + "<span class=\"badge\">" + value + "</span></a>";
+            });
+            $("#hothashtagslist").append(hothashtagslist);
+            alert("핫 해시태그 리스트 성공")
+        },
+        error: function (response) {
+            alert("핫 해시태그 리스트 실패");
         }
     });
 }

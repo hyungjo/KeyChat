@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelCreateModel;
@@ -62,52 +65,7 @@ public class ChannelsHashtagDao {
 		}
 		return list;
 	}
-	//CHANNELS_HASHTAG 테이블에서 CHANNEL_NAME, HASHTAG를 CHANNEL_NAME 로 출력한다. (검색)
-	public static ArrayList<String> findName(ChannelsHashtagModel user) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String query = "SELECT CHANNEL_NAME, HASHTAG FROM CHANNELS_HASHTAG where CHANNEL_NAME like '%?%'";
-		ArrayList<String> list = new ArrayList<String>();
-		try {
-			con = DBUtil.getConnection();
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getChannel_name());
-			rset = pstmt.executeQuery();
-			while (rset.next()) {
-				list.add(rset.getString(1));
-			}
-		} catch (SQLException s) {
-			s.printStackTrace();
-			throw s;
-		} finally {
-			DBUtil.close(pstmt, con);
-		}
-		return list;
-	}
-	//CHANNELS_HASHTAG 테이블에서 CHANNEL_NAME, HASHTAG를 HASHTAG 로 출력한다. (검색)
-	public static ArrayList<String> findHashtag(ChannelsHashtagModel user) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String query = "SELECT CHANNEL_NAME, HASHTAG FROM CHANNELS_HASHTAG where HASHTAG like '%?%'";
-		ArrayList<String> list = new ArrayList<String>();
-		try {
-			con = DBUtil.getConnection();
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, user.getHashtag());
-			rset = pstmt.executeQuery();
-			while (rset.next()) {
-				list.add(rset.getString(1));
-			}
-		} catch (SQLException s) {
-			s.printStackTrace();
-			throw s;
-		} finally {
-			DBUtil.close(pstmt, con);
-		}
-		return list;
-	}
+
 	//채널이름으로 hashtag들을 검색한다
 	public static ArrayList<String> findHashes(String channel_name) throws SQLException {
 		Connection con = null;
@@ -150,18 +108,22 @@ public class ChannelsHashtagDao {
 		}
 	}
 	//전체 해쉬태그 인기순위로 가져오기
-	public static ArrayList<String> getHotHashtag() {
+	public static Map<String, Integer> getHotHashtag() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<String> list = new ArrayList<String>();
-		String query = "SELECT HASHTAG, COUNT(*) FROM CHANNELS_HASHTAG WHERE ROWNUM<=5 GROUP BY HASHTAG ORDER BY COUNT(*) DESC";
+		Map<String, Integer> hotHashtagList = new LinkedHashMap<>();
+		String query = "select hashtag, count(hashtag) from channels_hashtag group by hashtag order by count(hashtag) desc";
+
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				list.add(rset.getString(1));
+				hotHashtagList.put(
+						rset.getString(1),
+						rset.getInt(2)
+				);
 			}
 			
 		} catch (SQLException s) {
@@ -169,6 +131,6 @@ public class ChannelsHashtagDao {
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
-		return list;
+		return hotHashtagList;
 	}
 }

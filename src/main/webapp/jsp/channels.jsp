@@ -51,9 +51,12 @@
                     <input class="form-control input-lg" id="channel-search1" type="text">
                 </div>
                 <div class="alert alert-success" role="alert">
-                    <h4 class="alert-heading">Hot 태그</h4>
-                    #음식 #운동  #
-                    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+                    <h4 class="alert-heading">HOT # Tags</h4>
+                    <p class="mb-0">Top 5</p>
+                    <div id="hothashtagslist">
+                        <%--링크 기능 추가(누르면 검색 결과에 태그로 검색 되게--%>
+                        <%--<a href="#">News <span class="badge">5</span></a>--%>
+                    </div>
                 </div>
                 <div class="table-wrapper">
 
@@ -167,5 +170,6 @@
         $( document ).ready( function() {
             getMyChannel();
             getChannels();
+            getHotHashtags();
         });
     </script>

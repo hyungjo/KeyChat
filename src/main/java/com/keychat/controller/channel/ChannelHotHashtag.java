@@ -2,6 +2,7 @@ package com.keychat.controller.channel;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +21,7 @@ public class ChannelHotHashtag extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		ResponseModel res;
-		ArrayList<String> hotHashtaglist = ChannelsHashtagDao.getHotHashtag();
+		Map<String, Integer> hotHashtaglist = ChannelsHashtagDao.getHotHashtag();
 
 //		HttpSession session = request.getSession();
 //		UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
