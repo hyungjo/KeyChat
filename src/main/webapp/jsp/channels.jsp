@@ -26,14 +26,14 @@
             </table>
 
             <%--<div class="media conversation">--%>
-                <%--<a class="pull-left" href="#">--%>
-                    <%--<img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 50px; height: 50px;"--%>
-                         <%--src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACqUlEQVR4Xu2Y60tiURTFl48STFJMwkQjUTDtixq+Av93P6iBJFTgg1JL8QWBGT4QfDX7gDIyNE3nEBO6D0Rh9+5z9rprr19dTa/XW2KHl4YFYAfwCHAG7HAGgkOQKcAUYAowBZgCO6wAY5AxyBhkDDIGdxgC/M8QY5AxyBhkDDIGGYM7rIAyBgeDAYrFIkajEYxGIwKBAA4PDzckpd+322243W54PJ5P5f6Omh9tqiTAfD5HNpuFVqvFyckJms0m9vf3EY/H1/u9vb0hn89jsVj8kwDfUfNviisJ8PLygru7O4TDYVgsFtDh9Xo9NBrNes9cLgeTybThgKenJ1SrVXGf1WoVDup2u4jFYhiPx1I1P7XVBxcoCVCr1UBfTqcTrVYLe3t7OD8/x/HxsdiOPqNGo9Eo0un02gHkBhJmuVzC7/fj5uYGXq8XZ2dnop5Mzf8iwMPDAxqNBmw2GxwOBx4fHzGdTpFMJkVzNB7UGAmSSqU2RoDmnETQ6XQiOyKRiHCOSk0ZEZQcUKlU8Pz8LA5vNptRr9eFCJQBFHq//szG5eWlGA1ywOnpqQhBapoWPfl+vw+fzweXyyU+U635VRGUBOh0OigUCggGg8IFK/teXV3h/v4ew+Hwj/OQU4gUq/w4ODgQrkkkEmKEVGp+tXm6XkkAOngmk4HBYBAjQA6gEKRmyOL05GnR99vbW9jtdjEGdP319bUIR8oA+pnG5OLiQoghU5OElFlKAtCGr6+vKJfLmEwm64aosd/XbDbbyIBSqSSeNKU+HXzlnFAohKOjI6maMs0rO0B20590n7IDflIzMmdhAfiNEL8R4jdC/EZIJj235R6mAFOAKcAUYApsS6LL9MEUYAowBZgCTAGZ9NyWe5gCTAGmAFOAKbAtiS7TB1Ng1ynwDkxRe58vH3FfAAAAAElFTkSuQmCC">--%>
-                <%--</a>--%>
-                <%--<div class="media-body">--%>
-                    <%--<h5 class="media-heading">Naimish Sakhpara</h5>--%>
-                    <%--<small>Hello</small>--%>
-                <%--</div>--%>
+            <%--<a class="pull-left" href="#">--%>
+            <%--<img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 50px; height: 50px;"--%>
+            <%--src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACqUlEQVR4Xu2Y60tiURTFl48STFJMwkQjUTDtixq+Av93P6iBJFTgg1JL8QWBGT4QfDX7gDIyNE3nEBO6D0Rh9+5z9rprr19dTa/XW2KHl4YFYAfwCHAG7HAGgkOQKcAUYAowBZgCO6wAY5AxyBhkDDIGdxgC/M8QY5AxyBhkDDIGGYM7rIAyBgeDAYrFIkajEYxGIwKBAA4PDzckpd+322243W54PJ5P5f6Omh9tqiTAfD5HNpuFVqvFyckJms0m9vf3EY/H1/u9vb0hn89jsVj8kwDfUfNviisJ8PLygru7O4TDYVgsFtDh9Xo9NBrNes9cLgeTybThgKenJ1SrVXGf1WoVDup2u4jFYhiPx1I1P7XVBxcoCVCr1UBfTqcTrVYLe3t7OD8/x/HxsdiOPqNGo9Eo0un02gHkBhJmuVzC7/fj5uYGXq8XZ2dnop5Mzf8iwMPDAxqNBmw2GxwOBx4fHzGdTpFMJkVzNB7UGAmSSqU2RoDmnETQ6XQiOyKRiHCOSk0ZEZQcUKlU8Pz8LA5vNptRr9eFCJQBFHq//szG5eWlGA1ywOnpqQhBapoWPfl+vw+fzweXyyU+U635VRGUBOh0OigUCggGg8IFK/teXV3h/v4ew+Hwj/OQU4gUq/w4ODgQrkkkEmKEVGp+tXm6XkkAOngmk4HBYBAjQA6gEKRmyOL05GnR99vbW9jtdjEGdP319bUIR8oA+pnG5OLiQoghU5OElFlKAtCGr6+vKJfLmEwm64aosd/XbDbbyIBSqSSeNKU+HXzlnFAohKOjI6maMs0rO0B20590n7IDflIzMmdhAfiNEL8R4jdC/EZIJj235R6mAFOAKcAUYApsS6LL9MEUYAowBZgCTAGZ9NyWe5gCTAGmAFOAKbAtiS7TB1Ng1ynwDkxRe58vH3FfAAAAAElFTkSuQmCC">--%>
+            <%--</a>--%>
+            <%--<div class="media-body">--%>
+            <%--<h5 class="media-heading">Naimish Sakhpara</h5>--%>
+            <%--<small>Hello</small>--%>
+            <%--</div>--%>
             <%--</div>--%>
         </div>
 
@@ -164,63 +164,65 @@
             </div>
         </div>
     </div>
-<jsp:include page="/footer.jsp" flush="false"/>
-<script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>
-<script>
-    $( document ).ready( function() {
-        getMyChannel();
-    });
+    <jsp:include page="/footer.jsp" flush="false"/>
+    <%--<script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>--%>
+    <script>
+        $( document ).ready( function() {
+            getMyChannel();
+        });
 
-    $("#channel-search1").keyup(function (){
-        $('.channel-name').removeHighlight().highlight($('#channel-search1').val());
-        myFunction1();
-    });
+        $("#channel-search1").keyup(function (){
+            // $('.channel-name').removeHighlight().highlight($('#channel-search1').val());
+            myFunction1();
+        });
 
-    $('#channel-search2').keyup(function(event){
-            $('.channel-title').removeHighlight().highlight($('#channel-search2').val());
+        $('#channel-search2').keyup(function(event){
+            // $('.channel-title').removeHighlight().highlight($('#channel-search2').val());
             myFunction2();
             // var result = $('.form-control').value;
             // var str = $('.media-heading')[result].childNodes[0].nodeValue;
             // //td[번호]를 읽어와 안의 값을 str에 저장
             // alert(str);
-    });
+        });
 
-    function myFunction1() {
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("channel-search1");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
+        function myFunction1() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("channel-search1");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
                 }
             }
+            console.log("done;");
         }
-    }
 
-    function myFunction2() {
-        var input, filter, table, tr1, tr2, td, i;
-        input = document.getElementById("channel-search2");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("channel_table");
-        tr1 = table.getElementsByClassName("tr1");
-        tr2 = table.getElementsByClassName("tr2");
-        for (i = 0; i < tr1.length; i++) {
-            td = tr1[i].getElementsByTagName("td")[1];
-            if (td) {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr1[i].style.display = "";
-                    tr2[i].style.display = "";
-                } else {
-                    tr1[i].style.display = "none";
-                    tr2[i].style.display = "none";
+        function myFunction2() {
+            var input, filter, table, tr1, tr2, td, i;
+            input = document.getElementById("channel-search2");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("channel_table");
+            tr1 = table.getElementsByClassName("tr1");
+            tr2 = table.getElementsByClassName("tr2");
+            for (i = 0; i < tr1.length; i++) {
+                td = tr1[i].getElementsByTagName("td")[1];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr1[i].style.display = "";
+                        tr2[i].style.display = "";
+                    } else {
+                        tr1[i].style.display = "none";
+                        tr2[i].style.display = "none";
+                    }
                 }
             }
+            console.log("done;");
         }
-    }
-</script>
+    </script>

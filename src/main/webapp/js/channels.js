@@ -1,3 +1,7 @@
+var openWin = window.open("./Chatroom.jsp",
+    "childForm", "width=570, height=350, resizable = yes, scrollbars = yes");
+}
+
 function getMyChannel(){
     $.ajax({
         type: 'POST',
