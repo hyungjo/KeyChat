@@ -102,6 +102,19 @@
     font-weight: 700;
 }
 
+.num{
+    width: 15%;
+    text-align: center;
+}
+
+.channel-title{
+    font-weight: bold;
+}
+
+.channel-title .channel-leader{
+    margin-left: 5px;
+    margin-left: 5px
+}
 
 .msg-date
 {
