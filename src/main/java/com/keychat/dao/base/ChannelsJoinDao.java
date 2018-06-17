@@ -134,4 +134,37 @@ public class ChannelsJoinDao  {
 
 		return list;
 	}
+
+	public static ArrayList<ChannelsModel> getChannelsByLeaderUser(UsersModel usersModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select * from channels where leader = ?";
+
+		ArrayList<ChannelsModel> list = new ArrayList<>();
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, usersModel.getEmail());
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				list.add(new ChannelsModel(
+						rset.getString(1),
+						rset.getString(2),
+						rset.getString(3),
+						rset.getInt(4),
+						rset.getInt(5),
+						rset.getString(6),
+						rset.getTimestamp(7)
+				));
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+
+		return list;
+	}
 }

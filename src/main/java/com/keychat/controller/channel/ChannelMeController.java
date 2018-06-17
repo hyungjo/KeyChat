@@ -36,9 +36,14 @@ public class ChannelMeController extends HttpServlet {
 //        );
 
         if(loginUser != null) {
-            ArrayList<ChannelsModel> joinChannelList = ChannelsJoinDao.getChannelsByUser(loginUser);
-            if(joinChannelList != null)
-                res = new ResponseModel(200, "success", joinChannelList);
+            ArrayList<ChannelsModel> channelListByUser = ChannelsJoinDao.getChannelsByUser(loginUser);
+            ArrayList<ChannelsModel> channelListByLeaderUser = ChannelsJoinDao.getChannelsByLeaderUser(loginUser);
+            ArrayList<ChannelsModel> channelList = new ArrayList<>();
+            channelList.addAll(channelListByLeaderUser);
+            channelList.addAll(channelListByUser);
+
+            if(channelList != null)
+                res = new ResponseModel(200, "success", channelList);
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(new Gson().toJson(res));

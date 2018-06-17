@@ -141,7 +141,7 @@
         }
     </style>
     -->
-    <link rel="stylesheet" href="css/chatroom.css">
+    <link rel="stylesheet" href="../css/chatroom.css">
 </head>
 <body>
 <!--
@@ -226,6 +226,6 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>
-<script type="text/javascript" src="js/chatroom.js"></script>
+<script type="text/javascript" src="../js/chatroom.js"></script>
 </body>
 </html>

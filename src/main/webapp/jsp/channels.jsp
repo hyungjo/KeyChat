@@ -10,7 +10,7 @@
             </div>
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="">새 채널 생성</span>
+                    <span class="input-group-text" id="" href="#" data-toggle="modal" data-target="#createChannelModal">새 채널 생성</span>
                 </div>
                 <input type="text" id="channel-search2" class="form-control" placeholder="Search ... ">
             </div>
@@ -164,65 +164,69 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="createChannelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <%--<div class="modal-header">--%>
+                <%--<h5 class="modal-title" id="exampleModalLabel">로그인</h5>--%>
+                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+                <%--<span aria-hidden="true">&times;</span>--%>
+                <%--</button>--%>
+                <%--</div>--%>
+                <div class="modal-body modal-form form-signin">
+                        <form role="form" action="channel/create">
+                            <h2> 채널 생성 </h2>
+                            <hr class="colorgraph">
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <input type="text" name="createChannelName" id="createChannelName" class="form-control input-lg" placeholder="채널 이름" tabindex="1">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name="createChannelLmitCapacity" id="createChannelLmitCapacity" class="form-control input-lg" placeholder="최대 인원 (0 = 1000)" tabindex="3">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name="createChannelLmitTime" id="createChannelLmitTime" class="form-control input-lg" placeholder="최대 시간 (0 = 무한)" tabindex="3">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="createChannelLmitAnonym" id="createChannelLmitAnonym" class="form-control input-lg" placeholder="익명(T / F)" tabindex="3">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="createChannelLmitHashtag" id="createChannelLmitHashtag" class="form-control input-lg" placeholder="해시태그(soccer, baseball, ...)" tabindex="3">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="createChannelPassword" id="createChannelPassword" class="form-control input-lg" placeholder="비밀번호" tabindex="5">
+                            </div>
+
+                            <hr class="colorgraph">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <input type="button" id="register" value="만들기" class="btn btn-block btn-lg" tabindex="7" onclick="createChannel()">
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <input type="reset" class="btn btn-block btn-lg" value="취소">
+                                </div>
+                            </div>
+                        </form>
+                </div>
+                <%--<div class="modal-footer">--%>
+                <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
+                <%--<button type="button" class="btn btn-lg btn-block" data-dismiss="modal" onclick="login()">로그인</button>--%>
+                <%--<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="login()">로그인</button>--%>
+                <%--</div>--%>
+            </div>
+        </div>
+    </div>
+
+
+
     <jsp:include page="/footer.jsp" flush="false"/>
     <%--<script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>--%>
     <script>
         $( document ).ready( function() {
             getMyChannel();
         });
-
-        $("#channel-search1").keyup(function (){
-            // $('.channel-name').removeHighlight().highlight($('#channel-search1').val());
-            myFunction1();
-        });
-
-        $('#channel-search2').keyup(function(event){
-            // $('.channel-title').removeHighlight().highlight($('#channel-search2').val());
-            myFunction2();
-            // var result = $('.form-control').value;
-            // var str = $('.media-heading')[result].childNodes[0].nodeValue;
-            // //td[번호]를 읽어와 안의 값을 str에 저장
-            // alert(str);
-        });
-
-        function myFunction1() {
-            var input, filter, table, tr, td, i;
-            input = document.getElementById("channel-search1");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("myTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
-                if (td) {
-                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-            console.log("done;");
-        }
-
-        function myFunction2() {
-            var input, filter, table, tr1, tr2, td, i;
-            input = document.getElementById("channel-search2");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("channel_table");
-            tr1 = table.getElementsByClassName("tr1");
-            tr2 = table.getElementsByClassName("tr2");
-            for (i = 0; i < tr1.length; i++) {
-                td = tr1[i].getElementsByTagName("td")[1];
-                if (td) {
-                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        tr1[i].style.display = "";
-                        tr2[i].style.display = "";
-                    } else {
-                        tr1[i].style.display = "none";
-                        tr2[i].style.display = "none";
-                    }
-                }
-            }
-            console.log("done;");
-        }
     </script>

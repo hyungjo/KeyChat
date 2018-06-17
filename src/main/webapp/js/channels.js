@@ -1,6 +1,6 @@
-var openWin = window.open("./Chatroom.jsp",
-    "childForm", "width=570, height=350, resizable = yes, scrollbars = yes");
-}
+// var openWin = window.open("./chatroom.jsp",
+//     "childForm", "width=570, height=350, resizable = yes, scrollbars = yes");
+// }
 
 function getMyChannel(){
     $.ajax({
@@ -35,6 +35,36 @@ function getMyChannel(){
         },
         error: function (response) {
             alert("내 채널 불러오기 실패");
+        }
+    });
+}
+
+function createChannel(){
+    var reqJson = {requestMsg: {
+            name: $("#createChannelName").val(),
+            password: $("#createChannelPassword").val(),
+            limitCapacity: $("#createChannelLmitCapacity").val(),
+            limitTime: $("#createChannelLmitTime").val(),
+            limitAnonym: $("#createChannelLmitAnonym").val(),
+            hashtags: $("#createChannelLmitHashtag").val().split(", ")
+        }};
+
+    console.log(reqJson);
+
+    $.ajax({
+        type: 'POST',
+        url: '/channel/create',
+        data: JSON.stringify(reqJson),
+        async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            alert("채널 생성 성공");
+            location.reload();
+            // setUserNickname();
+        },
+        error: function (response) {
+            console.log(response);
+            alert("로그인 실패");
         }
     });
 }
