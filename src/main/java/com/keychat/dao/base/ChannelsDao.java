@@ -121,7 +121,7 @@ public class ChannelsDao {
         return success;
     }
 
-    public static ChannelsModel getChannel(ChannelsModel channelsModel) {
+    public static ChannelsModel getChannelInfoByName(ChannelsModel channelsModel) {
         Connection con = null;
         PreparedStatement pstmt = null;
         String query = "SELECT * FROM CHANNELS WHERE NAME=?";
@@ -149,6 +149,36 @@ public class ChannelsDao {
         }
 
         return channelsModel1;
+    }
+
+    public static ArrayList<ChannelsModel> getChannelsInfo() {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        String query = "SELECT * FROM CHANNELS";
+        ArrayList<ChannelsModel> channelsModel1List = new ArrayList<>();
+
+        try {
+            con = DBUtil.getConnection();
+            pstmt = con.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                channelsModel1List.add(new ChannelsModel(
+                        rset.getString(1),
+                        rset.getString(2),
+                        rset.getString(3),
+                        rset.getInt(4),
+                        rset.getInt(5),
+                        rset.getString(6),
+                        rset.getTimestamp(7)
+                ));
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            DBUtil.close(pstmt, con);
+        }
+
+        return channelsModel1List;
     }
 
     // LEADER로 검색해서 CHANNELS테이블에서 NAME을 CREATED_DATETIME을 내림차순으로 출력한다.

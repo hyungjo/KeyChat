@@ -16,13 +16,16 @@
             </div>
 
             <table style="width: 100%" id="channel_table">
-                <tr class="tr1">
-                    <td class="num" rowspan="2"> 1 </td>
-                    <td class="channel-title"> Naimish Sakhpara </td>
-                </tr>
-                <tr class="tr2">
-                    <td class="channel-leader"> Hello </td>
-                </tr>
+                <%--Will Add My Channel List--%>
+
+                <%--My Channel List Format--%>
+                <%--<tr class="tr1">--%>
+                <%--<td class="num" rowspan="2"> 1 </td>--%>
+                <%--<td class="channel-title"> Naimish Sakhpara </td>--%>
+                <%--</tr>--%>
+                <%--<tr class="tr2">--%>
+                <%--<td class="channel-leader"> Hello </td>--%>
+                <%--</tr>--%>
             </table>
 
             <%--<div class="media conversation">--%>
@@ -68,81 +71,16 @@
                             <table class="table table-striped table-hover table-bordered" id="myTable">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Name <i class="fa fa-sort"></i></th>
-                                    <th>Address</th>
-                                    <th>City <i class="fa fa-sort"></i></th>
-                                    <th>Pin Code</th>
-                                    <th>Country <i class="fa fa-sort"></i></th>
-                                    <th>Actions</th>
+                                    <th>Leader</th>
+                                    <th>Capacity <i class="fa fa-sort"></i></th>
+                                    <th>Time</th>
+                                    <th>Anonym <i class="fa fa-sort"></i></th>
+                                    <th>Created</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="channel-name">Thomas Hardy</td>
-                                    <td>89 Chiaroscuro Rd.</td>
-                                    <td>Portland</td>
-                                    <td>97219</td>
-                                    <td>USA</td>
-                                    <td>
-                                        <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td class="channel-name">Maria Anders</td>
-                                    <td>Obere Str. 57</td>
-                                    <td>Berlin</td>
-                                    <td>12209</td>
-                                    <td>Germany</td>
-                                    <td>
-                                        <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td class="channel-name">Fran Wilson</td>
-                                    <td>C/ Araquil, 67</td>
-                                    <td>Madrid</td>
-                                    <td>28023</td>
-                                    <td>Spain</td>
-                                    <td>
-                                        <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="channel-name">Dominique Perrier</td>
-                                    <td>25, rue Lauriston</td>
-                                    <td>Paris</td>
-                                    <td>75016</td>
-                                    <td>France</td>
-                                    <td>
-                                        <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td class="channel-name">Martin Blank</td>
-                                    <td>Via Monte Bianco 34</td>
-                                    <td>Turin</td>
-                                    <td>10100</td>
-                                    <td>Italy</td>
-                                    <td>
-                                        <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
+                                <tbody id="channelsListRow">
+                                <%--Will Add Channels List --%>
                                 </tbody>
                             </table>
                             <div class="clearfix">
@@ -177,40 +115,40 @@
                 <%--</button>--%>
                 <%--</div>--%>
                 <div class="modal-body modal-form form-signin">
-                        <form role="form" action="channel/create">
-                            <h2> 채널 생성 </h2>
-                            <hr class="colorgraph">
-                            <div class="form-group">
-                                <div class="col-xs-4">
-                                    <input type="text" name="createChannelName" id="createChannelName" class="form-control input-lg" placeholder="채널 이름" tabindex="1">
-                                </div>
+                    <form role="form" action="channel/create">
+                        <h2> 채널 생성 </h2>
+                        <hr class="colorgraph">
+                        <div class="form-group">
+                            <div class="col-xs-4">
+                                <input type="text" name="createChannelName" id="createChannelName" class="form-control input-lg" placeholder="채널 이름" tabindex="1">
                             </div>
-                            <div class="form-group">
-                                <input type="number" name="createChannelLmitCapacity" id="createChannelLmitCapacity" class="form-control input-lg" placeholder="최대 인원 (0 = 1000)" tabindex="3">
-                            </div>
-                            <div class="form-group">
-                                <input type="number" name="createChannelLmitTime" id="createChannelLmitTime" class="form-control input-lg" placeholder="최대 시간 (0 = 무한)" tabindex="3">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="createChannelLmitAnonym" id="createChannelLmitAnonym" class="form-control input-lg" placeholder="익명(T / F)" tabindex="3">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="createChannelLmitHashtag" id="createChannelLmitHashtag" class="form-control input-lg" placeholder="해시태그(soccer, baseball, ...)" tabindex="3">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="createChannelPassword" id="createChannelPassword" class="form-control input-lg" placeholder="비밀번호" tabindex="5">
-                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="createChannelLmitCapacity" id="createChannelLmitCapacity" class="form-control input-lg" placeholder="최대 인원 (0 = 1000)" tabindex="3">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="createChannelLmitTime" id="createChannelLmitTime" class="form-control input-lg" placeholder="최대 시간 (0 = 무한)" tabindex="3">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="createChannelLmitAnonym" id="createChannelLmitAnonym" class="form-control input-lg" placeholder="익명(T / F)" tabindex="3">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="createChannelLmitHashtag" id="createChannelLmitHashtag" class="form-control input-lg" placeholder="해시태그(soccer, baseball, ...)" tabindex="3">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="createChannelPassword" id="createChannelPassword" class="form-control input-lg" placeholder="비밀번호" tabindex="5">
+                        </div>
 
-                            <hr class="colorgraph">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-6">
-                                    <input type="button" id="register" value="만들기" class="btn btn-block btn-lg" tabindex="7" onclick="createChannel()">
-                                </div>
-                                <div class="col-xs-12 col-md-6">
-                                    <input type="reset" class="btn btn-block btn-lg" value="취소">
-                                </div>
+                        <hr class="colorgraph">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <input type="button" id="register" value="만들기" class="btn btn-block btn-lg" tabindex="7" onclick="createChannel()">
                             </div>
-                        </form>
+                            <div class="col-xs-12 col-md-6">
+                                <input type="reset" class="btn btn-block btn-lg" value="취소">
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <%--<div class="modal-footer">--%>
                 <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
@@ -228,5 +166,6 @@
     <script>
         $( document ).ready( function() {
             getMyChannel();
+            getChannels();
         });
     </script>

@@ -19,7 +19,7 @@ public class ChannelInfoController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         ResponseModel res;
         ChannelsModel channelsModel = JsonUtil.getModelFromJsonRequest(request, ChannelsModel.class);
-        ChannelsModel existChannelModel = ChannelsDao.getChannel(channelsModel);
+        ChannelsModel existChannelModel = ChannelsDao.getChannelInfoByName(channelsModel);
 
         if(existChannelModel != null)
             res = new ResponseModel(200, "success", existChannelModel);
