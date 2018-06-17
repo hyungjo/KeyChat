@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,7 @@ public class ChannelKeywordRecomListController extends HttpServlet {
     	request.setCharacterEncoding("UTF-8");   
 		String channel_name = request.getParameter("channel_name").trim();
 		String nonkeyword = "분석된 키워드가 존재하지 않습니다.";
+		RequestDispatcher rd = null;
 		try {
 			ArrayList<String> list = ChannelsKeywordRecomDao.findKeyword(channel_name);
 			int size = list.size();
@@ -51,7 +53,7 @@ public class ChannelKeywordRecomListController extends HttpServlet {
 					}
 				}
 			}
-			try {ArrayList<String[]> categories = ChannelsKeywordRecomDao.findCategory(channel_name);
+			try {ArrayList<String[]> categories = ChannelsKeywordRecomDao.findCategory(channel_name); // 순서 1
 	    		if(categories.size() >= 1) {
 			    	String[] categories1 = categories.get(0);
 			    	String category1 = categories1[0];
@@ -78,18 +80,29 @@ public class ChannelKeywordRecomListController extends HttpServlet {
 			    	request.setAttribute("per3", per3);
 			    }else {
 	    			request.setAttribute("error", nonkeyword);
-					request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
+	    			rd = request.getRequestDispatcher("/jsp/error.jsp");
+//					request.getRequestDispatcher("/jsp/error.jsp").forward(request, response); //1 // 순서 2
 	    		}
 			} catch (SQLException e) {
 				e.printStackTrace();
 				request.setAttribute("error", nonkeyword);
-				request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
-			}request.getRequestDispatcher("/jsp/CategoriesGraph.jsp").forward(request, response);
+				rd = request.getRequestDispatcher("/jsp/error.jsp");
+//				request.getRequestDispatcher("/jsp/error.jsp").forward(request, response); //2
+			}
+			rd = request.getRequestDispatcher("/jsp/CategoriesGraph.jsp");
+//			request.getRequestDispatcher("/CategoriesGraph.jsp").forward(request, response); //3 // 순서 3
 		} catch (SQLException e) {
 			e.printStackTrace();
 			//분석된 키워드가 존재하지 않습니다 출력.
 			request.setAttribute("error", nonkeyword);
-			request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
+			rd = request.getRequestDispatcher("/jsp/error.jsp");
+//			request.getRequestDispatcher("/jsp/error.jsp").forward(request, response); //4
+			
 		}
+		//forwarding 하는 로직이 안맞아. ???? 1, 3이 중복으로 forward 하잖아 아..? 그럼  음...? 저 경우가 될수가 있잖아 
+		//그래서 forward가 두번 실행되서 한번 forward하고 다시 forward할 수 없다고 예외나는거야~아..
+		//그러면 성공한 포워드저거를 이프문 안에 넣어주면 되려나?
+		//순서 봐바
+		rd.forward(request, response);
     }
 }
