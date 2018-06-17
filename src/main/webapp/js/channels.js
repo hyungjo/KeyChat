@@ -1,6 +1,15 @@
-// var openWin = window.open("./chatroom.jsp",
-//     "childForm", "width=570, height=350, resizable = yes, scrollbars = yes");
-// }
+
+function openChatroom(element)
+{
+    var channelName = element.innerText;
+    var openWin;
+    // window.name = "부모창 이름";
+    window.name = "channel";
+    // window.open("open할 window", "자식창 이름", "팝업창 옵션");
+    openWin = window.open("/chatview?channel="+channelName ,
+        "childForm", "width=570, height=350, resizable = yes, scrollbars = yes");
+    openWin.document.getElementById("channelRoom").value = channelName;
+}
 
 function getMyChannel() {
     $.ajax({
@@ -9,10 +18,12 @@ function getMyChannel() {
         success: function (response) {
             var table = document.getElementById('channel_table');
             var channelList = "";
+            var channelIndex = 1;
+
             $.each(response.result, function (index, value) {
                 table.innerHTML += "<tr class='tr1'>"
-                    + " " + "<td class='num' rowspan='2'> 1 </td>"
-                    + " " + "<td class='channel-title'>" + value.name + "</td>"
+                    + " " + "<td class='num' rowspan='2'>" + channelIndex++ + "</td>"
+                    + " " + "<td class='channel-title'><a href='#' onclick='openChatroom(this)'>" + value.name + "</a></td>"
                     + " " + "</tr>"
                     + " " + "<tr class='tr2'>"
                     + " " + "<td class='channel-leader'>" + value.leader + "</td>"

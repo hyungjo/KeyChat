@@ -185,6 +185,7 @@
                 <div class="panel-heading">
                     <div id="dd">
                         <br>
+                        <%--<input type="hidden" id="channelRoom" value="<%=request.getAttribute("channelName")%>"/>--%>
                         <input id="username" style="width: 20%;" type="text"/>
                         <input id="channelName" style="width: 20%;" type="text" value="a"/>
                         <input type="button" value="소켓 연결" onclick="chatInit();">
@@ -226,6 +227,6 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>
-<script type="text/javascript" src="../js/chatroom.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/chatroom.js"></script>
 </body>
 </html>

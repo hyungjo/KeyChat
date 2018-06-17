@@ -16,6 +16,7 @@ public class Chatroom {
 
     @OnMessage
     public void onMessage(@PathParam("channel") String channel, String message, Session session) throws IOException {
+        System.out.println(channel);
         synchronized (clients) {
             for (Map.Entry<Session, String> client : clients.entrySet()) {
                 if (!client.getKey().equals(session) && client.getValue().equals(channel)) {
