@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.colorgraph {
+    height: 5px;
+    border-top: 0;
+    background: #000066;
+    border-radius: 5px;
+}
+#register {
+    background: #000033;
+    color: white;
+}
+#login {
+    background: #bfbfbf;
+    color: white;
+}
