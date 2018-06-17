@@ -102,9 +102,16 @@
     font-weight: 700;
 }
 
+#channel_table{
+    padding: 0px;
+    border-collapse: collapse;
+}
+
 .num{
     width: 15%;
     text-align: center;
+    border-bottom: 1px solid #D0D0D0;
+    height: 75px;
 }
 
 .channel-title{
@@ -114,6 +121,10 @@
 .channel-title .channel-leader{
     margin-left: 5px;
     margin-left: 5px
+}
+
+.channel-leader{
+    border-bottom: 1px solid #D0D0D0;
 }
 
 .msg-date
