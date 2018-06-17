@@ -70,3 +70,7 @@ input[type="password"] {
     background: #000033;
     color: white;
 }
+
+.bg-not {
+	background: #bfbfbf;
+}

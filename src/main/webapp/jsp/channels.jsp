@@ -158,26 +158,40 @@
                                 </ul>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="profile">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+                        
+                        <div role="tabpanel" class="tab-pane" id="profile">
+							<table style="width: 100%" id="hashtable" class="table table-striped table-hover table-bordered">
+								<thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name <i class="fa fa-sort"></i></th>
+                                    <th>Address</th>
+                                    <th>City <i class="fa fa-sort"></i></th>
+                                    <th>Pin Code</th>
+                                    <th>Country <i class="fa fa-sort"></i></th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+							</table>
+						</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <jsp:include page="/footer.jsp" flush="false"/>
-<script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>
+<!-- <script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script> -->
 <script>
     $( document ).ready( function() {
         getMyChannel();
     });
 
     $("#channel-search1").keyup(function (){
-        $('.channel-name').removeHighlight().highlight($('#channel-search1').val());
         myFunction1();
     });
 
     $('#channel-search2').keyup(function(event){
-            $('.channel-title').removeHighlight().highlight($('#channel-search2').val());
             myFunction2();
             // var result = $('.form-control').value;
             // var str = $('.media-heading')[result].childNodes[0].nodeValue;
@@ -208,6 +222,27 @@
         input = document.getElementById("channel-search2");
         filter = input.value.toUpperCase();
         table = document.getElementById("channel_table");
+        tr1 = table.getElementsByClassName("tr1");
+        tr2 = table.getElementsByClassName("tr2");
+        for (i = 0; i < tr1.length; i++) {
+            td = tr1[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr1[i].style.display = "";
+                    tr2[i].style.display = "";
+                } else {
+                    tr1[i].style.display = "none";
+                    tr2[i].style.display = "none";
+                }
+            }
+        }
+    }
+    
+    function myFunction2() {
+        var input, filter, table, tr1, tr2, td, i;
+        input = document.getElementById("channel-search1");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("hashtable");
         tr1 = table.getElementsByClassName("tr1");
         tr2 = table.getElementsByClassName("tr2");
         for (i = 0; i < tr1.length; i++) {

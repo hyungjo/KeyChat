@@ -29,7 +29,7 @@ public class ChannelsHashtagDao {
 			DBUtil.close(pstmt, con);
 		}
 	}
-	// CHANNLES_HASHTAG 테이블에서 _IDCHANNELS_HASHTAG와 일치하는 CHANNEL_NAME를 검색한다. 
+	// CHANNLES_HASHTAG 테이블에서 CHANNELS_HASHTAG와 일치하는 CHANNEL_NAME를 검색한다. 
 	public static ArrayList<String> searchHashtag(ChannelsHashtagModel user) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
