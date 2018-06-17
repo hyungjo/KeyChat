@@ -12,15 +12,15 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="">새 채널 생성</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Search ... ">
+                <input type="text" id="channel-search2" class="form-control" placeholder="Search ... ">
             </div>
 
-            <table style="width: 100%" border="1" id="channel_table">
-                <tr class="tr">
+            <table style="width: 100%" id="channel_table">
+                <tr class="tr1">
                     <td class="num" rowspan="2"> 1 </td>
                     <td class="channel-title"> Naimish Sakhpara </td>
                 </tr>
-                <tr class="td">
+                <tr class="tr2">
                     <td class="channel-leader"> Hello </td>
                 </tr>
             </table>
@@ -45,7 +45,7 @@
                     <p class="h4">채널 검색</p>
                 </div>
                 <div class="form-group col-3">
-                    <input class="form-control input-lg" id="channel-search" type="text" onkeyup="myFunction()">
+                    <input class="form-control input-lg" id="channel-search1" type="text">
                 </div>
                 <div class="alert alert-success" role="alert">
                     <h4 class="alert-heading">Hot 태그</h4>
@@ -80,7 +80,7 @@
                                 <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>Thomas Hardy</td>
+                                    <td class="channel-name">Thomas Hardy</td>
                                     <td>89 Chiaroscuro Rd.</td>
                                     <td>Portland</td>
                                     <td>97219</td>
@@ -93,7 +93,7 @@
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>Maria Anders</td>
+                                    <td class="channel-name">Maria Anders</td>
                                     <td>Obere Str. 57</td>
                                     <td>Berlin</td>
                                     <td>12209</td>
@@ -106,7 +106,7 @@
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>Fran Wilson</td>
+                                    <td class="channel-name">Fran Wilson</td>
                                     <td>C/ Araquil, 67</td>
                                     <td>Madrid</td>
                                     <td>28023</td>
@@ -119,7 +119,7 @@
                                 </tr>
                                 <tr>
                                     <td>4</td>
-                                    <td>Dominique Perrier</td>
+                                    <td class="channel-name">Dominique Perrier</td>
                                     <td>25, rue Lauriston</td>
                                     <td>Paris</td>
                                     <td>75016</td>
@@ -132,7 +132,7 @@
                                 </tr>
                                 <tr>
                                     <td>5</td>
-                                    <td>Martin Blank</td>
+                                    <td class="channel-name">Martin Blank</td>
                                     <td>Via Monte Bianco 34</td>
                                     <td>Turin</td>
                                     <td>10100</td>
@@ -171,19 +171,23 @@
         getMyChannel();
     });
 
-    $('.form-control').keydown(function(event){
-        if(event.which == 13){
-            $('.media-heading').removeHighlight().highlight($('.form-control').val());
+    $("#channel-search1").keyup(function (){
+        $('.channel-name').removeHighlight().highlight($('#channel-search1').val());
+        myFunction1();
+    });
+
+    $('#channel-search2').keyup(function(event){
+            $('.channel-title').removeHighlight().highlight($('#channel-search2').val());
+            myFunction2();
             // var result = $('.form-control').value;
             // var str = $('.media-heading')[result].childNodes[0].nodeValue;
             // //td[번호]를 읽어와 안의 값을 str에 저장
             // alert(str);
-        }
     });
 
-    function myFunction() {
+    function myFunction1() {
         var input, filter, table, tr, td, i;
-        input = document.getElementById("channel-search");
+        input = document.getElementById("channel-search1");
         filter = input.value.toUpperCase();
         table = document.getElementById("myTable");
         tr = table.getElementsByTagName("tr");
@@ -199,4 +203,24 @@
         }
     }
 
+    function myFunction2() {
+        var input, filter, table, tr1, tr2, td, i;
+        input = document.getElementById("channel-search2");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("channel_table");
+        tr1 = table.getElementsByClassName("tr1");
+        tr2 = table.getElementsByClassName("tr2");
+        for (i = 0; i < tr1.length; i++) {
+            td = tr1[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr1[i].style.display = "";
+                    tr2[i].style.display = "";
+                } else {
+                    tr1[i].style.display = "none";
+                    tr2[i].style.display = "none";
+                }
+            }
+        }
+    }
 </script>
