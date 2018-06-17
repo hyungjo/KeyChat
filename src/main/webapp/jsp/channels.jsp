@@ -35,7 +35,7 @@
                     <p class="h4">채널 검색</p>
                 </div>
                 <div class="form-group col-3">
-                    <input class="form-control input-lg" type="text">
+                    <input class="form-control input-lg" id="channel-search" type="text" onkeyup="myFunction()">
                 </div>
                 <div class="alert alert-success" role="alert">
                     <h4 class="alert-heading">Hot 태그</h4>
@@ -55,7 +55,7 @@
 
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="home">
-                            <table class="table table-striped table-hover table-bordered">
+                            <table class="table table-striped table-hover table-bordered" id="myTable">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -154,10 +154,39 @@
             </div>
         </div>
     </div>
-
 <jsp:include page="/footer.jsp" flush="false"/>
+<script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>
 <script>
     $( document ).ready( function() {
         getMyChannel();
     });
+
+    $('.form-control').keydown(function(event){
+        if(event.which == 13){
+            $('.media-heading').removeHighlight().highlight($('.form-control').val());
+            // var result = $('.form-control').value;
+            // var str = $('.media-heading')[result].childNodes[0].nodeValue;
+            // //td[번호]를 읽어와 안의 값을 str에 저장
+            // alert(str);
+        }
+    });
+
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("channel-search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
 </script>

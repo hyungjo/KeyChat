@@ -113,6 +113,10 @@
     border-bottom: 1px solid #ddd;
 }
 
+.highlight {
+    color: white;
+    background-color: black;
+}
 
 body::-webkit-scrollbar {
     width: 12px;
