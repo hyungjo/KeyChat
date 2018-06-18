@@ -121,7 +121,7 @@ function getHotHashtags() {
             var hothashtagslist = "";
             $.each(response.result, function (index, value) {
                 console.log(index + " " + value);
-                hothashtagslist += "<a href=\"#\">" + index + "<span class=\"badge\">" + value + "</span></a>";
+                hothashtagslist += "<a class=\"alert-link\" href=\"#\">" + index + "<span class=\"badge\">" + value + "</span></a>";
             });
             $("#hothashtagslist").append(hothashtagslist);
             alert("핫 해시태그 리스트 성공")
