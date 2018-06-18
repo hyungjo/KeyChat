@@ -58,7 +58,7 @@ public class ChannelsKeywordRecomDao {
 	public static boolean saveCategory(ChannelsCategoriesModel channelsCategoriesModel) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "INSERT INTO CHANNELS_CATEGORIES VALUES (CHANNELS_CATEGORIES_ID_SEQ.nextval, ?, ?, SYSTIMESTAMP)";
+		String query = "INSERT INTO CHANNELS_CATEGORIES VALUES(CHANNELS_CATEGORIES_ID_SEQ.nextval, ?, ?, SYSTIMESTAMP)";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -78,7 +78,7 @@ public class ChannelsKeywordRecomDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT CATEGORIES, COUNT(*) FROM (SELECT CATEGORIES, DATETIME FROM CHANNELS_CATEGORIES WHERE CHANNEL_NAME = ? AND ROWNUM<=3 ORDER BY DATETIME DESC) GROUP BY CATEGORIES";
+		String query = "SELECT CATEGORIES, COUNT(*) FROM (SELECT CATEGORIES, DATETIME FROM CHANNELS_CATEGORIES WHERE CHANNEL_NAME = ? ORDER BY DATETIME DESC) GROUP BY CATEGORIES";
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		
 		try {

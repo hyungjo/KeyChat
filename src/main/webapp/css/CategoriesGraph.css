@@ -1,0 +1,39 @@
+@charset "UTF-8";
+tr.keyword td {
+	text-align: center;
+}
+tr.entity td {
+	text-align: center;
+}
+#key {
+    width: 600px;
+    border: 1px outset #000000;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+a {
+	text-decoration: none;
+	font-size: 17pt;
+}
+a:link{
+	color: #000000;
+}
+a:hover{
+	font-weight: bold;
+	color: #000080;
+}
+a:active{
+	color: white;
+	text-shadow: 2px 2px 5px #00004d;
+}
+a:visited {
+	color: #d9d9d9;
+}
+#aa {
+	text-align: right;
+}
+#bb {
+	font-size: small;
+	color: gray;
+}
