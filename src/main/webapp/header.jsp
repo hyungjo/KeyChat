@@ -25,7 +25,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">KeyChat</a>
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/img/Finall.png" width="200px" height="50px"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -80,7 +80,7 @@
                 <input type="text" class="form-control" id="emailInput" placeholder="이메일">
                 <input type="password" class="form-control" id="passwordInput" placeholder="비밀번호">
 
-                <button class="btn btn-lg btn-block" id="login" data-dismiss="modal" onclick="login()">로그인</button>
+                <button class="btn btn-lg btn-block" style="background: #000033; color: white;" data-dismiss="modal" onclick="login()">로그인</button>
             </div>
             <%--<div class="modal-footer">--%>
             <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
