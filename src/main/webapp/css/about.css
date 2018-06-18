@@ -17,3 +17,11 @@ header {
 section {
     padding: 150px 0;
 }
+
+.bg-primary2 {
+	background-color: #00001a;
+}
+
+.bg-light2 {
+	background-color: #f2f2f2;
+}
