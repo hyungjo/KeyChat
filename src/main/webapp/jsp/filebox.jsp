@@ -36,29 +36,43 @@
 
 <script type="text/javascript" src="../js/filebox.js"> </script>
 <script>
+    var aaa;
+    var sss;
+
     $('.upload').click(function(){
         if($('.upload-name').val() == 0){
             alert('파일을 올려주세요.');
         } else{
-            if(file_ss() == "exe"){
-                alert('exe는 올릴 수 없습니다.');
-            }
-            else{
-                var size = file_size();
-                if(size == false){
-                    alert('100MB 파일 초과되었습니다. 그 이하 파일으로 올려주세요.');
-                }
-                if(size){
-                    add($('.upload-name').val(), size);
-                    $('.upload-name').val('');
-                }
+            if(aaa > 100){
+                alert('파일 100MB 초과되었습니다. 그 이하인 파일을 올려주세요.');
+            } else{
+                add($('.upload-name').val(), aaa + sss);
+                $('.upload-name').val('');
             }
         }
     });
 
-    function download(data){
-        alert(data);
-    }
+    $('#input_file').change(function() {
+        var iSize = ($("#input_file")[0].files[0].size / 1024);
+        var size = "";
+        if (iSize / 1024 > 1) {
+            if (((iSize / 1024) / 1024) > 1) {
+                iSize = (Math.round(((iSize / 1024) / 1024) * 100) / 100);
+                size = "GB";
+
+            } else {
+                iSize = (Math.round((iSize / 1024) * 100) / 100);
+                size = "MB";
+            }
+        } else {
+            iSize = (Math.round(iSize * 100) / 100);
+            size = "KB";
+        }
+
+        aaa = iSize;
+        sss = size
+    });
+
 
     function add(name, size){
         var file = document.getElementById('file-table');
@@ -69,45 +83,6 @@
             " " + "<td> <button onclick='download($('.file-name').text())'> Download </button> </td>" +
             " " + "<td> <button id='delete'> Delete </button> </td>" +
             " " + "</tr>";
-
-    }
-
-    function file_size(){
-        if(window.ActiveXObject){
-            var fso = new ActiveXObject("Scripting.FileSystemObject");
-            var filepath = document.getElementById('input_file').value; // input 아이디 "file1"
-            var thefile = fso.getFile(filepath);
-            sizeinbytes = thefile.size;
-        }else{
-            sizeinbytes = document.getElementById('input_file').files[0].size;
-        }
-        var fSExt = new Array('Bytes', 'KB', 'MB', 'GB');
-        var fSize = sizeinbytes;
-        var i=0;
-        while(fSize>900){
-            fSize/=1024;
-            i++;
-        }
-        if(fSize > 101.58542346954346){
-            return false;
-        }
-        else{
-            fSize = (Math.round(fSize*100)/100)+' '+fSExt[i];
-            return fSize;
-        }
-
-//                if(fSize > 102400){
-//                    alert('첨부하신 용량이 100MB 넘습니다. 그 이하 파일을 선택해주세요.');
-//                } else{
-//                    fSize = (Math.round(fSize*100)/100)+' '+fSExt[i];
-//                    return fSize;
-//                }
-    }
-
-    function file_ss(){
-        var thumbext = document.getElementById('input_file').value; //파일을 추가한 input 박스의 값
-        thumbext = thumbext.slice(thumbext.indexOf(".") + 1).toLowerCase(); //파일 확장자를 잘라내고, 비교를 위해 소문자로 만듭니다.
-        return thumbext;
     }
 </script>
 </body>
