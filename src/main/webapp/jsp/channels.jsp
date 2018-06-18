@@ -172,4 +172,143 @@
             getChannels();
             getHotHashtags();
         });
+
+        $("#channel-search1").keyup(function (event){
+            if(event.which==13) {
+                myFunction1();
+            }
+        });
+
+        $('#channel-search2').keyup(function(event){
+            if(event.which==13) {
+                myFunction2();
+            }
+        });
+
+        function myFunction1() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("channel-search1");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function myFunction2() {
+            var input, filter, table, tr1, tr2, td, i;
+            input = document.getElementById("channel-search2");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("channel_table");
+            tr1 = table.getElementsByClassName("tr1");
+            tr2 = table.getElementsByClassName("tr2");
+            for (i = 0; i < tr1.length; i++) {
+                td = tr1[i].getElementsByTagName("td")[1];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr1[i].style.display = "";
+                        tr2[i].style.display = "";
+                    } else {
+                        tr1[i].style.display = "none";
+                        tr2[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        $(function() {
+            $('#channel-search1').bind('keyup change', function(ev) {
+                // pull in the new value
+                var searchTerm = $('#channel-search1').val();
+
+                // remove any old highlighted terms
+                $('.channel-name').removeHighlight();
+
+                // disable highlighting if empty
+                if ( searchTerm ) {
+                    // highlight the new term
+                    $('.channel-name').highlight( searchTerm );
+                }
+            });
+        });
+
+        $(function() {
+            $('#channel-search2').bind('keyup change', function(ev) {
+                // pull in the new value
+                var searchTerm = $('#channel-search2').val();
+
+                // remove any old highlighted terms
+                $('.channel-title').removeHighlight();
+
+                // disable highlighting if empty
+                if ( searchTerm ) {
+                    // highlight the new term
+                    $('.channel-title').highlight( searchTerm );
+                }
+            });
+        });
+
+        jQuery.fn.highlight = function(pat) {
+            function innerHighlight(node, pat) {
+                var skip = 0;
+                if (node.nodeType == 3) {
+                    var pos = node.data.toUpperCase().indexOf(pat);
+                    if (pos >= 0) {
+                        var spannode = document.createElement('span');
+                        spannode.className = 'highlight';
+                        var middlebit = node.splitText(pos);
+                        var endbit = middlebit.splitText(pat.length);
+                        var middleclone = middlebit.cloneNode(true);
+                        spannode.appendChild(middleclone);
+                        middlebit.parentNode.replaceChild(spannode, middlebit);
+                        skip = 1;
+                    }
+                }
+                else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
+                    for (var i = 0; i < node.childNodes.length; ++i) {
+                        i += innerHighlight(node.childNodes[i], pat);
+                    }
+                }
+                return skip;
+            }
+            return this.each(function() {
+                innerHighlight(this, pat.toUpperCase());
+            });
+        };
+
+        jQuery.fn.removeHighlight = function() {
+            function newNormalize(node) {
+                for (var i = 0, children = node.childNodes, nodeCount = children.length; i < nodeCount; i++) {
+                    var child = children[i];
+                    if (child.nodeType == 1) {
+                        newNormalize(child);
+                        continue;
+                    }
+                    if (child.nodeType != 3) { continue; }
+                    var next = child.nextSibling;
+                    if (next == null || next.nodeType != 3) { continue; }
+                    var combined_text = child.nodeValue + next.nodeValue;
+                    new_node = node.ownerDocument.createTextNode(combined_text);
+                    node.insertBefore(new_node, child);
+                    node.removeChild(child);
+                    node.removeChild(next);
+                    i--;
+                    nodeCount--;
+                }
+            }
+
+            return this.find("span.highlight").each(function() {
+                var thisParent = this.parentNode;
+                thisParent.replaceChild(this.firstChild, this);
+                newNormalize(thisParent);
+            }).end();
+        };
     </script>

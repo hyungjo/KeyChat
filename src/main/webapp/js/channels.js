@@ -7,7 +7,7 @@ function openChatroom(element)
     window.name = "channel";
     // window.open("open할 window", "자식창 이름", "팝업창 옵션");
     openWin = window.open("/chatview?channel="+channelName ,
-        "childForm", "width=570, height=350, resizable = yes, scrollbars = yes");
+        "childForm", "width=800, height=700, resizable = yes, scrollbars = yes");
     openWin.document.getElementById("channelRoom").value = channelName;
 }
 
@@ -91,7 +91,7 @@ function getChannels() {
             var channelsListRow = "";
             $.each(response.result, function (index, value) {
                 channelsListRow += "<tr>\n" +
-                    "            <td>" + value.name + "</td>\n" +
+                    "            <td class='channel-name'>" + value.name + "</td>\n" +
                     "            <td>" + value.leader + "</td>\n" +
                     "            <td>" + value.limitCapacity + "</td>\n" +
                     "            <td>" + value.limitTime + "</td>\n" +

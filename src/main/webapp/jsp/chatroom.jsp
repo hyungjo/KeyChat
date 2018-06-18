@@ -184,17 +184,17 @@
             <div class="panel">
                 <div class="panel-heading">
                     <div id="dd">
-                        <br>
-                        <%--<input type="hidden" id="channelRoom" value="<%=request.getAttribute("channelName")%>"/>--%>
-                        <input id="username" style="width: 20%;" type="text"/>
-                        <input id="channelName" style="width: 20%;" type="text" value="a"/>
-                        <input type="button" value="소켓 연결" onclick="chatInit();">
-                        <input id="con" type="submit" value="connect" onclick="onOpen('message');">
-                        <div id="aaa"> </div> <br>
+                        <%--<br>--%>
+                        <input type="hidden" id="channelRoom" value="<%=request.getAttribute("channelName")%>"/>
+                        <%--<input id="username" style="width: 20%;" type="text"/>--%>
+                        <%--<input id="channelName" style="width: 20%;" type="text" value="a"/>--%>
+                        <%--<input type="button" value="소켓 연결" onclick="chatInit();">--%>
+                        <%--<input id="con" type="submit" value="connect" onclick="onOpen('message');">--%>
+                        <%--<div id="aaa"> </div> <br>--%>
                     </div>
                     <nav class="navbar">
                         <div id="title">
-                            채널 이름
+                            <%=request.getAttribute("channelName")%>
                         </div>
                         <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기" aria-label="Search">
                         <button id="btn_search" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
@@ -220,13 +220,114 @@
         </div>
     </div>
 </div>
+
+<%--ChannelPasswordModal--%>
+<div class="modal fade" id="channelPasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--%>
+                <h4 class="modal-title" id="exampleModalLabel">채널 비밀번호</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="channelPasswordField" class="control-label">비밀번호 입력:</label>
+                        <input type="password" class="form-control" id="channelPasswordField">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
+                <button type="button" class="btn btn-primary" onclick="isAuthUser()">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<%--<script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>--%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/chatroom.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#channelPasswordModal').modal({backdrop: 'static', keyboard: false}) ;
+    });
+
+    $(function() {
+        $('#Search').bind('keyup change', function(ev) {
+            // pull in the new value
+            var searchTerm = $(this).val();
+
+            // remove any old highlighted terms
+            $('.mess').removeHighlight();
+
+            // disable highlighting if empty
+            if ( searchTerm ) {
+                // highlight the new term
+                $('.mess').highlight( searchTerm );
+            }
+        });
+    });
+
+    jQuery.fn.highlight = function(pat) {
+        function innerHighlight(node, pat) {
+            var skip = 0;
+            if (node.nodeType == 3) {
+                var pos = node.data.toUpperCase().indexOf(pat);
+                if (pos >= 0) {
+                    var spannode = document.createElement('span');
+                    spannode.className = 'highlight';
+                    var middlebit = node.splitText(pos);
+                    var endbit = middlebit.splitText(pat.length);
+                    var middleclone = middlebit.cloneNode(true);
+                    spannode.appendChild(middleclone);
+                    middlebit.parentNode.replaceChild(spannode, middlebit);
+                    skip = 1;
+                }
+            }
+            else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
+                for (var i = 0; i < node.childNodes.length; ++i) {
+                    i += innerHighlight(node.childNodes[i], pat);
+                }
+            }
+            return skip;
+        }
+        return this.each(function() {
+            innerHighlight(this, pat.toUpperCase());
+        });
+    };
+
+    jQuery.fn.removeHighlight = function() {
+        function newNormalize(node) {
+            for (var i = 0, children = node.childNodes, nodeCount = children.length; i < nodeCount; i++) {
+                var child = children[i];
+                if (child.nodeType == 1) {
+                    newNormalize(child);
+                    continue;
+                }
+                if (child.nodeType != 3) { continue; }
+                var next = child.nextSibling;
+                if (next == null || next.nodeType != 3) { continue; }
+                var combined_text = child.nodeValue + next.nodeValue;
+                new_node = node.ownerDocument.createTextNode(combined_text);
+                node.insertBefore(new_node, child);
+                node.removeChild(child);
+                node.removeChild(next);
+                i--;
+                nodeCount--;
+            }
+        }
+
+        return this.find("span.highlight").each(function() {
+            var thisParent = this.parentNode;
+            thisParent.replaceChild(this.firstChild, this);
+            newNormalize(thisParent);
+        }).end();
+    };
+</script>
 </body>
 </html>

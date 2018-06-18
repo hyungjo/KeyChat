@@ -4,7 +4,7 @@ function chatInit(){
 
     var channelName = $("#channelRoom").val();
     // var channelName = prompt();
-    socket = new WebSocket("ws://58.127.165.240:9999/chat/" + channelName);
+    socket = new WebSocket("ws://localhost:9999/chat/" + channelName);
 
     socket.onerror = function(message){
         onError(message);
@@ -123,4 +123,26 @@ function send(){
 
     var box = document.getElementById("content-box");
     box.scrollTop = box.scrollHeight;
+}
+
+function isAuthUser(){
+    var inputPassword = $("#channelPasswordField").val();
+    var reqJson = {requestMsg: {
+            channelName: $("#channelRoom").val(), //값을 못가져옴 화면이 로딩되기 전이기 때문
+            password: inputPassword
+        }};
+
+    $.ajax({
+        type: 'POST',
+        url: '/channel/auth',
+        data: JSON.stringify(reqJson),
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            alert("채널 인증 성공");
+            $("#channelPasswordModal").modal('hide');
+        },
+        error: function (response) {
+            alert("채널 인증 실패");
+        }
+    });
 }

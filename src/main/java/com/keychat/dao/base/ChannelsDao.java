@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.keychat.controller.util.DBUtil;
+import com.keychat.dto.base.ChannelJoinAuthModel;
 import com.keychat.dto.base.ChannelsModel;
 
 /**
@@ -274,6 +275,28 @@ public class ChannelsDao {
         return allList;
     }
 
+    public static boolean isChannelAuthUser(ChannelJoinAuthModel channelJoinAuthModel) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        boolean success = false;
+        System.out.println(channelJoinAuthModel.getChannelName() + " " + channelJoinAuthModel.getPassword());
+        String query = "SELECT * FROM CHANNELS WHERE NAME = ? AND PASSWORD = ?";
+        try {
+            con = DBUtil.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, channelJoinAuthModel.getChannelName());
+            pstmt.setString(2, channelJoinAuthModel.getPassword());
+            rset = pstmt.executeQuery();
+            if(rset.next())
+                success = true;
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            DBUtil.close(pstmt, con);
+        }
+        return success;
+    }
     // 조회 후 if 조건식으로 T일 경우 익명 테이블 생성 / F일 경우 익명 테이블 거치지 않고 방 생성
 
     /*

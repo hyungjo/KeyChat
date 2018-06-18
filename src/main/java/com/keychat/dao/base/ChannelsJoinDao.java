@@ -1,12 +1,10 @@
 package com.keychat.dao.base;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 import com.keychat.controller.util.DBUtil;
+import com.keychat.dto.base.ChannelJoinAuthModel;
 import com.keychat.dto.base.ChannelsJoinModel;
 import com.keychat.dto.base.ChannelsModel;
 import com.keychat.dto.base.UsersModel;
@@ -100,6 +98,27 @@ public class ChannelsJoinDao  {
 		return list;
 	}
 
+	public static boolean joinChannelUser(ChannelJoinAuthModel channelJoinAuthModel, UsersModel usersModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "INSERT INTO CHANNELS_JOIN VALUES(CHANNELS_JOIN_ID_SEQ.nextval, ?, ?, systimestamp)";
+		boolean success = false;
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelJoinAuthModel.getChannelName());
+			pstmt.setString(2, usersModel.getEmail());
+			pstmt.executeUpdate();
+			success = true;
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return success;
+	}
+
 	public static ArrayList<ChannelsModel> getChannelsByUser(UsersModel usersModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -166,5 +185,27 @@ public class ChannelsJoinDao  {
 		}
 
 		return list;
+	}
+
+	public static boolean isExistChannelUser(ChannelJoinAuthModel channelJoinAuthModel, UsersModel usersModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "SELECT * FROM CHANNELS_JOIN WHERE CHANNEL_NAME = ? AND EMAIL = ?";
+		boolean success = false;
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelJoinAuthModel.getChannelName());
+			pstmt.setString(2, usersModel.getEmail());
+			ResultSet rset = pstmt.executeQuery();
+			if(rset.next())
+				success = true;
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return success;
 	}
 }
