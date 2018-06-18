@@ -21,18 +21,20 @@ import java.sql.SQLException;
 public class ChannelMemoCreateController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		 HttpSession session = request.getSession();
-	        UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
-	      String email = loginUser.getEmail();
-	      String contents = request.getParameter("contents").trim();
+		request.setCharacterEncoding("UTF-8");
+		String email = request.getParameter("email").trim();
+		String file_path = request.getParameter("file_path").trim();
+		String channel_name = request.getParameter("channel_name").trim();
 		ResponseModel res;
+		HttpSession session = request.getSession();
+		UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
 		if (loginUser != null) {
 			res = new ResponseModel(200, "success", loginUser);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(new Gson().toJson(res));
 			try {
-				ChannelsMemoDao.insertMemo(email, contents);;
+				ChannelsFileboxDao.insertFile(email, file_path, channel_name);
 				;
 			} catch (SQLException e) {
 				e.printStackTrace();

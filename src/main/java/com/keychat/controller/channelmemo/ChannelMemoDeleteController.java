@@ -22,10 +22,10 @@ public class ChannelMemoDeleteController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		 HttpSession session = request.getSession();
-	        UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
-	      String email = loginUser.getEmail();
+		String email = request.getParameter("email").trim();
 		ResponseModel res;
+		HttpSession session = request.getSession();
+		UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
 		if (loginUser != null) {
 			res = new ResponseModel(200, "success", loginUser);
 			response.setContentType("application/json");
