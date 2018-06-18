@@ -20,15 +20,15 @@ public class ChannelJoinAuthController extends HttpServlet {
     	request.setCharacterEncoding("UTF-8");
 		ResponseModel res = null;
 
-		HttpSession session = request.getSession();
-		UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
-//		        UsersModel loginUser = new UsersModel(
-//                "ggg@naver.com",
-//                "1234",
-//                "hello",
-//                "학생",
-//                "010-111-1111"
-//        );
+//		HttpSession session = request.getSession();
+//		UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
+		        UsersModel loginUser = new UsersModel(
+                "ggg@naver.com",
+                "1234",
+                "hello",
+                "학생",
+                "010-111-1111"
+        );
 		ChannelJoinAuthModel channelJoinAuthModel = JsonUtil.getModelFromJsonRequest(request, ChannelJoinAuthModel.class);
 		boolean isAuth = ChannelsDao.isChannelAuthUser(channelJoinAuthModel);
 
@@ -40,18 +40,20 @@ public class ChannelJoinAuthController extends HttpServlet {
 		}
 
 		//참여자가 익명 이름이 없으면 익명 이름 추가
+//		TODO 참여자 익명이 존재하는지 체크
 		boolean isExistAnonym = ChannelsJoinDao.isExistAnonym(channelJoinAuthModel, loginUser);
 		if(!isExistAnonym){
 			while(true){
-				String tempAnonym = "Anonimityt" + (int) (Math.random() * (1000 - 1 + 1)) + 1;
+				String tempAnonym = "Anonimity" + (int) (Math.random() * (1000 - 1 + 1)) + 1;
 				if(ChannelsAnonymDao.isExistAnonymName(tempAnonym, channelJoinAuthModel) == null){
 					ChannelsAnonymDao.createAnonym(tempAnonym, loginUser, channelJoinAuthModel);
+					System.out.println(tempAnonym);
 					break;
 				}
 			}
 		}
-		System.out.println(isAuth + " " + isExistChannelUser + " " + isJoinChannel);
 
+		System.out.println(isAuth + " " + isExistChannelUser + " " + isJoinChannel + " " + isExistAnonym);
 
 		if(loginUser != null && isAuth && (isExistChannelUser || isJoinChannel)) {
 			res = new ResponseModel(200, "success", loginUser);

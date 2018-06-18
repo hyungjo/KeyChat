@@ -43,7 +43,7 @@ public class ChannelFileboxCreateController extends HttpServlet {
 					new DefaultFileRenamePolicy());
 			String filename = mr.getFilesystemName("file");
 			String file_path = savePath + "/" + filename;
-			try {
+					try {
 				ChannelsFileboxDao.insertFile(email, file_path, channel_name);
 			} catch (SQLException e) {
 				e.printStackTrace();
