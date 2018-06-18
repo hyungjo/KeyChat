@@ -2,10 +2,10 @@
 
 <jsp:include page="/header.jsp" flush="false"/>
 
-<header class="bg-primary text-white">
+<header class="bg-primary2 text-white">
     <div class="container text-center">
-        <h1>Welcome to Scrolling Nav</h1>
-        <p class="lead">A landing page template freshly redesigned for Bootstrap 4</p>
+        <h1>Hello KeyChat!</h1>
+        <p class="lead">채팅의 새로운 방법&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;혁신&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;채팅&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;그 이상</p>
     </div>
 </header>
 
@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h2>About this page</h2>
+                <h2>새로운 채팅, KeyChat</h2>
                 <p class="lead">This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for you own landing page designs! This template features:</p>
                 <ul>
                     <li>Clickable nav links that smooth scroll to page sections</li>
@@ -26,7 +26,7 @@
     </div>
 </section>
 
-<section id="services" class="bg-light">
+<section id="services" class="bg-light2">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
