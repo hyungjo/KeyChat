@@ -8,7 +8,7 @@
 </header>
 
 <!-- Content section -->
-<section class="py-5">
+<section class="py-5 bg-not">
     <div class="container">
         <h1>KeyChat</h1>
         <p class="lead">불필요한 회의 시간, 다양한 추천 키워드 제시</p>
@@ -23,7 +23,7 @@
 </header>
 
 <!-- Content section -->
-<section class="py-5">
+<section class="py-5 bg-not">
     <div class="container">
         <h1>KeyChat</h1>
         <p class="lead">불필요한 회의 시간, 다양한 추천 키워드 제시</p>
