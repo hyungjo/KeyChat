@@ -2,10 +2,7 @@ package com.keychat.controller.channel;
 
 import com.google.gson.Gson;
 import com.keychat.controller.util.JsonUtil;
-import com.keychat.dao.base.ChannelsDao;
-import com.keychat.dao.base.ChannelsJoinDao;
-import com.keychat.dao.base.ChannelsJoinJoinChannelsAnonym;
-import com.keychat.dao.base.UsersJoinChannelsJoin;
+import com.keychat.dao.base.*;
 import com.keychat.dto.base.*;
 import com.keychat.dto.util.ResponseModel;
 
@@ -15,10 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Response;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/channel/auth")
 public class ChannelJoinAuthController extends HttpServlet {
@@ -44,7 +38,21 @@ public class ChannelJoinAuthController extends HttpServlet {
 		if(!isExistChannelUser){
 			isJoinChannel = ChannelsJoinDao.joinChannelUser(channelJoinAuthModel, loginUser);
 		}
+
+		//참여자가 익명 이름이 없으면 익명 이름 추가
+		boolean isExistAnonym = ChannelsJoinDao.isExistAnonym(channelJoinAuthModel, loginUser);
+		if(!isExistAnonym){
+			while(true){
+				String tempAnonym = "Anonimityt" + (int) (Math.random() * (1000 - 1 + 1)) + 1;
+				if(ChannelsAnonymDao.isExistAnonymName(tempAnonym, channelJoinAuthModel) == null){
+					ChannelsAnonymDao.createAnonym(tempAnonym, loginUser, channelJoinAuthModel);
+					break;
+				}
+			}
+		}
 		System.out.println(isAuth + " " + isExistChannelUser + " " + isJoinChannel);
+
+
 		if(loginUser != null && isAuth && (isExistChannelUser || isJoinChannel)) {
 			res = new ResponseModel(200, "success", loginUser);
 			response.setContentType("application/json");

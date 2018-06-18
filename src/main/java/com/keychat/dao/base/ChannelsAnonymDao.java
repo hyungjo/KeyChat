@@ -2,10 +2,12 @@ package com.keychat.dao.base;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.keychat.controller.util.DBUtil;
+import com.keychat.dto.base.ChannelJoinAuthModel;
 import com.keychat.dto.base.ChannelsAnonymModel;
 import com.keychat.dto.base.ChannelsModel;
 import com.keychat.dto.base.UsersModel;
@@ -29,6 +31,54 @@ public class ChannelsAnonymDao {
 		}
 	}
 
+	public static boolean createAnonym(String anonymName, UsersModel usersModel, ChannelJoinAuthModel channelJoinAuthModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		boolean success = false;
+
+		String query = "INSERT INTO CHANNELS_ANONYM VALUES(CHANNELS_ANONYM_ID_SEQ, ?, ?, ?)";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, anonymName);
+			pstmt.setString(2, usersModel.getEmail());
+			pstmt.setString(3, channelJoinAuthModel.getChannelName());
+			pstmt.executeUpdate();
+			success = true;
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+
+		return success;
+	}
+
+	public static String isExistAnonymName(String anonymName, ChannelJoinAuthModel channelJoinAuthModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String searchAnonym = null;
+
+		String query = "SELECT ANONYM_NAME FROM CHANNELS_ANONYM WHERE ANONYM_NAME = ? AND CHANNEL_NAME = ?";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, anonymName);
+			pstmt.setString(2, channelJoinAuthModel.getChannelName());
+			rset = pstmt.executeQuery();
+			if(rset.next()){
+				searchAnonym = rset.getString(1);
+			}
+
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+
+		return searchAnonym;
+	}
 	// 조회 후 if 조건식으로 T일 경우 익명 테이블 생성 / F일 경우 익명 테이블 거치지 않고 방 생성
 	public static void insertAnonym(int n, String email) throws SQLException {
 //		Connection con = null;

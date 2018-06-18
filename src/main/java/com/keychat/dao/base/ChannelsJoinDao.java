@@ -119,6 +119,29 @@ public class ChannelsJoinDao  {
 		return success;
 	}
 
+	public static boolean isExistAnonym(ChannelJoinAuthModel channelJoinAuthModel, UsersModel usersModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "SELECT * FROM CHANNELS_JOIN WHERE CHANNEL_NAME = ? AND EMAIL = ?";
+		ResultSet rset = null;
+		boolean success = false;
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelJoinAuthModel.getChannelName());
+			pstmt.setString(2, usersModel.getEmail());
+			rset = pstmt.executeQuery();
+			if(rset.next())
+				success = true;
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return success;
+	}
+
 	public static ArrayList<ChannelsModel> getChannelsByUser(UsersModel usersModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;

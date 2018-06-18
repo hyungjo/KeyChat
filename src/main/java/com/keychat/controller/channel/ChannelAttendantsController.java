@@ -28,8 +28,7 @@ public class ChannelAttendantsController extends HttpServlet {
 		    ArrayList<String> list;
 		    System.out.println(result);
 			if (result.equals("T")) { // 익명 방이 맞으면
-		        String anonym_name = request.getParameter("anonym_name").trim();
-		        ChannelsJoinJoinChannelsAnonymModel user = new ChannelsJoinJoinChannelsAnonymModel(channel_name, anonym_name);
+		        ChannelsJoinJoinChannelsAnonymModel user = new ChannelsJoinJoinChannelsAnonymModel(channel_name, null);
 		        try {
 					list = ChannelsJoinJoinChannelsAnonym.anonymCheck(user);
 					request.setAttribute("list", list);
@@ -38,9 +37,7 @@ public class ChannelAttendantsController extends HttpServlet {
 				}
 			}
 		    if (result.equals("F")) { // 익명 방이 아니면
-		    	String email = request.getParameter("email");
-		        String nickname = request.getParameter("nickname");
-		        UsersJoinChannelsJoinModel user = new UsersJoinChannelsJoinModel(email, channel_name, nickname);
+		        UsersJoinChannelsJoinModel user = new UsersJoinChannelsJoinModel(null, channel_name, null);
 		    	try {
 					list = UsersJoinChannelsJoin.anonymCheck2(user);
 					request.setAttribute("list", list);
