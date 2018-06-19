@@ -20,7 +20,7 @@
 
                 <label for="input_file">업로드</label>
                 <input type="file" id="input_file" class="upload-hidden">
-                <input type="hidden" name="email" value="dddd2">
+
                 <button type="submit" class="upload" onclick="createFilebox()">올리기</button>
                 <b> ※ exe는 올릴 수 없습니다. </b>
             </div>
