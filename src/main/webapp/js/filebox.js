@@ -46,42 +46,42 @@ $(document).ready(function(){
     });
 });
 
-var aaa;
-var sss;
-
-$('.upload').click(function(){
-    if($('.upload-name').val() == 0){
-        alert('파일을 올려주세요.');
-    } else{
-        if(aaa > 100){
-            alert('파일 100MB 초과되었습니다. 그 이하인 파일을 올려주세요.');
-        } else{
-            add($('.upload-name').val(), aaa + sss);
-            $('.upload-name').val('');
-        }
-    }
-});
-
-$('#input_file').change(function() {
-    var iSize = ($("#input_file")[0].files[0].size / 1024);
-    var size = "";
-    if (iSize / 1024 > 1) {
-        if (((iSize / 1024) / 1024) > 1) {
-            iSize = (Math.round(((iSize / 1024) / 1024) * 100) / 100);
-            size = "GB";
-
-        } else {
-            iSize = (Math.round((iSize / 1024) * 100) / 100);
-            size = "MB";
-        }
-    } else {
-        iSize = (Math.round(iSize * 100) / 100);
-        size = "KB";
-    }
-
-    aaa = iSize;
-    sss = size
-});
+// var aaa;
+// var sss;
+//
+// $('.upload').click(function(){
+//     if($('.upload-name').val() == 0){
+//         alert('파일을 올려주세요.');
+//     } else{
+//         if(aaa > 100){
+//             alert('파일 100MB 초과되었습니다. 그 이하인 파일을 올려주세요.');
+//         } else{
+//             add($('.upload-name').val(), aaa + sss);
+//             $('.upload-name').val('');
+//         }
+//     }
+// });
+//
+// $('#input_file').change(function() {
+//     var iSize = ($("#input_file")[0].files[0].size / 1024);
+//     var size = "";
+//     if (iSize / 1024 > 1) {
+//         if (((iSize / 1024) / 1024) > 1) {
+//             iSize = (Math.round(((iSize / 1024) / 1024) * 100) / 100);
+//             size = "GB";
+//
+//         } else {
+//             iSize = (Math.round((iSize / 1024) * 100) / 100);
+//             size = "MB";
+//         }
+//     } else {
+//         iSize = (Math.round(iSize * 100) / 100);
+//         size = "KB";
+//     }
+//
+//     aaa = iSize;
+//     sss = size
+// });
 
 function getMyFile() {
     $.ajax({
@@ -126,9 +126,7 @@ function createFilebox() {
 
     $.ajax({
         type: 'POST',
-        url: '/jsp/channelfilebox/create',
-        data: JSON.stringify(reqJson),
-        async: false,
+        url: '/channelfilebox/create',
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
             alert("파일 생성 성공");

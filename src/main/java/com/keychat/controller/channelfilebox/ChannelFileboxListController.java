@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = "/jsp/channelfilebox/list")
+@WebServlet(urlPatterns = "/channelfilebox/list")
 public class ChannelFileboxListController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -29,7 +29,6 @@ public class ChannelFileboxListController extends HttpServlet {
 
 		try {
 			ArrayList<String> list = ChannelsFileboxDao.selectFile("자유");
-//			list = ChannelsFileboxDao.selectFile("자유");
 			if (loginUser != null && list != null){
 
 
