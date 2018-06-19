@@ -220,7 +220,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-2">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#channelInfo" role="tab" aria-controls="channelInfo">채널 정보</a>
@@ -235,9 +235,11 @@
                     <a class="nav-link" data-toggle="tab" href="#filebox" role="tab" aria-controls="filebox">파일방</a>
                 </li>
             </ul>
-
+        </div>
+        <div class="col">
             <div class="tab-content">
                 <div class="tab-pane active" id="channelInfo" role="tabpanel">
+                    <h3>채널 정보</h3>
                     <div class="row">
                         <table class="table table-user-information">
                             <tbody>
@@ -265,9 +267,41 @@
                         </table>
                     </div>
                 </div>
-                <div class="tab-pane" id="recommend" role="tabpanel">..2.</div>
-                <div class="tab-pane" id="schedule" role="tabpanel">.3..</div>
-                <div class="tab-pane" id="filebox" role="tabpanel">.4..</div>
+                <div class="tab-pane" id="recommend" role="tabpanel">
+                    <h3>채팅 분석 결과</h3>
+                    <h4>최근 대화 내용 분석 결과</h4>
+                    <input type="button" class="btn btn-primary" onclick="getNLAResultByCount()" value="분석">
+                    <div class="row">
+                        <div id="list_keyword"></div>
+                    </div>
+                    <div class="row">
+                        <div id="list_entity"></div>
+                    </div>
+                    <div class="row">
+                        <div id="list_category"></div>
+                    </div>
+                    <h4>누적 대화 내용 분석 결과</h4>
+                    <input type="button" class="btn btn-primary" onclick="startRealTimeLAResult()" value="실시간 분석 시작">
+                    <input type="button" class="btn btn-danger" onclick="stopRealTimeLAResult()" value="실시간 분석 중지">
+                    <div class="row">
+                        <div id="graph_keywordAndEntity"></div>
+                    </div>
+                    <div class="row">
+                        <div id="graph_category"></div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="schedule" role="tabpanel">
+                    <h3>일정 관리 / 메모</h3>
+                    <div class="row">
+
+                    </div>
+                </div>
+                <div class="tab-pane" id="filebox" role="tabpanel">
+                    <h3>파일 박스</h3>
+                    <div class="row">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -303,8 +337,114 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/chatroom.js"></script>
 <script>
+    var realTimeResultUpdate;
+    function startRealTimeLAResult(){
+        realTimeResultUpdate = setInterval(function() {
+            getTotalNLAResult();
+        }, 5 * 1000);
+        // getTotalNLAResult();
+    }
+
+    function stopRealTimeLAResult(){
+        clearInterval(realTimeResultUpdate);
+    }
+
+    function getNLAResultByCount(){
+        var reqJson = {requestMsg: {
+                channelName: $("#channelRoom").val(), //값을 못가져옴 화면이 로딩되기 전이기 때문
+                count: 50
+            }};
+
+        $.ajax({
+            type: 'POST',
+            url: '/channelKeywordRecom/analyzeContents',
+            data: JSON.stringify(reqJson),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                console.log(response);
+
+                var keywordList = "";
+                keywordList += "<h5>키워드</h5>";
+                $.each(response.result.keyword, function (index, value) {
+                    keywordList += "<span class=\"badge badge-secondary\">" + value + "</span>";
+                });
+                $("#list_keyword").append(keywordList);
+
+                var entityList = "";
+                $.each(response.result.entity, function (index, value) {
+                    entityList += "<span class=\"badge badge-secondary\">" + value + "</span>";
+                });
+                $("#list_entity").append(entityList);
+
+                var midCategoryList = "";
+                midCategoryList += "<h5>카테고리</h5>";
+                $.each(response.result.midCategory, function (index, value) {
+                    midCategoryList += "<span class=\"badge badge-secondary\">" + value + "</span>";
+                });
+                $("#list_category").append(midCategoryList);
+
+                alert("분석 성공");
+
+            },
+            error: function (response) {
+                alert("분석 실패");
+            }
+        });
+
+    }
+
+    function getTotalNLAResult(){
+        var reqJson = {requestMsg: {
+                channelName: $("#channelRoom").val(), //값을 못가져옴 화면이 로딩되기 전이기 때문
+                count: 500 //Dummy
+            }};
+
+        $.ajax({
+            type: 'POST',
+            url: '/channelKeywordRecom/list',
+            data: JSON.stringify(reqJson),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $("#graph_keywordAndEntity").empty();
+                $("#graph_category").empty();
+                console.log(response);
+                var keywordAndEntity = [];
+                $.each(response.result.keywordAndEntity, function (index, value) {
+                    keywordAndEntity.push({label: index, value: value});
+                });
+                var category = [];
+                $.each(response.result.category, function (index, value) {
+                    category.push({label: index, value: value});
+                });
+
+                Morris.Donut({
+                    element : 'graph_keywordAndEntity',
+                    data : keywordAndEntity,
+                    resize: true
+                }).redraw();
+                Morris.Donut({
+                    element : 'graph_category',
+                    data : category,
+                    resize: true
+                }).redraw();
+
+                alert("실시간 분석 성공");
+
+            },
+            error: function (response) {
+                alert("실시간 분석 실패");
+            }
+        });
+
+
+
+    }
+
     function noEvent() { // 새로 고침 방지
         if (event.keyCode == 116) {
             alert("새로고침을 할 수 없습니다.");

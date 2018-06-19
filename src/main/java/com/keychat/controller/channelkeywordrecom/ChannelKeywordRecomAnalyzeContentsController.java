@@ -35,10 +35,11 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
 
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		final AsyncContext asyncContext = request.startAsync();
+
 		request.setCharacterEncoding("UTF-8");
 		ChannelChatHistoryReadModel channelChatHistoryReadModel = JsonUtil.getModelFromJsonRequest(request, ChannelChatHistoryReadModel.class);
-		final AsyncContext asyncContext = request.startAsync();
-		ResponseModel responseModel = null;
+
     	String contents = ChannelsChatHistoryDao.getHistory(channelChatHistoryReadModel);
 		System.out.println(contents);
     	NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(

@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.keychat.controller.util.DBUtil;
+import com.keychat.dto.base.ChannelChatHistoryReadModel;
 import com.keychat.dto.base.ChannelsCategoriesModel;
 import com.keychat.dto.base.ChannelsKeywordRecomModel;
 
@@ -29,7 +32,29 @@ public class ChannelsKeywordRecomDao {
 		}
 		return true;
 	}
-	
+
+	public static Map<String, Integer> getKeywordList(ChannelChatHistoryReadModel channelChatHistoryReadModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select KEYWORD, count(KEYWORD) from CHANNELS_KEYWORD_RECOM where channel_name=? group by KEYWORD ORDER BY count(KEYWORD) DESC";
+		Map<String, Integer> keywordList = new LinkedHashMap<>();
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelChatHistoryReadModel.getChannelName());
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				keywordList.put(rset.getString(1), rset.getInt(2));
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return keywordList;
+	}
+
 	// 채널 참여자가 보낸 메시지를 가지고 분석해서 가장 많은 분포도를 group by로 묶고 count(*)으로 인기 순위를 나타낸다.
 	public static ArrayList<String> findKeyword(String channel_name) throws SQLException {
 		Connection con = null;
@@ -71,6 +96,28 @@ public class ChannelsKeywordRecomDao {
 			DBUtil.close(pstmt, con);
 		}
 		return true;
+	}
+
+	public static Map<String, Integer> getCategoryList(ChannelChatHistoryReadModel channelChatHistoryReadModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select CATEGORIES, count(CATEGORIES) from CHANNELS_CATEGORIES where channel_name=? group by CATEGORIES ORDER BY count(CATEGORIES) DESC";
+		Map<String, Integer> categoryList = new LinkedHashMap<>();
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelChatHistoryReadModel.getChannelName());
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				categoryList.put(rset.getString(1), rset.getInt(2));
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return categoryList;
 	}
 
 	//카테고리 불러오기

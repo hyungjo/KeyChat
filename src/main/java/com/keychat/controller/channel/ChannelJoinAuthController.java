@@ -34,7 +34,7 @@ public class ChannelJoinAuthController extends HttpServlet {
 		}
 
 		//참여자가 익명 이름이 없으면 익명 이름 추가
-//		TODO 참여자 익명이 존재하는지 체크
+//		TODO 참여자 익명이 존재하는지 체크 리더거나 참가자거나 둘다 체크해야함
 		boolean isExistAnonym = ChannelsJoinDao.isExistAnonym(channelJoinAuthModel, loginUser);
 		if(!isExistAnonym){
 			while(true){

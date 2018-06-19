@@ -7,7 +7,7 @@ function openChatroom(element)
     window.name = "channel";
     // window.open("open할 window", "자식창 이름", "팝업창 옵션");
     openWin = window.open("/chatview?channel="+channelName ,
-        "childForm", "width=800, height=700, resizable = yes, scrollbars = yes");
+        "childForm", "width=1500, height=800, resizable = yes, scrollbars = yes");
     openWin.document.getElementById("channelRoom").value = channelName;
 }
 
