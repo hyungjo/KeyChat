@@ -30,9 +30,11 @@ public class ChannelsFileboxDao {
 	}
 
 	// 업로드시 CHANNELS_FILEBOX TABLE에서 INSERT문 쿼리 발생
-	public static void insertFile(String email, String file_path, String channel_name) throws SQLException {
+	public static boolean insertFile(String email, String file_path, String channel_name) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		boolean success = false;
+
 		String query = "insert into channels_filebox values(channels_filebox_id_seq.nextval, ?, ?, ?)";
 		try {
 			con = DBUtil.getConnection();
@@ -41,12 +43,14 @@ public class ChannelsFileboxDao {
 			pstmt.setString(2, file_path);
 			pstmt.setString(3, channel_name);
 			pstmt.executeUpdate();
+			success = true;
 		} catch (SQLException s) {
 			s.printStackTrace();
-			throw s;
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
+
+		return success;
 	}
 
 	// 채널 이름 조회해서 박스에 업로드 된 파일들 보여주기 위해 select문 쿼리 발생

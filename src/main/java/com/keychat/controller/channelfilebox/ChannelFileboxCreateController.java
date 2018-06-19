@@ -11,28 +11,27 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.keychat.dao.base.ChannelsFileboxDao;
 import com.keychat.dto.base.UsersModel;
 import com.keychat.dto.util.ResponseModel;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-@WebServlet(urlPatterns = "/jsp/channelfilebox/create")
+@WebServlet(urlPatterns = "/channelfilebox/create")
 public class ChannelFileboxCreateController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-//		String email = request.getParameter("email");
-//		String channel_name = request.getParameter("channel_name").trim();
-		String savePath = request.getServletContext().getRealPath("자유");
 
-		ResponseModel res;
 		HttpSession session = request.getSession();
 		UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
+
+//TODO 채널명 폴더 만들기, 디비에 값 넣기, 디비에서 값 가져오기
+		String savePath = request.getServletContext().getRealPath("Upload");
+
+		ResponseModel res;
+
 		if (loginUser != null) {
-			res = new ResponseModel(200, "success", loginUser);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(new Gson().toJson(res));
 			if (!new File(savePath).isDirectory()) {
 				new File(savePath).mkdirs();
 			}
@@ -42,26 +41,26 @@ public class ChannelFileboxCreateController extends HttpServlet {
 
 			try{
 				mr = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+				String channel_name = mr.getParameter("userEmail");
+				System.out.println(channel_name);
 				String filename = mr.getFilesystemName("input_file");
 				String file_path = savePath + "/" + filename;
-				//			try {
-				//				ChannelsFileboxDao.insertFile(email, file_path, channel_name);
-				//			} catch (SQLException e) {
-				//				e.printStackTrace();
-				//			}
-				System.out.println(loginUser.getEmail());
-				System.out.println(file_path);
 
-				request.getRequestDispatcher("#").forward(request, response);
+				if(ChannelsFileboxDao.insertFile(loginUser.getEmail(), file_path, channel_name)){
+					res = new ResponseModel(200, "success", "success");
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					response.getWriter().write(new Gson().toJson(res));
+				}
+
 			} catch(Exception e){
 				System.out.println("100mb 초과 잼");
-				request.getRequestDispatcher("#").forward(request, response);
-				return;
+				response.sendError(500, new ResponseModel(500, "fail", "Cannot upload file").toString());
 			}
 			// cos.jar 의 MultipartRequest 를 생성하면 동시에 서버에 업로드가 완료된다.
 
 		} else {
-			response.sendError(500, new ResponseModel(500, "fail", "Cannot get user info").toString());
+			response.sendError(500, new ResponseModel(500, "fail", "Cannot upload file").toString());
 		}
 	}
 }

@@ -15,7 +15,7 @@
     </head>
     <body>
 
-        <form action="channelfilebox/create" method="post" enctype="multipart/form-data">
+        <form action="${pageContext.request.contextPath}/channelfilebox/create" method="post" enctype="multipart/form-data">
             <div class="filebox bs3-primary preview-image">
 
                 <input type="text" class="upload-name" disabled="disabled" style="width: 200px;">

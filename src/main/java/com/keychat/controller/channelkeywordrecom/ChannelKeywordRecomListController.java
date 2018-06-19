@@ -33,7 +33,7 @@ public class ChannelKeywordRecomListController extends HttpServlet {
 				keywordAndEntityList,
 				categoryList
 		);
-
+		System.out.println(new Gson().toJson(nlaTotalResultModel));
 		if(nlaTotalResultModel != null) {
 			responseModel = new ResponseModel(200, "success", nlaTotalResultModel);
 			response.setContentType("application/json");

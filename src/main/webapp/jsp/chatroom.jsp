@@ -11,9 +11,10 @@
     <meta charset="EUC-KR">
     <title>Insert title here</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/filebox.css">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <!--
     <style>
         #wrapper{
@@ -186,8 +187,10 @@
                     <div id="dd">
                         <%--<br>--%>
                         <input type="hidden" id="channelRoom" value="<%=request.getAttribute("channelName")%>"/>
-                        <input type="hidden" id="username" value="<%=((UsersModel)(session.getAttribute("loginUser"))).getNickname()%>"/>
-                        <input type="hidden" id="useremail" value="<%=((UsersModel)(session.getAttribute("loginUser"))).getEmail()%>"/>
+                        <input type="hidden" id="username"
+                               value="<%=((UsersModel)(session.getAttribute("loginUser"))).getNickname()%>"/>
+                        <input type="hidden" id="useremail"
+                               value="<%=((UsersModel)(session.getAttribute("loginUser"))).getEmail()%>"/>
                         <%--<input id="username" style="width: 20%;" type="text"/>--%>
                         <%--<input id="channelName" style="width: 20%;" type="text" value="a"/>--%>
                         <%--<input type="button" value="소켓 연결" onclick="chatInit();">--%>
@@ -198,7 +201,8 @@
                         <div id="title">
                             Chat
                         </div>
-                        <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기" aria-label="Search">
+                        <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기"
+                               aria-label="Search">
                         <button id="btn_search" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
                         <button type="button" class="btn btn-ligh" onclick="closeSocket();">X</button>
                     </nav>
@@ -213,7 +217,7 @@
             </div>
             <div class="panel-footer">
                 <div class="input-group">
-                    <input id="inputMessage" type="text" class="form-control input-sm" placeholder="메세지를 입력하세요" />
+                    <input id="inputMessage" type="text" class="form-control input-sm" placeholder="메세지를 입력하세요"/>
                     <span class="input-group-btn">
                         <button class="btn btn-warning btn-sm" id="btn-chat" onclick="send();">보내기</button>
                     </span>
@@ -223,13 +227,16 @@
         <div class="col-md-2">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#channelInfo" role="tab" aria-controls="channelInfo">채널 정보</a>
+                    <a class="nav-link active" data-toggle="tab" href="#channelInfo" role="tab"
+                       aria-controls="channelInfo">채널 정보</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#recommend" role="tab" aria-controls="recommend">추천 서비스</a>
+                    <a class="nav-link" data-toggle="tab" href="#recommend" role="tab" aria-controls="recommend">추천
+                        서비스</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#schedule" role="tab" aria-controls="schedule">일정 관리/메모</a>
+                    <a class="nav-link" data-toggle="tab" href="#schedule" role="tab" aria-controls="schedule">일정
+                        관리/메모</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#filebox" role="tab" aria-controls="filebox">파일방</a>
@@ -299,7 +306,28 @@
                 <div class="tab-pane" id="filebox" role="tabpanel">
                     <h3>파일 박스</h3>
                     <div class="row">
+                        <form id="fileUploadForm">
+                            <div class="filebox bs3-primary preview-image">
 
+                                <input type="text" class="upload-name" disabled="disabled" style="width: 200px;">
+
+                                <label for="input_file">업로드</label>
+                                <input type="file" id="input_file" class="upload-hidden" name="input_file">
+
+                                <input type="button" onclick="fileUpload()" value="올리기"/>
+                                <b> ※ exe는 올릴 수 없습니다. </b>
+                            </div>
+                        </form>
+                        <%--<input type="hidden" name="channel_name" value="<%=request.getAttribute("channelName")%>">--%>
+                        <table id="file-table">
+                            <tr>
+                                <th> #</th>
+                                <th> Name</th>
+                                <th> Size</th>
+                                <th> Email</th>
+                                <th> Delete</th>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -308,7 +336,8 @@
 </div>
 
 <%--ChannelPasswordModal--%>
-<div class="modal fade" id="channelPasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="channelPasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -339,26 +368,30 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/chatroom.js"></script>
 <script>
     var realTimeResultUpdate;
-    function startRealTimeLAResult(){
-        realTimeResultUpdate = setInterval(function() {
+
+    function startRealTimeLAResult() {
+        realTimeResultUpdate = setInterval(function () {
             getTotalNLAResult();
         }, 5 * 1000);
         // getTotalNLAResult();
     }
 
-    function stopRealTimeLAResult(){
+    function stopRealTimeLAResult() {
         clearInterval(realTimeResultUpdate);
     }
 
-    function getNLAResultByCount(){
-        var reqJson = {requestMsg: {
+    function getNLAResultByCount() {
+        var reqJson = {
+            requestMsg: {
                 channelName: $("#channelRoom").val(), //값을 못가져옴 화면이 로딩되기 전이기 때문
                 count: 50
-            }};
+            }
+        };
 
         $.ajax({
             type: 'POST',
@@ -373,6 +406,7 @@
                 $.each(response.result.keyword, function (index, value) {
                     keywordList += "<span class=\"badge badge-secondary\">" + value + "</span>";
                 });
+                $("#list_keyword").empty();
                 $("#list_keyword").append(keywordList);
 
                 var entityList = "";
@@ -386,23 +420,24 @@
                 $.each(response.result.midCategory, function (index, value) {
                     midCategoryList += "<span class=\"badge badge-secondary\">" + value + "</span>";
                 });
+                $("#list_category").empty();
                 $("#list_category").append(midCategoryList);
-
-                alert("분석 성공");
 
             },
             error: function (response) {
-                alert("분석 실패");
             }
         });
 
     }
 
-    function getTotalNLAResult(){
-        var reqJson = {requestMsg: {
+    //실시간 그래프
+    function getTotalNLAResult() {
+        var reqJson = {
+            requestMsg: {
                 channelName: $("#channelRoom").val(), //값을 못가져옴 화면이 로딩되기 전이기 때문
                 count: 500 //Dummy
-            }};
+            }
+        };
 
         $.ajax({
             type: 'POST',
@@ -423,26 +458,43 @@
                 });
 
                 Morris.Donut({
-                    element : 'graph_keywordAndEntity',
-                    data : keywordAndEntity,
+                    element: 'graph_keywordAndEntity',
+                    data: keywordAndEntity,
                     resize: true
                 }).redraw();
                 Morris.Donut({
-                    element : 'graph_category',
-                    data : category,
+                    element: 'graph_category',
+                    data: category,
                     resize: true
                 }).redraw();
 
-                alert("실시간 분석 성공");
-
             },
             error: function (response) {
-                alert("실시간 분석 실패");
             }
         });
+    }
 
+    function fileUpload() {
+        var formData = new FormData();
+        formData.append('file', $('#input_file')[0].files[0]);
+        formData.append('userEmail', $('#useremail').val());
 
-
+        $.ajax({
+            url : 'channelfilebox/create',
+            type : 'POST',
+            data : formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success : function(data) {
+                alert("파일 업로드 성공");
+            },
+            error: function(response) {
+                alert("파일 업로드 실패");
+            }
+        });
     }
 
     function noEvent() { // 새로 고침 방지
@@ -455,20 +507,21 @@
             return false;
         }
     }
+
     document.onkeydown = noEvent;
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         //채널 접속
         chatInit();
 
         //비밀번호 입력
-        $('#channelPasswordModal').modal({backdrop: 'static', keyboard: false}) ;
+        $('#channelPasswordModal').modal({backdrop: 'static', keyboard: false});
 
 
     });
 
-    $(function() {
-        $('#Search').bind('keyup change', function(ev) {
+    $(function () {
+        $('#Search').bind('keyup change', function (ev) {
             // pull in the new value
             var searchTerm = $(this).val();
 
@@ -476,14 +529,14 @@
             $('.mess').removeHighlight();
 
             // disable highlighting if empty
-            if ( searchTerm ) {
+            if (searchTerm) {
                 // highlight the new term
-                $('.mess').highlight( searchTerm );
+                $('.mess').highlight(searchTerm);
             }
         });
     });
 
-    jQuery.fn.highlight = function(pat) {
+    jQuery.fn.highlight = function (pat) {
         function innerHighlight(node, pat) {
             var skip = 0;
             if (node.nodeType == 3) {
@@ -506,12 +559,13 @@
             }
             return skip;
         }
-        return this.each(function() {
+
+        return this.each(function () {
             innerHighlight(this, pat.toUpperCase());
         });
     };
 
-    jQuery.fn.removeHighlight = function() {
+    jQuery.fn.removeHighlight = function () {
         function newNormalize(node) {
             for (var i = 0, children = node.childNodes, nodeCount = children.length; i < nodeCount; i++) {
                 var child = children[i];
@@ -519,9 +573,13 @@
                     newNormalize(child);
                     continue;
                 }
-                if (child.nodeType != 3) { continue; }
+                if (child.nodeType != 3) {
+                    continue;
+                }
                 var next = child.nextSibling;
-                if (next == null || next.nodeType != 3) { continue; }
+                if (next == null || next.nodeType != 3) {
+                    continue;
+                }
                 var combined_text = child.nodeValue + next.nodeValue;
                 new_node = node.ownerDocument.createTextNode(combined_text);
                 node.insertBefore(new_node, child);
@@ -532,7 +590,7 @@
             }
         }
 
-        return this.find("span.highlight").each(function() {
+        return this.find("span.highlight").each(function () {
             var thisParent = this.parentNode;
             thisParent.replaceChild(this.firstChild, this);
             newNormalize(thisParent);

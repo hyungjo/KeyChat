@@ -26,10 +26,6 @@ public class ChannelFileboxDeleteController extends HttpServlet {
 		HttpSession session = request.getSession();
 		UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
 		if (loginUser != null) {
-			res = new ResponseModel(200, "success", loginUser);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(new Gson().toJson(res));
 			try {
 				ChannelsFileboxDao.dropFile(file_path, channel_name);
 			} catch (SQLException e) {
