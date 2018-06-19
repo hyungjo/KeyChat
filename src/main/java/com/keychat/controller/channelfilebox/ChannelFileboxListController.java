@@ -9,9 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.keychat.dao.base.ChannelsFileboxDao;
-import com.keychat.dao.base.ChannelsMemoDao;
-import com.keychat.dto.base.ChannelsFileboxModel;
-import com.keychat.dto.base.ChannelsMemoModel;
 import com.keychat.dto.base.UsersModel;
 import com.keychat.dto.util.ResponseModel;
 
@@ -24,23 +21,35 @@ public class ChannelFileboxListController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String channel_name = request.getParameter("channel_name").trim();
+
+//		String channel_name = request.getParameter("channel_name").trim();
 		ResponseModel res;
 		HttpSession session = request.getSession();
 		UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
 
-		ArrayList<ChannelsFileboxModel> list = null;
 		try {
-			list = ChannelsFileboxDao.selectFile(channel_name);
-			if (loginUser != null && list != null) {
+			ArrayList<String> list = ChannelsFileboxDao.selectFile("자유");
+//			list = ChannelsFileboxDao.selectFile("자유");
+			if (loginUser != null && list != null){
+
+
+				String[] str = new String[list.size()];
+				str = list.toArray(str);
+
+				for(String s : str){
+					System.out.println(s);
+				}
+
 				res = new ResponseModel(200, "success", list);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(new Gson().toJson(res));
-			} else
-				response.sendError(500, new ResponseModel(500, "fail", "Cannot access").toString());
+			} else {
+				response.sendError(500, new ResponseModel(500, "fail", "Cannot get user info").toString());
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		request.getRequestDispatcher("#").forward(request, response);
 	}
 }

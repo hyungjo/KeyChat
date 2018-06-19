@@ -35,14 +35,15 @@
                 <th> Email </th>
                 <th> Delete </th>
             </tr>
-
         </table>
-
-        <script type="text/javascript" src="../js/filebox.js"> </script>
-        <script>
-            $( document ).ready( function() {
-                getMyFile();
-            });
-        </script>
     </body>
+</html>
+
+<script type="text/javascript" src="../js/filebox.js"> </script>
+<script>
+    $( document ).ready( function() {
+        getMyFile();
+    });
+</script>
+</body>
 </html>
