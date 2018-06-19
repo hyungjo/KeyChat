@@ -35,7 +35,30 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h2>Services we offer</h2>
+                <h2>Kim EungHo</h2>
+                <p class="lead">dddddddddddddddddddddddddddddddddddddddddddfdfdfdfdfdf
+                <img src="${pageContext.request.contextPath}/img/PEH.jpg" width="150px" height="150px"></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Kim HyoEun</h2>
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero odio fugiat voluptatem dolor, provident officiis, id iusto! Obcaecati incidunt, qui nihil beatae magnam et repudiandae ipsa exercitationem, in, quo totam.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="services" class="bg-light2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Seo HyungJo</h2>
                 <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.</p>
             </div>
         </div>
@@ -46,12 +69,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h2>Contact us</h2>
+                <h2>Lee Hyunmin</h2>
                 <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero odio fugiat voluptatem dolor, provident officiis, id iusto! Obcaecati incidunt, qui nihil beatae magnam et repudiandae ipsa exercitationem, in, quo totam.</p>
             </div>
         </div>
     </div>
 </section>
-
 
 <jsp:include page="/footer.jsp" flush="false"/>
