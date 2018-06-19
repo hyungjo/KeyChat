@@ -122,7 +122,7 @@ public class ChannelsJoinDao  {
 	public static boolean isExistAnonym(ChannelJoinAuthModel channelJoinAuthModel, UsersModel usersModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "SELECT * FROM CHANNELS_JOIN WHERE CHANNEL_NAME = ? AND EMAIL = ?";
+		String query = "SELECT * FROM CHANNELS_ANONYM WHERE CHANNEL_NAME = ? AND EMAIL = ?";
 		ResultSet rset = null;
 		boolean success = false;
 

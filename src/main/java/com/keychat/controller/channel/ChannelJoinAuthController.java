@@ -44,13 +44,14 @@ public class ChannelJoinAuthController extends HttpServlet {
 		boolean isExistAnonym = ChannelsJoinDao.isExistAnonym(channelJoinAuthModel, loginUser);
 		if(!isExistAnonym){
 			while(true){
-				String tempAnonym = "Anonimity" + (int) (Math.random() * (1000 - 1 + 1)) + 1;
-				if(ChannelsAnonymDao.isExistAnonymName(tempAnonym, channelJoinAuthModel) == null){
-					ChannelsAnonymDao.createAnonym(tempAnonym, loginUser, channelJoinAuthModel);
-					System.out.println(tempAnonym);
-					break;
-				}
-			}
+                String tempAnonym = "Anonimity" + ((int) (Math.random() * (1000 - 1 + 1)) + 1);
+                System.out.println(tempAnonym);
+                if(ChannelsAnonymDao.isExistAnonymName(tempAnonym, channelJoinAuthModel) == null){
+                    ChannelsAnonymDao.createAnonym(tempAnonym, loginUser, channelJoinAuthModel);
+                    System.out.println(tempAnonym);
+                    break;
+                }
+            }
 		}
 
 		System.out.println(isAuth + " " + isExistChannelUser + " " + isJoinChannel + " " + isExistAnonym);
@@ -62,7 +63,7 @@ public class ChannelJoinAuthController extends HttpServlet {
 			response.getWriter().write(new Gson().toJson(res));
 		}
 		else {
-			response.sendError(500, new ResponseModel(500, "fail", "Cannot get user info").toString());
+			response.sendError(500, new Gson().toJson(new ResponseModel(500, "fail", "Cannot join channel").toString()));
 		}
     }	
 }

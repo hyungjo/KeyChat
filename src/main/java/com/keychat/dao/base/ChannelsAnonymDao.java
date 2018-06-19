@@ -36,7 +36,7 @@ public class ChannelsAnonymDao {
 		PreparedStatement pstmt = null;
 		boolean success = false;
 
-		String query = "INSERT INTO CHANNELS_ANONYM VALUES(CHANNELS_ANONYM_ID_SEQ, ?, ?, ?)";
+		String query = "INSERT INTO CHANNELS_ANONYM VALUES(CHANNELS_ANONYM_ID_SEQ.NEXTVAL, ?, ?, ?)";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
