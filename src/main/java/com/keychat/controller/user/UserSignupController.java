@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-@WebServlet(urlPatterns = "/jsp/user/signup")
+@WebServlet(urlPatterns = "/user/signup")
 public class UserSignupController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -45,7 +45,7 @@ public class UserSignupController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			request.getRequestDispatcher("#").forward(request, response);
+			request.getRequestDispatcher("/").forward(request, response);
 		} /*else {
 			response.sendError(500, new ResponseModel(500, "fail", "Cannot get user info").toString());
 		}
