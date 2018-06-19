@@ -45,3 +45,100 @@ $(document).ready(function(){
         }
     });
 });
+
+var aaa;
+var sss;
+
+$('.upload').click(function(){
+    if($('.upload-name').val() == 0){
+        alert('파일을 올려주세요.');
+    } else{
+        if(aaa > 100){
+            alert('파일 100MB 초과되었습니다. 그 이하인 파일을 올려주세요.');
+        } else{
+            add($('.upload-name').val(), aaa + sss);
+            $('.upload-name').val('');
+        }
+    }
+});
+
+$('#input_file').change(function() {
+    var iSize = ($("#input_file")[0].files[0].size / 1024);
+    var size = "";
+    if (iSize / 1024 > 1) {
+        if (((iSize / 1024) / 1024) > 1) {
+            iSize = (Math.round(((iSize / 1024) / 1024) * 100) / 100);
+            size = "GB";
+
+        } else {
+            iSize = (Math.round((iSize / 1024) * 100) / 100);
+            size = "MB";
+        }
+    } else {
+        iSize = (Math.round(iSize * 100) / 100);
+        size = "KB";
+    }
+
+    aaa = iSize;
+    sss = size
+});
+
+function getMyFile() {
+    $.ajax({
+        type: 'POST',
+        url: '/channelfilebox/list',
+        success: function (response) {
+            var file = document.getElementById('file-table');
+            var channelList = "";
+            var fileIndex = 1;
+
+            $.each(response.result, function (index, value) {
+
+                file.innerHTML += "<tr>" +
+                    " " + "<td>" + fileIndex + "</td>" +
+                    " " + "<td class='file-name'>" + name + "</td>" +
+                    " " + "<td>" + size + "</td>" +
+                    " " + "<td> <button> Download </button> </td>" +
+                    " " + "<td> <button> Delete </button> </td>" +
+                    " " + "</tr>";
+            });
+
+            $(".conversation-wrap").append(channelList);
+
+            alert("파일 불러오기 성공");
+        },
+        error: function (response) {
+            alert("파일 불러오기 실패");
+        }
+    });
+}
+
+function createFilebox() {
+    var reqJson = {
+        requestMsg: {
+            // id: $("#createChannelName").val(),
+            // email: $("#createChannelPassword").val(),
+            // file_path: $("#createChannelLmitCapacity").val(),
+            // channel_name: $("#createChannelLmitTime").val(),
+        }
+    };
+
+    console.log(reqJson);
+
+    $.ajax({
+        type: 'POST',
+        url: '/channelfilebox/create',
+        data: JSON.stringify(reqJson),
+        async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            alert("파일 생성 성공");
+            location.reload();
+            // setUserNickname();
+        },
+        error: function (response) {
+            console.log(response);
+            alert("파일 생성 실패");
+        }
+    });
+}
