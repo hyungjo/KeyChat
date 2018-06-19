@@ -2,6 +2,7 @@ package com.keychat.controller.user;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,11 +18,15 @@ public class UserForgotEmailController extends HttpServlet {
     	request.setCharacterEncoding("UTF-8");
     	String nickname = request.getParameter("nickname");
     	String phone = request.getParameter("phone");
-    	System.out.println("0000000000");
     	try {
-			String res = UsersDao.findEmail(nickname, phone).toString();
-			request.setAttribute("email", res);
-			System.out.println(res);
+			ArrayList<String> res = UsersDao.findEmail(nickname, phone);
+			int size = res.size();
+			if(size >= 1) {
+				String res1 = res.get(0);
+				request.setAttribute("res", res1);
+			}else {
+				request.setAttribute("res", "존재하지 않는 회원입니다.");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}request.getRequestDispatcher("/jsp/afterEmailFind.jsp").forward(request, response);
