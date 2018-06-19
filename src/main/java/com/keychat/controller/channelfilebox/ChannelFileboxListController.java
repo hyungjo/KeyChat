@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import com.keychat.dao.base.ChannelsFileboxDao;
 import com.keychat.dao.base.ChannelsMemoDao;
+import com.keychat.dto.base.ChannelsFileboxModel;
 import com.keychat.dto.base.ChannelsMemoModel;
 import com.keychat.dto.base.UsersModel;
 import com.keychat.dto.util.ResponseModel;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = "/channelfilebox/list")
+@WebServlet(urlPatterns = "/jsp/channelfilebox/list")
 public class ChannelFileboxListController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -27,20 +28,19 @@ public class ChannelFileboxListController extends HttpServlet {
 		ResponseModel res;
 		HttpSession session = request.getSession();
 		UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
-		if (loginUser != null) {
-			res = new ResponseModel(200, "success", loginUser);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(new Gson().toJson(res));
-			try {
-				ArrayList<String> list = ChannelsFileboxDao.selectFile(channel_name);
-				request.setAttribute("list", list);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			request.getRequestDispatcher("#").forward(request, response);
-		} else {
-			response.sendError(500, new ResponseModel(500, "fail", "Cannot get user info").toString());
+
+		ArrayList<ChannelsFileboxModel> list = null;
+		try {
+			list = ChannelsFileboxDao.selectFile(channel_name);
+			if (loginUser != null && list != null) {
+				res = new ResponseModel(200, "success", list);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(new Gson().toJson(res));
+			} else
+				response.sendError(500, new ResponseModel(500, "fail", "Cannot access").toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 }
