@@ -54,9 +54,11 @@
                     </div>
                 </div>
                 <hr class="colorgraph">
+                <form action = "/user/leave" method ="post">
                 <div class="col-xs-12 col-md-6">
                     <input type="submit" value="회원탈퇴" class="btn btn-lg" tabindex="8">
                 </div>
+                </form>
         </div>
     </div>
 </div>
