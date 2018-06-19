@@ -19,6 +19,7 @@ public class ChannelsKeywordRecomDao {
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
+			pstmt = con.prepareStatement("delete from CHANNELS_KEYWORD_RECOM where KEYWORD like '%null%'");
 			pstmt.setString(1, channelsKeywordRecomModel.getKeyword());
 			pstmt.setString(2, channelsKeywordRecomModel.getChannel_name());
 			pstmt.executeUpdate();

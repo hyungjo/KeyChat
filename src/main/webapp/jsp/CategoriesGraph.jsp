@@ -52,7 +52,6 @@
 		<th colspan="5"><div id="donut_example"></div></th>
 	</tr>
 </table>
-
 <script>
 Morris.Donut({
 	element : 'donut_example',

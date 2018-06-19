@@ -11,11 +11,11 @@
 <form action="${pageContext.request.contextPath}/channelMemo" method="POST">
 	<textarea name="contents" rows="30" cols="50"></textarea>
 	<br>
-	<input type ="button" value ="불러오기" onclick="location.href='${pageContext.request.contextPath}/channelMemo?command=list">
+	<input type ="button" value ="불러오기" onclick="location.href='channelmemo?command=list">
 	
-	<input type ="button" value ="만들기" onclick="location.href='${pageContext.request.contextPath}/channelMemo?command=create">
+	<input type ="button" value ="만들기" onclick="location.href='channelmemo?command=create'">
 	
-	<input type ="button" value ="삭제" onclick="location.href='${pageContext.request.contextPath}/channelMemo?command=delete">
+	<input type ="button" value ="삭제" onclick="location.href='channelmemo?command=delete">
 </form>
 
 </body>

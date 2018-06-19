@@ -17,10 +17,10 @@ import com.keychat.dto.base.ChannelsMemoModel;
 import com.keychat.dto.base.UsersModel;
 import com.keychat.dto.util.ResponseModel;
 
-@WebServlet(urlPatterns = "/channelMemo")
+@WebServlet("/channelmemo")
 public class ChannelMemoController extends HttpServlet {
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+request.setCharacterEncoding("UTF-8");
 		
 		System.out.println("00000001111111111111222222222222222");
 		
@@ -126,4 +126,5 @@ public class ChannelMemoController extends HttpServlet {
 			response.sendError(500, new ResponseModel(500, "fail", "Cannot get user info").toString());
 		}
 	}
+
 }

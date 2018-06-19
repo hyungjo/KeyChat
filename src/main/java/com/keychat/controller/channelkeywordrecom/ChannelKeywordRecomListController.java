@@ -88,11 +88,9 @@ public class ChannelKeywordRecomListController extends HttpServlet {
 			    	String category2 = categories2[0];
 			    	double num2 = (double)Integer.valueOf(categories2[1]);
 			    	
-			    	double num3 = (double)0;
-			    	
 			    	double per1 = Math.floor(num1/(num1+num2)*100);
 			    	double per2 = Math.floor(num2/(num1+num2)*100);
-			    	double per3 = Math.floor(num3/(num1+num2+num3)*100);
+			    	double per3 = (double)0;
 			    	
 			    	request.setAttribute("category1", category1);
 			    	request.setAttribute("category2", category2);
@@ -100,16 +98,21 @@ public class ChannelKeywordRecomListController extends HttpServlet {
 			    	request.setAttribute("per1", per1);
 			    	request.setAttribute("per2", per2);
 			    	request.setAttribute("per3", per3);
+			    	
 			    }else if(categories.size() >= 1) {
 			    	String[] categories1 = categories.get(0);
 			    	String category1 = categories1[0];
 			    	double num1 = (double)Integer.valueOf(categories1[1]);
 			    	
 			    	double per1 = Math.floor(num1/(num1)*100);
+			    	double per2 = (double)0;
+			    	double per3 = (double)0;
 			    	
 			    	request.setAttribute("category1", category1);
 			    	
 			    	request.setAttribute("per1", per1);
+			    	request.setAttribute("per2", per2);
+			    	request.setAttribute("per3", per3);
 			    }else {
 	    			request.setAttribute("error", nonkeyword);
 	    			rd = request.getRequestDispatcher("/jsp/error.jsp");
