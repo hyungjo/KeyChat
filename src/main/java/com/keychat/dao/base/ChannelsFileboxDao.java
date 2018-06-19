@@ -50,12 +50,12 @@ public class ChannelsFileboxDao {
 	}
 
 	// 채널 이름 조회해서 박스에 업로드 된 파일들 보여주기 위해 select문 쿼리 발생
-	public static ArrayList<ChannelsFileboxModel> selectFile(String channel_name) throws SQLException {
+	public static ArrayList<String> selectFile(String channel_name) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "select file_path from channels_filebox where channel_name = ?";
-		ArrayList<ChannelsFileboxModel> list = new ArrayList<>();
+		ArrayList<String> list = new ArrayList<>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -63,7 +63,7 @@ public class ChannelsFileboxDao {
 			System.out.println(channel_name);
 			rset =pstmt.executeQuery();
 			while (rset.next()) {
-				list.add(new ChannelsFileboxModel(0, null, rset.getString(1), null));
+				list.add((rset.getString(1)));
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();

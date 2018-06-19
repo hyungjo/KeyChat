@@ -9,10 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.keychat.dao.base.ChannelsFileboxDao;
-import com.keychat.dao.base.ChannelsMemoDao;
-import com.keychat.dto.base.ChannelsFileboxModel;
-import com.keychat.dto.base.ChannelsMemoModel;
-import com.keychat.dto.base.ChannelsModel;
 import com.keychat.dto.base.UsersModel;
 import com.keychat.dto.util.ResponseModel;
 
@@ -25,16 +21,25 @@ public class ChannelFileboxListController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+
 //		String channel_name = request.getParameter("channel_name").trim();
 		ResponseModel res;
 		HttpSession session = request.getSession();
 		UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
 
-		ArrayList<ChannelsFileboxModel> list = null;
+
 		try {
-			list = ChannelsFileboxDao.selectFile("자유");
+			ArrayList<String> list = ChannelsFileboxDao.selectFile("자유");
+//			list = ChannelsFileboxDao.selectFile("자유");
 			if (loginUser != null && list != null){
-				request.setAttribute("list", list);
+
+
+				String[] str = new String[list.size()];
+				str = list.toArray(str);
+
+				for(String s : str){
+					System.out.println(s);
+				}
 
 				res = new ResponseModel(200, "success", list);
 				response.setContentType("application/json");

@@ -88,22 +88,22 @@ function getMyFile() {
         type: 'POST',
         url: '/channelfilebox/list',
         success: function (response) {
-            var file = document.getElementById('file-table');
-            var channelList = "";
-            var fileIndex = 1;
-
-            $.each(response.result, function (index, value) {
-
-                file.innerHTML += "<tr>" +
-                    " " + "<td>" + fileIndex + "</td>" +
-                    " " + "<td class='file-name'>" + name + "</td>" +
-                    " " + "<td>" + size + "</td>" +
-                    " " + "<td> <button> Download </button> </td>" +
-                    " " + "<td> <button> Delete </button> </td>" +
-                    " " + "</tr>";
-            });
-
-            $(".conversation-wrap").append(channelList);
+            // var file = document.getElementById('file-table');
+            // var channelList = "";
+            // var fileIndex = 1;
+            //
+            // $.each(response.result, function (index, value) {
+            //
+            //     file.innerHTML += "<tr>" +
+            //         " " + "<td>" + fileIndex + "</td>" +
+            //         " " + "<td class='file-name'>" + name + "</td>" +
+            //         " " + "<td>" + size + "</td>" +
+            //         " " + "<td> <button> Download </button> </td>" +
+            //         " " + "<td> <button> Delete </button> </td>" +
+            //         " " + "</tr>";
+            // });
+            //
+            // $(".conversation-wrap").append(channelList);
 
             alert("파일 불러오기 성공");
         },
