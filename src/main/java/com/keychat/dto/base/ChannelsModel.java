@@ -1,5 +1,8 @@
 package com.keychat.dto.base;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -82,21 +85,33 @@ public class ChannelsModel implements Serializable{
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
+
 		if (o == null || getClass() != o.getClass()) return false;
+
 		ChannelsModel that = (ChannelsModel) o;
-		return password == that.password &&
-				limitCapacity == that.limitCapacity &&
-				limitTime == that.limitTime &&
-				Objects.equals(name, that.name) &&
-				Objects.equals(leader, that.leader) &&
-				Objects.equals(limitAnonym, that.limitAnonym) &&
-				Objects.equals(createdDatetime, that.createdDatetime);
+
+		return new EqualsBuilder()
+				.append(limitCapacity, that.limitCapacity)
+				.append(limitTime, that.limitTime)
+				.append(name, that.name)
+				.append(leader, that.leader)
+				.append(password, that.password)
+				.append(limitAnonym, that.limitAnonym)
+				.append(createdDatetime, that.createdDatetime)
+				.isEquals();
 	}
 
 	@Override
 	public int hashCode() {
-
-		return Objects.hash(name, leader, password, limitCapacity, limitTime, limitAnonym, createdDatetime);
+		return new HashCodeBuilder(17, 37)
+				.append(name)
+				.append(leader)
+				.append(password)
+				.append(limitCapacity)
+				.append(limitTime)
+				.append(limitAnonym)
+				.append(createdDatetime)
+				.toHashCode();
 	}
 
 	@Override

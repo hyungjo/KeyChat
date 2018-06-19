@@ -1,10 +1,7 @@
 var socket;
 function chatInit(){
-    // var channelName = document.getElementById("channelName");
-
     var channelName = $("#channelRoom").val();
-    // var channelName = prompt();
-    socket = new WebSocket("ws://192.168.236.81:9999/chat/" + channelName);
+    socket = new WebSocket("ws://58.127.165.240:9999/chat/" + channelName);
 
     socket.onerror = function(message){
         onError(message);
@@ -17,7 +14,6 @@ function chatInit(){
 
 var a = document.getElementById("aaa");
 var p = document.getElementById("message-box");
-//var nick = document.getElementById("nickname");
 
 var sendmessage = document.getElementById("inputMessage");
 

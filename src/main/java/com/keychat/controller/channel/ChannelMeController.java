@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 
 @WebServlet(urlPatterns = "/channel/me")
 public class ChannelMeController extends HttpServlet {
@@ -28,7 +30,7 @@ public class ChannelMeController extends HttpServlet {
         UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
 //                  Dummy User
 //                UsersModel loginUser = new UsersModel(
-//                "ggg@naver.com",
+//                "hyungjo@gmail.com",
 //                "1234",
 //                "hello",
 //                "학생",
@@ -38,9 +40,13 @@ public class ChannelMeController extends HttpServlet {
         if(loginUser != null) {
             ArrayList<ChannelsModel> channelListByUser = ChannelsJoinDao.getChannelsByUser(loginUser);
             ArrayList<ChannelsModel> channelListByLeaderUser = ChannelsJoinDao.getChannelsByLeaderUser(loginUser);
-            ArrayList<ChannelsModel> channelList = new ArrayList<>();
-            channelList.addAll(channelListByLeaderUser);
-            channelList.addAll(channelListByUser);
+            ArrayList<ChannelsModel> channelListSum = new ArrayList<>();
+            channelListSum.addAll(channelListByLeaderUser);
+            channelListSum.addAll(channelListByUser);
+
+            //중복 제거
+            HashSet<ChannelsModel> listSet = new HashSet<ChannelsModel>(channelListSum);
+            ArrayList<ChannelsModel> channelList = new ArrayList<ChannelsModel>( listSet);
 
             if(channelList != null)
                 res = new ResponseModel(200, "success", channelList);

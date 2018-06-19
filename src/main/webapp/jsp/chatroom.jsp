@@ -196,7 +196,7 @@
                     </div>
                     <nav class="navbar">
                         <div id="title">
-                            <%=request.getAttribute("channelName")%>
+                            Chat
                         </div>
                         <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기" aria-label="Search">
                         <button id="btn_search" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
@@ -221,33 +221,54 @@
             </div>
         </div>
         <div class="col-md-5">
-
-
-            <h2>bootstrap 4 vertical tabs</h2>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#home" role="tab" aria-controls="home">Home</a>
+                    <a class="nav-link active" data-toggle="tab" href="#channelInfo" role="tab" aria-controls="channelInfo">채널 정보</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">Profile</a>
+                    <a class="nav-link" data-toggle="tab" href="#recommend" role="tab" aria-controls="recommend">추천 서비스</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-controls="messages">Messages</a>
+                    <a class="nav-link" data-toggle="tab" href="#schedule" role="tab" aria-controls="schedule">일정 관리/메모</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-controls="settings">Settings</a>
+                    <a class="nav-link" data-toggle="tab" href="#filebox" role="tab" aria-controls="filebox">파일방</a>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <div class="tab-pane active" id="home" role="tabpanel">1</div>
-                <div class="tab-pane" id="profile" role="tabpanel">..2.</div>
-                <div class="tab-pane" id="messages" role="tabpanel">.3..</div>
-                <div class="tab-pane" id="settings" role="tabpanel">.4..</div>
+                <div class="tab-pane active" id="channelInfo" role="tabpanel">
+                    <div class="row">
+                        <table class="table table-user-information">
+                            <tbody>
+                            <tr>
+                                <td>채널 명:</td>
+                                <td id="">Programming</td>
+                            </tr>
+                            <tr>
+                                <td>최대 참여자 수</td>
+                                <td>06/23/2013</td>
+                            </tr>
+                            <tr>
+                                <td>최대 유지 시간</td>
+                                <td>01/24/1988</td>
+                            </tr>
+                            <tr>
+                                <td>익명 여부</td>
+                                <td>Female</td>
+                            </tr>
+                            <tr>
+                                <td>채널 생성 시간</td>
+                                <td>Kathmandu,Nepal</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane" id="recommend" role="tabpanel">..2.</div>
+                <div class="tab-pane" id="schedule" role="tabpanel">.3..</div>
+                <div class="tab-pane" id="filebox" role="tabpanel">.4..</div>
             </div>
-
-
-
         </div>
     </div>
 </div>
@@ -284,6 +305,18 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/chatroom.js"></script>
 <script>
+    function noEvent() { // 새로 고침 방지
+        if (event.keyCode == 116) {
+            alert("새로고침을 할 수 없습니다.");
+            event.keyCode = 2;
+            return false;
+        } else if (event.ctrlKey
+            && (event.keyCode == 78 || event.keyCode == 82)) {
+            return false;
+        }
+    }
+    document.onkeydown = noEvent;
+
     $(document).ready(function(){
         //채널 접속
         chatInit();
