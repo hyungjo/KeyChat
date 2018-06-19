@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myPage.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/channels.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/register.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/search.css">
     <script src="${pageContext.request.contextPath}/js/index.js"></script>
     <script src="${pageContext.request.contextPath}/js/myPage.js"></script>
     <script src="${pageContext.request.contextPath}/js/channels.js"></script>
@@ -81,6 +82,7 @@
                 <input type="password" class="form-control" id="passwordInput" placeholder="비밀번호">
 
                 <button class="btn btn-lg btn-block" style="background: #000033; color: white;" data-dismiss="modal" onclick="login()">로그인</button>
+                <br><a id="search" href="${pageContext.request.contextPath}/jsp/search.jsp">E-Mail | Password 찾기</a>
             </div>
             <%--<div class="modal-footer">--%>
             <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
