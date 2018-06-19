@@ -12,20 +12,18 @@ import com.keychat.dto.base.ChannelsKeywordRecomModel;
 
 public class ChannelsKeywordRecomDao {
 	//키워드값을 받아와서 키워드테이블에 저장한다
-	public static boolean saveKeyword(ChannelsKeywordRecomModel channelsKeywordRecomModel) throws SQLException {
+	public static boolean saveKeyword(ChannelsKeywordRecomModel channelsKeywordRecomModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "INSERT INTO CHANNELS_KEYWORD_RECOM VALUES (CHANNELS_KEYWORD_RECOM_ID_SEQ.nextval, ?, ?, SYSTIMESTAMP)";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt = con.prepareStatement("delete from CHANNELS_KEYWORD_RECOM where KEYWORD like '%null%'");
 			pstmt.setString(1, channelsKeywordRecomModel.getKeyword());
 			pstmt.setString(2, channelsKeywordRecomModel.getChannel_name());
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();
-			throw s;
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
@@ -55,8 +53,9 @@ public class ChannelsKeywordRecomDao {
 		}
 		return list;
 	}
+
 	//카테고리 DB에 저장
-	public static boolean saveCategory(ChannelsCategoriesModel channelsCategoriesModel) throws SQLException {
+	public static boolean saveCategory(ChannelsCategoriesModel channelsCategoriesModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "INSERT INTO CHANNELS_CATEGORIES VALUES(CHANNELS_CATEGORIES_ID_SEQ.nextval, ?, ?, SYSTIMESTAMP)";
@@ -68,12 +67,12 @@ public class ChannelsKeywordRecomDao {
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
 			s.printStackTrace();
-			throw s;
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
 		return true;
 	}
+
 	//카테고리 불러오기
 	public static ArrayList<String[]> findCategory(String channel_name) throws SQLException {
 		Connection con = null;

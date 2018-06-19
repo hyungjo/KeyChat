@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.ibm.watson.developer_cloud.http.ServiceCall;
 import com.ibm.watson.developer_cloud.http.ServiceCallback;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
@@ -19,19 +21,26 @@ import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Ca
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.EntitiesOptions;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Features;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsOptions;
+import com.keychat.controller.util.JsonUtil;
 import com.keychat.dao.base.ChannelsChatHistoryDao;
 import com.keychat.dao.base.ChannelsKeywordRecomDao;
+import com.keychat.dto.base.ChannelChatHistoryReadModel;
 import com.keychat.dto.base.ChannelsCategoriesModel;
 import com.keychat.dto.base.ChannelsKeywordRecomModel;
+import com.keychat.dto.base.NLAResultModel;
+import com.keychat.dto.util.ResponseModel;
 
-@WebServlet(urlPatterns = "/channelKeywordRecom/analyzeContents")
+@WebServlet(urlPatterns = "/channelKeywordRecom/analyzeContents", asyncSupported = true)
 public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
 
 	@SuppressWarnings("unchecked")
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-    	String channel_name = request.getParameter("channel_name").trim();
-    	String contents = ChannelsChatHistoryDao.getHistory(channel_name);
+		ChannelChatHistoryReadModel channelChatHistoryReadModel = JsonUtil.getModelFromJsonRequest(request, ChannelChatHistoryReadModel.class);
+		final AsyncContext asyncContext = request.startAsync();
+		ResponseModel responseModel = null;
+    	String contents = ChannelsChatHistoryDao.getHistory(channelChatHistoryReadModel);
+		System.out.println(contents);
     	NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
                 "2018-03-16",
                 "cbb20eb6-c3cb-42bf-96db-7438bc3d87aa",
@@ -43,19 +52,15 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
         EntitiesOptions entitiesOptions = new EntitiesOptions.Builder()
                 .limit(5)
                 .build();
-
         KeywordsOptions keywordsOptions = new KeywordsOptions.Builder()
                 .limit(5)
                 .build();
-        
         CategoriesOptions categories = new CategoriesOptions();
-
         Features features = new Features.Builder()
                 .entities(entitiesOptions)
                 .keywords(keywordsOptions)
                 .categories(categories)
                 .build();
-
         AnalyzeOptions parameters = new AnalyzeOptions.Builder()
                 .text(text)
                 .features(features)
@@ -63,43 +68,54 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
         
         ServiceCall call = service.analyze(parameters);
         call.enqueue(new ServiceCallback<AnalysisResults>() {
+			ResponseModel responseModel = null;
+
 			@Override 
 			public void onResponse(AnalysisResults res) {
 				int size = res.getKeywords().size();
+				ArrayList<String> keyword = new ArrayList<String>();
             	for (int i = 0; i<size; i++) {
-					String keyword1 = res.getKeywords().get(i).getText().toString();
-					ChannelsKeywordRecomModel channelsKeywordRecomModel1 = new ChannelsKeywordRecomModel(0, keyword1, channel_name, null);
-					try {
-						ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel1);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					int size2 = res.getEntities().size();
-	            	for (int j = 0; j<size2; j++) {
-						String keyword2 = res.getEntities().get(j).getText().toString();
-						ChannelsKeywordRecomModel channelsKeywordRecomModel2 = new ChannelsKeywordRecomModel(0, keyword2, channel_name, null);
-						try {
-							ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel2);
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-	            	}
+					keyword.add(res.getKeywords().get(i).getText());
+					ChannelsKeywordRecomModel channelsKeywordRecomModel1 = new ChannelsKeywordRecomModel(0, res.getKeywords().get(i).getText(), channelChatHistoryReadModel.getChannelName(), null);
+					ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel1);
             	}
-            	int size3 = res.getCategories().size();
-            	for (int i = 0; i<size3; i++) {
-            		String category = res.getCategories().get(0).getLabel().toString();
-            		String word1 = category.split("/")[1];
-            		System.out.println(word1);
-					ChannelsCategoriesModel channelsCategoriesModel = new ChannelsCategoriesModel(0, word1, channel_name, null);
-					try {
-						ChannelsKeywordRecomDao.saveCategory(channelsCategoriesModel);
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
+
+				int size2 = res.getEntities().size();
+				ArrayList<String> entity = new ArrayList<String>();
+				for (int j = 0; j<size2; j++) {
+					entity.add(res.getEntities().get(j).getText());
+					ChannelsKeywordRecomModel channelsKeywordRecomModel2 = new ChannelsKeywordRecomModel(0, res.getEntities().get(j).getText(), channelChatHistoryReadModel.getChannelName(), null);
+					ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel2);
 				}
+
+            	int size3 = res.getCategories().size();
+				ArrayList<String> midCategory = new ArrayList<String>();
+            	for (int i = 0; i<size3; i++) {
+            		midCategory.add(res.getCategories().get(i).getLabel().split("/")[1]);
+					ChannelsCategoriesModel channelsCategoriesModel = new ChannelsCategoriesModel(0, res.getCategories().get(i).getLabel().split("/")[1], channelChatHistoryReadModel.getChannelName(), null);
+						ChannelsKeywordRecomDao.saveCategory(channelsCategoriesModel);
+				}
+
+				NLAResultModel nlaResultModel = new NLAResultModel(keyword, entity, midCategory);
+				responseModel = new ResponseModel(200, "success", nlaResultModel);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				try {
+					response.getWriter().write(new Gson().toJson(responseModel));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				asyncContext.complete();
             }
             @Override public void onFailure(Exception e) {
                 e.printStackTrace();
+				try {
+					response.sendError(500, new ResponseModel(500, "fail", "Cannot create channel").toString());
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				asyncContext.complete();
             }
         });
     }

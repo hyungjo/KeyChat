@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.keychat.controller.util.DBUtil;
+import com.keychat.dto.base.ChannelChatHistoryReadModel;
 import com.keychat.dto.base.ChannelsChatHistoryModel;
 
 
@@ -107,20 +108,22 @@ public class ChannelsChatHistoryDao {
 		return list;
 	}
 	
-	public static String getHistory(String channel_name) {
+	public static String getHistory(ChannelChatHistoryReadModel channelChatHistoryReadModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<String> list = new ArrayList<String>();
-		String listString = null;
-		String query = "SELECT CONTENTS, SENT_DATETIME FROM CHANNELS_CHAT_HISTORY WHERE CHANNEL_NAME=? AND ROWNUM<=50 ORDER BY 2 DESC";
+		StringBuilder contentsList = new StringBuilder();
+
+		String query = "select contents, sent_datetime from ( select contents, sent_datetime from channels_chat_history where channel_name = ? order by sent_datetime desc) where rownum <= ?";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, channel_name);
+			pstmt.setString(1, channelChatHistoryReadModel.getChannelName());
+			pstmt.setInt(2, channelChatHistoryReadModel.getCount());
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				list.add(rset.getString(1));
+				contentsList.append(rset.getString(1)).append("\t");
+				System.out.println(rset.getString(1));
 			}
 			
 		} catch (SQLException s) {
@@ -128,12 +131,7 @@ public class ChannelsChatHistoryDao {
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
-		/*String[] contents = list.toArray(new String[list.size()]);
-		return contents;*/
-		for (String s : list) {
-		    listString += s + "\t";
-		}
 
-		return listString;
+		return contentsList.toString();
 	}
 }

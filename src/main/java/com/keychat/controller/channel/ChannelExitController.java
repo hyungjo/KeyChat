@@ -21,6 +21,8 @@ public class ChannelExitController extends HttpServlet {
         UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
 		String email = loginUser.getEmail();
 		String channel_name = request.getParameter("channel_name");
+		//TODO 방장 나가면 채널 삭제
+
 		try {
 			boolean res = ChannelsJoinDao.dropChannelsJoin(email, channel_name);
 			if (res) {
