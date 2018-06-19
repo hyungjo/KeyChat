@@ -24,6 +24,7 @@ function getMyChannel() {
                 table.innerHTML += "<tr class='tr1'>"
                     + " " + "<td class='num' rowspan='2'>" + channelIndex++ + "</td>"
                     + " " + "<td class='channel-title'><a href='#' onclick='openChatroom(this)'>" + value.name + "</a></td>"
+                    + " " + "<td class='num' rowspan='2'><a href='/channelExit?channel_name="+value.name+"'>x</a></td>"
                     + " " + "</tr>"
                     + " " + "<tr class='tr2'>"
                     + " " + "<td class='channel-leader'>" + value.leader + "</td>"
