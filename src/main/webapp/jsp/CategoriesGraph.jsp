@@ -13,8 +13,13 @@
 </head>
 <body>
 
+<form action="${pageContext.request.contextPath}/channelKeywordRecom/analyzeContents" method="GET">
+<input type="text" name="channel_name" value="호중이바보">
+<input type="submit" value="000000000000000000000000">
+</form>
+
 <form action="${pageContext.request.contextPath}/channelKeywordRecom/list" method="POST">
-<input type="text" name="channel_name" value="자유">
+<input type="text" name="channel_name" value="호중이바보">
 <input type="submit" value="000000000000000000000000">
 </form>
 <table id="key">
