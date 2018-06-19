@@ -14,3 +14,10 @@
     background: #bfbfbf;
     color: white;
 }
+.col-md-offset-3 {
+	padding-top: 60px;
+    padding-bottom: 30px;
+}
+body {
+	min-height: 815px;
+}

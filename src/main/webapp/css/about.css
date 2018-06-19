@@ -3,7 +3,12 @@
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-scrolling-nav/blob/master/LICENSE)
  */
-
+.righttext {
+	padding-left: 20px;
+}
+.lefttext {
+	padding-right: 20px;
+}
 header {
     padding: 154px 0 100px;
 }
