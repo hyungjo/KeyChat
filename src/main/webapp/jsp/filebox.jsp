@@ -14,15 +14,16 @@
         <link rel="stylesheet" type="text/css" href="../css/filebox.css">
     </head>
     <body>
-        <form action="channelfilebox/create" method="post" >
+
+        <form action="channelfilebox/create" method="post" enctype="multipart/form-data">
             <div class="filebox bs3-primary preview-image">
 
                 <input type="text" class="upload-name" disabled="disabled" style="width: 200px;">
 
                 <label for="input_file">업로드</label>
-                <input type="file" id="input_file" class="upload-hidden">
+                <input type="file" id="input_file" class="upload-hidden" name="input_file">
 
-                <button type="submit" class="upload">올리기</button>
+                <button type="submit">올리기</button>
                 <b> ※ exe는 올릴 수 없습니다. </b>
             </div>
         </form>
