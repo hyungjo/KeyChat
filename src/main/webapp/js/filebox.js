@@ -83,36 +83,6 @@ $('#input_file').change(function() {
     sss = size
 });
 
-function getMyFile() {
-    $.ajax({
-        type: 'POST',
-        url: '/channelfilebox/list',
-        success: function (response) {
-            var file = document.getElementById('file-table');
-            var channelList = "";
-            var fileIndex = 1;
-
-            $.each(response.result, function (index, value) {
-
-                file.innerHTML += "<tr>" +
-                    " " + "<td>" + fileIndex + "</td>" +
-                    " " + "<td class='file-name'>" + name + "</td>" +
-                    " " + "<td>" + size + "</td>" +
-                    " " + "<td> <button> Download </button> </td>" +
-                    " " + "<td> <button> Delete </button> </td>" +
-                    " " + "</tr>";
-            });
-
-            $(".conversation-wrap").append(channelList);
-
-            alert("파일 불러오기 성공");
-        },
-        error: function (response) {
-            alert("파일 불러오기 실패");
-        }
-    });
-}
-
 function createFilebox() {
     var reqJson = {
         requestMsg: {
@@ -127,7 +97,7 @@ function createFilebox() {
 
     $.ajax({
         type: 'POST',
-        url: '/channelfilebox/create',
+        url: '/jsp/channelfilebox/create',
         data: JSON.stringify(reqJson),
         async: false,
         contentType: 'application/json; charset=utf-8',
@@ -139,6 +109,36 @@ function createFilebox() {
         error: function (response) {
             console.log(response);
             alert("파일 생성 실패");
+        }
+    });
+}
+
+function getMyFile() {
+    $.ajax({
+        type: 'POST',
+        url: '/jsp/channelfilebox/list',
+        success: function (response) {
+            var file = document.getElementById('file-table');
+            var channelList = "";
+            // var fileIndex = 1;
+
+            $.each(response.result, function (index, value) {
+
+                file.innerHTML += "<tr>" +
+                    " " + "<td> 1 </td>" +
+                    " " + "<td class='file-name'> 2 </td>" +
+                    " " + "<td> 3 </td>" +
+                    " " + "<td> <button> Download </button> </td>" +
+                    " " + "<td> <button> Delete </button> </td>" +
+                    " " + "</tr>";
+            });
+
+            $(".conversation-wrap").append(channelList);
+
+            alert("파일 불러오기 성공");
+        },
+        error: function (response) {
+            alert("파일 불러오기 실패");
         }
     });
 }
