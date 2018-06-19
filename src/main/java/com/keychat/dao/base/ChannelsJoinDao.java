@@ -11,21 +11,22 @@ import com.keychat.dto.base.UsersModel;
 
 public class ChannelsJoinDao  {
 	//CHANNELS_JOIN에서 EMAIL을 찾아 회원을 탈퇴 한다. 
-	public static void dropChannelsJoin(String email) throws SQLException{
+	public static boolean dropChannelsJoin(String email, String channel_name) throws SQLException{
     	Connection con = null;
 		PreparedStatement pstmt = null;
-		String query = "DELETE FROM CHANNELS_JOIN WHERE EMAIL=?";
+		String query = "DELETE FROM CHANNELS_JOIN WHERE EMAIL=? AND CHANNEL_NAME=?";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, email);
+			pstmt.setString(2, channel_name);
 			pstmt.executeQuery();
 		} catch (SQLException s) {
 			s.printStackTrace();
 			throw s;
 		} finally {
 			DBUtil.close(pstmt, con);
-		}
+		}return true;
 	}
 	//시청인원순 출력
 	public static ArrayList<ChannelsJoinModel> descChannelName() throws SQLException {
