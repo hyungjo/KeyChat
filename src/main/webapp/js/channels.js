@@ -91,7 +91,7 @@ function getChannels() {
             var channelsListRow = "";
             $.each(response.result, function (index, value) {
                 channelsListRow += "<tr>\n" +
-                    "            <td class='channel-name'>" + value.name + "</td>\n" +
+                    "            <td class='channel-name'>" + "<a href='#' onclick='openChatroom(this)'>" + value.name + "</a>" + "</td>\n" +
                     "            <td>" + value.leader + "</td>\n" +
                     "            <td>" + value.limitCapacity + "</td>\n" +
                     "            <td>" + value.limitTime + "</td>\n" +

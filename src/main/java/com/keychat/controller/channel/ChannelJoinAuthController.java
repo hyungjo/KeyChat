@@ -20,15 +20,9 @@ public class ChannelJoinAuthController extends HttpServlet {
     	request.setCharacterEncoding("UTF-8");
 		ResponseModel res = null;
 
-//		HttpSession session = request.getSession();
-//		UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
-		        UsersModel loginUser = new UsersModel(
-                "ggg@naver.com",
-                "1234",
-                "hello",
-                "학생",
-                "010-111-1111"
-        );
+		HttpSession session = request.getSession();
+		UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
+
 		ChannelJoinAuthModel channelJoinAuthModel = JsonUtil.getModelFromJsonRequest(request, ChannelJoinAuthModel.class);
 		boolean isAuth = ChannelsDao.isChannelAuthUser(channelJoinAuthModel);
 

@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.keychat.dto.base.UsersModel" %><%--
   Created by IntelliJ IDEA.
   User: keh_a
   Date: 2018-06-05
@@ -180,12 +180,14 @@
 -->
 <div class="container">
     <div class="row">
-        <div id="col-md-5">
+        <div class="col-md-5">
             <div class="panel">
                 <div class="panel-heading">
                     <div id="dd">
                         <%--<br>--%>
                         <input type="hidden" id="channelRoom" value="<%=request.getAttribute("channelName")%>"/>
+                        <input type="hidden" id="username" value="<%=((UsersModel)(session.getAttribute("loginUser"))).getNickname()%>"/>
+                        <input type="hidden" id="useremail" value="<%=((UsersModel)(session.getAttribute("loginUser"))).getEmail()%>"/>
                         <%--<input id="username" style="width: 20%;" type="text"/>--%>
                         <%--<input id="channelName" style="width: 20%;" type="text" value="a"/>--%>
                         <%--<input type="button" value="소켓 연결" onclick="chatInit();">--%>
@@ -217,6 +219,35 @@
                     </span>
                 </div>
             </div>
+        </div>
+        <div class="col-md-5">
+
+
+            <h2>bootstrap 4 vertical tabs</h2>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#home" role="tab" aria-controls="home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-controls="messages">Messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-controls="settings">Settings</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="home" role="tabpanel">1</div>
+                <div class="tab-pane" id="profile" role="tabpanel">..2.</div>
+                <div class="tab-pane" id="messages" role="tabpanel">.3..</div>
+                <div class="tab-pane" id="settings" role="tabpanel">.4..</div>
+            </div>
+
+
+
         </div>
     </div>
 </div>
@@ -254,7 +285,13 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/chatroom.js"></script>
 <script>
     $(document).ready(function(){
+        //채널 접속
+        chatInit();
+
+        //비밀번호 입력
         $('#channelPasswordModal').modal({backdrop: 'static', keyboard: false}) ;
+
+
     });
 
     $(function() {

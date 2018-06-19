@@ -7,7 +7,7 @@
 		<div class="row">
 			<div
 				class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-				<form role="form" action="user/signup" method="POST">
+				<form role="form" action="${pageContext.request.contextPath}/user/signup" method="POST">
 					<h2>회원가입</h2>
 					<hr class="colorgraph">
 					<div class="row">

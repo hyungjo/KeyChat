@@ -4,7 +4,7 @@ function chatInit(){
 
     var channelName = $("#channelRoom").val();
     // var channelName = prompt();
-    socket = new WebSocket("ws://localhost:9999/chat/" + channelName);
+    socket = new WebSocket("ws://192.168.236.81:9999/chat/" + channelName);
 
     socket.onerror = function(message){
         onError(message);
@@ -116,6 +116,7 @@ function send(){
             p.innerHTML += "<div id='chat-me-message' class='mess'>" + msg1 + "</div> <br/>";
             p.innerHTML += "<div id='chat-me-time'>" + str_time + "</div> <br/>";
             socket.send(JSON.stringify(jsonObj));
+            createChatHistory(msg1);
             inputMessage.value = "";
         }
         inputMessage.focus();
@@ -143,6 +144,29 @@ function isAuthUser(){
         },
         error: function (response) {
             alert("채널 인증 실패");
+        }
+    });
+}
+
+function createChatHistory(msg){
+    var reqJson = {requestMsg: {
+            email: $("#useremail").val(),
+            channel_name: $("#channelRoom").val(), //값을 못가져옴 화면이 로딩되기 전이기 때문
+            contents: msg
+        }};
+    console.log("createChatHistory: ");
+    console.log(reqJson);
+    $.ajax({
+        type: 'POST',
+        url: '/chathistory/create',
+        data: JSON.stringify(reqJson),
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            console.log(response.result.contents);
+        },
+        error: function (response) {
+            console.log(response);
+            alert("채팅 메시지 DB 입력 에러");
         }
     });
 }

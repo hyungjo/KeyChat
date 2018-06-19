@@ -35,6 +35,7 @@ public class ChannelsChatHistoryDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		boolean success = false;
+		System.out.println(channelsChatHistoryModel.toString());
 		String query = "insert into channels_chat_history values(CHANNELS_CHAT_HISTORY_ID_SEQ.NEXTVAL, ?, ?, ?, ?)";
 		try {
 			con = DBUtil.getConnection();
@@ -66,8 +67,7 @@ public class ChannelsChatHistoryDao {
 			pstmt.setString(1, channelsChatHistoryModel.getChannel_name());
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-
-				list.add(new ChannelsChatHistoryModel(rset.getInt(1),
+				list.add(new ChannelsChatHistoryModel(
 														rset.getString(2),
 														rset.getString(3),
 														rset.getString(4),
