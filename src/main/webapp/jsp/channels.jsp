@@ -10,7 +10,7 @@
             </div>
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="" href="#" data-toggle="modal" data-target="#createChannelModal">새 채널 생성</span>
+                    <span class="input-group-text" data-toggle="modal" data-target="#createChannelModal">새 채널 생성</span>
                 </div>
                 <input type="text" id="channel-search2" class="form-control" placeholder="Search ... ">
             </div>
@@ -50,12 +50,12 @@
                 <div class="form-group col-3">
                     <input class="form-control input-lg" id="channel-search1" type="text">
                 </div>
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-secondary" role="alert">
                     <h4 class="alert-heading">HOT # Tags</h4>
-                    <p class="mb-0">Top 5</p>
-                    <div id="hothashtagslist">
+                    <p class="mb-0">핫한 태그들이 나옵니다. 태그를 선택하시면 태그를 사용하는 방을 볼 수 있습니다.</p><br>
+                    <div id="hothashtagslist" style="text-size:15px;">
                         <%--링크 기능 추가(누르면 검색 결과에 태그로 검색 되게--%>
-                        <%--<a href="#">News <span class="badge">5</span></a>--%>
+                        <%--<a class="alert-link" href="#">News <span class="badge">5</span></a>--%>
                     </div>
                 </div>
                 <div class="table-wrapper">
@@ -105,7 +105,7 @@
             </div>
         </div>
     </div>
-
+</div>
 
     <!-- Login Modal -->
     <div class="modal fade" id="createChannelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

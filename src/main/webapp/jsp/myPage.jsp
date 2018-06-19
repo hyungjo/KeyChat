@@ -3,7 +3,7 @@
 <jsp:include page="/header.jsp" flush="false"/>
 
 <div class="container">
-    <div class="row">
+    <div class="row1">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <h2>내 정보</h2>
                 <hr class="colorgraph">
@@ -12,9 +12,6 @@
                 </div>
                 <div class="form-group">
                     닉네임 : <input type="text" name="nicknamefield" id="modiNickname" class="form-control input-lg" placeholder="닉네임" tabindex="3">
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6">
-                    <div class="form-group"></div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6">

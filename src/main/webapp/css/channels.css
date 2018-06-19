@@ -1,3 +1,7 @@
+.container-fluid {
+	padding-top: 20px;
+}
+
 .col-3 {
     flex: 0 0 25%;
     max-width: none;
@@ -8,6 +12,7 @@
     box-shadow: -2px 0 3px #ddd;
     padding:0;
     overflow: auto;
+    padding: 20px;
 }
 .conversation
 {
@@ -20,8 +25,7 @@
 .message-wrap
 {
     box-shadow: 0 0 3px #ddd;
-    padding:0;
-
+    padding: 15px;
 }
 .msg
 {
@@ -154,8 +158,6 @@
 body::-webkit-scrollbar {
     width: 12px;
 }
-
-
 /* Let's get this party started */
 ::-webkit-scrollbar {
     width: 6px;

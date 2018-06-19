@@ -25,3 +25,20 @@ section {
 .bg-light2 {
 	background-color: #f2f2f2;
 }
+
+.st {
+	font-size: medium;
+}
+
+h2 {
+	margin-bottom: 15px;
+}
+
+#keychat1 {
+   list-style: none;
+   font-size: xx-small;
+   }
+   
+.b {
+	font-size: large;
+}
