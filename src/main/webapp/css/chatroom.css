@@ -1,5 +1,14 @@
 @charset "UTF-8";
 
+.one{
+    background-color: #00004d;
+    color:aliceblue
+}
+
+.navbar{
+    border-bottom: 1px solid
+}
+
 .user-row {
     margin-bottom: 14px;
 }
@@ -31,7 +40,7 @@
     border-top: 0;
 }
 .toppad {
-	margin-top:20px;
+    margin-top:20px;
 }
 
 .nav.nav-tabs {
@@ -49,24 +58,35 @@
 }
 
 .nav-link{
+    color: white;
     height: 153px;
     writing-mode: tb-rl;
     text-align: center;
     border: 1px solid black;
 }
 
+.nav-link:hover{
+    font-weight: bold;
+    color: white;
+}
+
 .nav-item{
-    border: 1px solid black;
+    border-top: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-bottom:  1px solid lightgray;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .nav-tabs .nav-link {
-    border: 1px solid black;
+
     border-top-left-radius: .25rem;
     border-top-right-radius: .25rem;
-    background-color: #DFDFF6;
+    background-color: #787878;
 }
 
 .nav-tabs .nav-link.active {
+    border-top: 1px solid lightgray;
     color: #495057;
     /*background-color:#007bff !important;*/
 }
@@ -77,11 +97,13 @@
 }
 .tab-content>.active {
     width: 390px;
-    border: 1px solid black;
+    border-right: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
     margin-top: 54px;
     display: block;
     /*background: #007bff;*/
-    margin-left: -166px;
+    margin-left: -170px;
     height: 617px;
 }
 .nav.nav-tabs {
@@ -116,7 +138,7 @@
 }
 
 .panel-footer{
-    margin-top: 4.7rem;
+    margin-top: -134px;
     width: 440px;
 }
 
@@ -145,16 +167,22 @@
 #content-box{
     height: 88%;
     background-color: azure;
+    margin-top: 55px;
     margin-left: 10px;
     margin-right: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 13%;
     overflow: auto;
 }
 
 #chat-user{
     font-weight: bold;
     font-size: 18px
+}
+
+#inputMessage{
+    margin-left: 10px;
 }
 
 #chat-user-message{
@@ -204,14 +232,6 @@
 }
 
 @media screen and (max-width:476px){
-    .panel-footer{
-        margin-top: 6.5rem;
-    }
-
-    #dd{
-        margin-top: 10px;
-        margin-left: 10px;
-    }
 
     #Search{
         width: 200px;
@@ -222,12 +242,22 @@
     }
 
     .navbar{
-        width: 450px;
+        width: 420px;
+    }
+
+    #content-box{
+        margin-left: -5px;
+    }
+
+    .panel-footer{
+        margin-left: -15px;
+        width: 454px;
     }
 
     .panel{
         height: 590px;
     }
+
     .col-md-2{
         margin-left: 30px
     }
@@ -241,10 +271,10 @@
     }
 }
 tr.keyword td {
-	text-align: center;
+    text-align: center;
 }
 tr.entity td {
-	text-align: center;
+    text-align: center;
 }
 #key {
     width: 100%;
@@ -254,27 +284,27 @@ tr.entity td {
     padding-bottom: auto;
 }
 #keywords2 {
-	text-decoration: none;
-	font-size: 13pt;
+    text-decoration: none;
+    font-size: 13pt;
 }
 #keywords2:link{
-	color: #000000;
+    color: #000000;
 }
 #keywords2:hover{
-	font-weight: bold;
-	color: #000080;
+    font-weight: bold;
+    color: #000080;
 }
 #keywords2:active{
-	color: white;
-	text-shadow: 2px 2px 5px #00004d;
+    color: white;
+    text-shadow: 2px 2px 5px #00004d;
 }
 #keywords2:visited {
-	color: #d9d9d9;
+    color: #d9d9d9;
 }
 #aa {
-	text-align: right;
+    text-align: right;
 }
 #bb {
-	font-size: small;
-	color: gray;
+    font-size: small;
+    color: gray;
 }
