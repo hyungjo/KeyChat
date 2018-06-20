@@ -276,26 +276,30 @@
                 </div>
                 <div class="tab-pane" id="recommend" role="tabpanel">
                     <h3>채팅 분석 결과</h3>
-                    <h4>최근 대화 내용 분석 결과</h4>
-                    <input type="button" class="btn btn-primary" onclick="getNLAResultByCount()" value="분석">
-                    <div class="row">
-                        <div id="list_keyword"></div>
-                    </div>
-                    <div class="row">
-                        <div id="list_entity"></div>
-                    </div>
-                    <div class="row">
-                        <div id="list_category"></div>
-                    </div>
-                    <h4>누적 대화 내용 분석 결과</h4>
                     <input type="button" class="btn btn-primary" onclick="startRealTimeLAResult()" value="실시간 분석 시작">
                     <input type="button" class="btn btn-danger" onclick="stopRealTimeLAResult()" value="실시간 분석 중지">
-                    <div class="row">
-                        <div id="graph_keywordAndEntity"></div>
-                    </div>
-                    <div class="row">
-                        <div id="graph_category"></div>
-                    </div>
+                    <table id="key">
+                        <tr>
+                            <th colspan="5"><h2>&#60;주요 키워드&#62;</h2></th>
+                        </tr>
+                        <tr>
+                            <td colspan="5" id="aa"><a id="bb">키워드를 클릭하시면 자동검색 페이지가 나옵니다.</a><br>&nbsp;</td>
+                        </tr>
+                        <tr class="keyword" id = "keywordList">
+                            <%--키워드 목록 표시--%>
+                        </tr>
+                        <tr><th>&nbsp;</th></tr>
+                        <tr class="entity" id = "entityList">
+                            <%--엔티티 목록 표시--%>
+                        </tr>
+                        <tr><td colspan="5">&nbsp;<hr style="size:5px;">&nbsp;</td></tr>
+                        <tr>
+                            <th colspan="5"><h2>&#60;대화 주제 TOP3&#62;</h2></th>
+                        </tr>
+                        <tr id="category">
+                            <th colspan="5"><div id="graph_category"></div></th>
+                        </tr>
+                    </table>
                 </div>
                 <div class="tab-pane" id="schedule" role="tabpanel">
                     <h3>일정 관리 / 메모</h3>
@@ -376,8 +380,9 @@
 
     function startRealTimeLAResult() {
         realTimeResultUpdate = setInterval(function () {
+            getNLAResultByCount();
             getTotalNLAResult();
-        }, 5 * 1000);
+        }, 10 * 1000);
         // getTotalNLAResult();
     }
 
@@ -404,24 +409,17 @@
                 var keywordList = "";
                 keywordList += "<h5>키워드</h5>";
                 $.each(response.result.keyword, function (index, value) {
-                    keywordList += "<span class=\"badge badge-secondary\">" + value + "</span>";
+                    keywordList += "<td><a target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
                 });
-                $("#list_keyword").empty();
-                $("#list_keyword").append(keywordList);
+                $("#keywordList").empty();
+                $("#keywordList").append(keywordList);
 
                 var entityList = "";
                 $.each(response.result.entity, function (index, value) {
-                    entityList += "<span class=\"badge badge-secondary\">" + value + "</span>";
+                    entityList += "<td><a target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
                 });
-                $("#list_entity").append(entityList);
-
-                var midCategoryList = "";
-                midCategoryList += "<h5>카테고리</h5>";
-                $.each(response.result.midCategory, function (index, value) {
-                    midCategoryList += "<span class=\"badge badge-secondary\">" + value + "</span>";
-                });
-                $("#list_category").empty();
-                $("#list_category").append(midCategoryList);
+                $("#entityList").empty();
+                $("#entityList").append(keywordList);
 
             },
             error: function (response) {
@@ -435,7 +433,7 @@
         var reqJson = {
             requestMsg: {
                 channelName: $("#channelRoom").val(), //값을 못가져옴 화면이 로딩되기 전이기 때문
-                count: 500 //Dummy
+                count: 3
             }
         };
 
@@ -445,23 +443,15 @@
             data: JSON.stringify(reqJson),
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
-                $("#graph_keywordAndEntity").empty();
+                // $("#graph_keywordAndEntity").empty();
                 $("#graph_category").empty();
                 console.log(response);
-                var keywordAndEntity = [];
-                $.each(response.result.keywordAndEntity, function (index, value) {
-                    keywordAndEntity.push({label: index, value: value});
-                });
+
                 var category = [];
                 $.each(response.result.category, function (index, value) {
                     category.push({label: index, value: value});
                 });
 
-                Morris.Donut({
-                    element: 'graph_keywordAndEntity',
-                    data: keywordAndEntity,
-                    resize: true
-                }).redraw();
                 Morris.Donut({
                     element: 'graph_category',
                     data: category,

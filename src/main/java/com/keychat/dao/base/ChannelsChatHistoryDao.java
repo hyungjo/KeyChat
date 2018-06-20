@@ -123,7 +123,7 @@ public class ChannelsChatHistoryDao {
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				contentsList.append(rset.getString(1)).append("\t");
-				System.out.println(rset.getString(1));
+//				System.out.println(rset.getString(1));
 			}
 			
 		} catch (SQLException s) {

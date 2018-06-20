@@ -37,12 +37,13 @@ public class ChannelsKeywordRecomDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "select KEYWORD, count(KEYWORD) from CHANNELS_KEYWORD_RECOM where channel_name=? group by KEYWORD ORDER BY count(KEYWORD) DESC";
+		String query = "SELECT KEYWORD, COUNT(*) FROM (SELECT KEYWORD, CREATED_DATETIME FROM CHANNELS_KEYWORD_RECOM WHERE CHANNEL_NAME = ? ORDER BY CREATED_DATETIME DESC) WHERE ROWNUM <= ? GROUP BY KEYWORD";
 		Map<String, Integer> keywordList = new LinkedHashMap<>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, channelChatHistoryReadModel.getChannelName());
+			pstmt.setInt(2, channelChatHistoryReadModel.getCount());
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				keywordList.put(rset.getString(1), rset.getInt(2));
@@ -102,12 +103,13 @@ public class ChannelsKeywordRecomDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "select CATEGORIES, count(CATEGORIES) from CHANNELS_CATEGORIES where channel_name=? group by CATEGORIES ORDER BY count(CATEGORIES) DESC";
+		String query = "SELECT CATEGORIES, COUNT(*) FROM (SELECT CATEGORIES, DATETIME FROM CHANNELS_CATEGORIES WHERE CHANNEL_NAME = ? ORDER BY DATETIME DESC)  GROUP BY CATEGORIES";
 		Map<String, Integer> categoryList = new LinkedHashMap<>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, channelChatHistoryReadModel.getChannelName());
+//			pstmt.setInt(2, channelChatHistoryReadModel.getCount());
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				categoryList.put(rset.getString(1), rset.getInt(2));
