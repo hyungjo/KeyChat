@@ -31,6 +31,7 @@ public class ChannelsFileboxDao {
 
 	// 업로드시 CHANNELS_FILEBOX TABLE에서 INSERT문 쿼리 발생
 	public static boolean insertFile(String email, String file_path, String channel_name) {
+		System.out.println(email + " " + file_path + " " + channel_name);
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		boolean success = false;

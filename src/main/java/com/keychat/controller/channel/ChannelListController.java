@@ -22,16 +22,16 @@ public class ChannelListController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         ResponseModel res;
 
-//        HttpSession session = request.getSession();
-//        UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
+        HttpSession session = request.getSession();
+        UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
 
-        UsersModel loginUser = new UsersModel(
-                "ggg@naver.com",
-                "1234",
-                "hello",
-                "학생",
-                "010-111-1111"
-        );
+//        UsersModel loginUser = new UsersModel(
+//                "ggg@naver.com",
+//                "1234",
+//                "hello",
+//                "학생",
+//                "010-111-1111"
+//        );
         ArrayList<ChannelsModel> channelList = ChannelsDao.getChannelsInfo();
 
         if (loginUser != null && channelList != null) {

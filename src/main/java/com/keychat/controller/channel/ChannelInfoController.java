@@ -18,17 +18,17 @@ public class ChannelInfoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         ResponseModel res;
-        ChannelsModel channelsModel = JsonUtil.getModelFromJsonRequest(request, ChannelsModel.class);
-        ChannelsModel existChannelModel = ChannelsDao.getChannelInfoByName(channelsModel);
+        String channelName = request.getParameter("channelName");
+        ChannelsModel existChannelModel = ChannelsDao.getChannelInfoByName(channelName);
 
-        if(existChannelModel != null)
+        if(existChannelModel != null) {
             res = new ResponseModel(200, "success", existChannelModel);
-        else
-            res = new ResponseModel(500, "fail", "Cannot create user");
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(new Gson().toJson(res));
+        } else
+            res = new ResponseModel(500, "fail", "Cannot get channel info");
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(new Gson().toJson(res));
     }
 
 }

@@ -122,7 +122,7 @@ public class ChannelsDao {
         return success;
     }
 
-    public static ChannelsModel getChannelInfoByName(ChannelsModel channelsModel) {
+    public static ChannelsModel getChannelInfoByName(String channelName) {
         Connection con = null;
         PreparedStatement pstmt = null;
         String query = "SELECT * FROM CHANNELS WHERE NAME=?";
@@ -131,7 +131,7 @@ public class ChannelsDao {
         try {
             con = DBUtil.getConnection();
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1, channelsModel.getName());
+            pstmt.setString(1, channelName);
             ResultSet rset = pstmt.executeQuery();
             if (rset.next()) {
                 channelsModel1 = new ChannelsModel(rset.getString(1),
