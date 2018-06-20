@@ -34,9 +34,6 @@
 {margin-top:20px;
 }
 
-
-
-
 .nav.nav-tabs {
     float: left;
     display: block;
@@ -44,18 +41,34 @@
     border-bottom:0;
     border-right: 1px solid #ddd;
     padding-right: 15px;
+    margin-top: 54px;
 }
+
+.nav-tabs{
+    margin-left: -35px;
+}
+
+.nav-link{
+    height: 153px;
+    writing-mode: tb-rl;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.nav-item{
+    border: 1px solid black;
+}
+
 .nav-tabs .nav-link {
-    border: 1px solid transparent;
+    border: 1px solid black;
     border-top-left-radius: .25rem;
     border-top-right-radius: .25rem;
-    background: #ccc;
+    background-color: #DFDFF6;
 }
 
 .nav-tabs .nav-link.active {
     color: #495057;
     /*background-color:#007bff !important;*/
-    border-color: transparent !important;
 }
 .nav-tabs .nav-link {
     border: 1px solid transparent;
@@ -63,9 +76,13 @@
     border-top-right-radius: 0rem!important;
 }
 .tab-content>.active {
+    width: 390px;
+    border: 1px solid black;
+    margin-top: 54px;
     display: block;
     /*background: #007bff;*/
-    min-height: 165px;
+    margin-left: -166px;
+    height: 617px;
 }
 .nav.nav-tabs {
     float: left;
@@ -76,9 +93,14 @@
     padding-right: 15px;
 }
 
+.tab-pane{
+    padding: 20px;
+    overflow: auto;
+}
 
-
-
+#keyword{
+    overflow: auto;
+}
 
 
 
@@ -94,6 +116,7 @@
 
 .panel-footer{
     margin-top: 4.7rem;
+    width: 440px;
 }
 
 #Search{
@@ -119,7 +142,7 @@
 }
 
 #content-box{
-    height: 75%;
+    height: 88%;
     background-color: azure;
     margin-left: 10px;
     margin-right: 10px;
@@ -179,9 +202,9 @@
     background-color: black;
 }
 
-@media screen and (max-width:786px){
+@media screen and (max-width:476px){
     .panel-footer{
-        margin-top: 5.5rem;
+        margin-top: 6.5rem;
     }
 
     #dd{
@@ -190,14 +213,29 @@
     }
 
     #Search{
-        width: 210px;
+        width: 200px;
     }
 
     #btn_search{
         margin-left: 10px;
     }
 
+    .navbar{
+        width: 450px;
+    }
+
     .panel{
         height: 590px;
+    }
+    .col-md-2{
+        margin-left: 30px
+    }
+    .tab-content{
+        width: 20px;
+        margin-left: 220px;
+        margin-top: -670px;
+    }
+    .tab-pane{
+        padding: 50px;
     }
 }
