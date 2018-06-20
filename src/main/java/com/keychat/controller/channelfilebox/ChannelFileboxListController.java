@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.keychat.controller.util.JsonUtil;
 import com.keychat.dao.base.ChannelsFileboxDao;
+import com.keychat.dto.base.ChannelJoinAuthModel;
 import com.keychat.dto.base.UsersModel;
 import com.keychat.dto.util.ResponseModel;
 
@@ -24,14 +26,13 @@ public class ChannelFileboxListController extends HttpServlet {
 
 //		String channel_name = request.getParameter("channel_name").trim();
 		ResponseModel res;
-		HttpSession session = request.getSession();
-		UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
+//		HttpSession session = request.getSession();
+//		UsersModel loginUser = (UsersModel) session.getAttribute("loginUser");
+		ChannelJoinAuthModel channelJoinAuthModel = JsonUtil.getModelFromJsonRequest(request, ChannelJoinAuthModel.class);
 
 		try {
-			ArrayList<String> list = ChannelsFileboxDao.selectFile("자유");
-			if (loginUser != null && list != null){
-
-
+			ArrayList<String> list = ChannelsFileboxDao.selectFile(channelJoinAuthModel.getChannelName());
+			if (list != null){
 				String[] str = new String[list.size()];
 				str = list.toArray(str);
 
@@ -49,6 +50,5 @@ public class ChannelFileboxListController extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		request.getRequestDispatcher("#").forward(request, response);
 	}
 }

@@ -74,7 +74,7 @@
                         관리/메모</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#filebox" role="tab" aria-controls="filebox">파일방</a>
+                    <a class="nav-link" data-toggle="tab" href="#filebox" onclick="getFileList()" role="tab" aria-controls="filebox">파일방</a>
                 </li>
             </ul>
         </div>
@@ -257,6 +257,38 @@
 
     }
 
+    function getFileList(){
+        var reqJson = {requestMsg: {
+                channelName: $("#channelRoom").val(), //값을 못가져옴 화면이 로딩되기 전이기 때문
+                password: null
+            }};
+        var fileList = "";
+        var count = 1;
+        $.ajax({
+            type: 'POST',
+            url: '/channelfilebox/list',
+            data: JSON.stringify(reqJson),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $.each(response.result, function (index, value) {
+                    var fileName = value.split("/").reverse()[0];
+                    fileList += "<table id=\"file-table\">\n" +
+                        "                    <tr>" +
+                        "                    <th>" + count++ + "</th>" +
+                        "                <th><a href=\'" + value + "\'> " + fileName + "</th>" +
+                        "                <th> </th>" +
+                        "                <th> </th>" +
+                        "                <th> </th>" +
+                        "                </tr>";
+                });
+                $("#file-table").empty();
+                $("#file-table").append(fileList);
+            },
+            error: function (response) {
+                alert("비밀번호가 틀렸습니다.");
+            }
+        });
+    }
     //실시간 그래프
     function getTotalNLAResult() {
         var reqJson = {
@@ -323,6 +355,7 @@
             processData: false,
             success : function(data) {
                 alert("파일 업로드 성공");
+                getFileList();
             },
             error: function(response) {
                 alert("파일 업로드 실패");
