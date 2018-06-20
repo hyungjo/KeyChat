@@ -179,7 +179,7 @@
         </div>
     </div>
 -->
-<div class="container">
+<div class="container" style="margin-right: 0px;  margin-left: 0px;">
     <div class="row">
         <div class="col-md-5">
             <div class="panel">
@@ -275,10 +275,9 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="recommend" role="tabpanel">
-                    <h3>채팅 분석 결과</h3>
                     <input type="button" class="btn btn-primary" onclick="startRealTimeLAResult()" value="실시간 분석 시작">
                     <input type="button" class="btn btn-danger" onclick="stopRealTimeLAResult()" value="실시간 분석 중지">
-                    <table id="key">
+                    <table id="key" style="border-collapse: unset;">
                         <tr>
                             <th colspan="5"><h2>&#60;주요 키워드&#62;</h2></th>
                         </tr>
@@ -431,16 +430,15 @@
                 //표 안망가지게 전체 td 출력
                 console.log(response);
                 var keywordList = "";
-                keywordList += "<h5>키워드</h5>";
                 $.each(response.result.keyword, function (index, value) {
-                    keywordList += "<td><a target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
+                    keywordList += "<td><a id='keywords2' target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
                 });
                 $("#keywordList").empty();
                 $("#keywordList").append(keywordList);
 
                 var entityList = "";
                 $.each(response.result.entity, function (index, value) {
-                    entityList += "<td><a target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
+                    entityList += "<td><a id='keywords2' target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
                 });
                 $("#entityList").empty();
                 $("#entityList").append(entityList);
