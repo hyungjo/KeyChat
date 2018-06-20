@@ -185,13 +185,13 @@
                 <form>
                     <div class="form-group">
                         <label for="channelPasswordField" class="control-label">비밀번호 입력:</label>
-                        <input type="password" class="form-control" id="channelPasswordField">
+                        <input type="password" class="form-control" id="channelPasswordField" onkeydown="if(event.keyCode==13) javascript:chkEnter();">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
-                <button type="button" class="btn btn-primary" onclick="isAuthUser()">확인</button>
+                <button type="button" id="enterbtn" class="btn btn-primary" onclick="isAuthUser()">확인</button>
             </div>
         </div>
     </div>
@@ -217,6 +217,17 @@
             getTotalNLAResult();
         }, 10 * 1000);
         // getTotalNLAResult();
+    }
+    
+    function chkEnter() {
+    	if (event.which || event.keyCode) {
+    		if ((event.which == 13) || (event.keyCode == 13)) {
+    			document.getElementById("enterbtn").click();
+    			return false;
+    		}
+    	}else { 
+    		return true;
+    	}
     }
 
     function stopRealTimeLAResult() {

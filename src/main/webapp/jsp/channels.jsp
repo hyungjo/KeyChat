@@ -75,7 +75,6 @@
                                 <thead>
                                 <tr>
                                     <th>Name <i class="fa fa-sort"></i></th>
-                                    <th>Leader</th>
                                     <th>Capacity <i class="fa fa-sort"></i></th>
                                     <th>Time</th>
                                     <th>Anonym <i class="fa fa-sort"></i></th>
@@ -139,7 +138,7 @@
                             <input type="text" name="createChannelLmitHashtag" id="createChannelLmitHashtag" class="form-control input-lg" placeholder="해시태그(soccer, baseball, ...)" tabindex="3">
                         </div>
                         <div class="form-group">
-                            <input type="password" name="createChannelPassword" id="createChannelPassword" class="form-control input-lg" placeholder="비밀번호" tabindex="5">
+                            <input type="password" name="createChannelPassword" id="createChannelPassword" class="form-control input-lg" placeholder="비밀번호" tabindex="5" onkeydown="if(event.keyCode==13) javascript:chkEnter();">
                         </div>
 
                         <hr class="colorgraph">
@@ -184,6 +183,17 @@
                 myFunction2();
             }
         });
+        
+        function chkEnter() {
+        	if (event.which || event.keyCode) {
+        		if ((event.which == 13) || (event.keyCode == 13)) {
+        			document.getElementById("register").click();
+        			return false;
+        		}
+        	}else { 
+        		return true;
+        	}
+        }
 
         function myFunction1() {
             var input, filter, table, tr, td, i;

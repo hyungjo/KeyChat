@@ -23,7 +23,18 @@
 </head>
 
 <body>
-
+<script type="text/javascript">
+function chkEnter() {
+	if (event.which || event.keyCode) {
+		if ((event.which == 13) || (event.keyCode == 13)) {
+			document.getElementById("loginbtn").click();
+			return false;
+		}
+	}else { 
+		return true;
+	}
+}
+</script>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -80,9 +91,9 @@
                 <hr class="colorgraph"><br>
 
                 <input type="text" class="form-control" id="emailInput" placeholder="이메일">
-                <input type="password" class="form-control" id="passwordInput" placeholder="비밀번호">
+                <input type="password" class="form-control" id="passwordInput" placeholder="비밀번호" onkeydown="if(event.keyCode==13) javascript:chkEnter();">
 
-                <button class="btn btn-lg btn-block" style="background: #000033; color: white;" data-dismiss="modal" onclick="login()">로그인</button>
+                <button id="loginbtn" class="btn btn-lg btn-block" style="background: #000033; color: white;" data-dismiss="modal" onclick="login()">로그인</button>
                 <br><a id="search" href="${pageContext.request.contextPath}/jsp/search.jsp">E-Mail | Password 찾기</a>
             </div>
             <%--<div class="modal-footer">--%>

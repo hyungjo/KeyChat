@@ -81,7 +81,7 @@ public class ChannelsJoinDao  {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "SELECT CHANNEL_NAME FROM CHANNELS_JOIN WHERE EMAIL=? ORDER BY JOINED_DATETIME DESC";
-		ArrayList<String> list = null;
+		ArrayList<String> list = new ArrayList<>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -209,6 +209,28 @@ public class ChannelsJoinDao  {
 		}
 
 		return list;
+	}
+	
+	public static String getLeader(String channel_name) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select leader from channels where name = ?";
+		String res = null;
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channel_name);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				res = rset.getString(1);
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return res;
 	}
 
 	public static boolean isExistChannelUser(ChannelJoinAuthModel channelJoinAuthModel, UsersModel usersModel) {
