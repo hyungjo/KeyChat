@@ -61,8 +61,6 @@ function createChannel() {
         }
     };
 
-    console.log(reqJson);
-
     $.ajax({
         type: 'POST',
         url: '/channel/create',

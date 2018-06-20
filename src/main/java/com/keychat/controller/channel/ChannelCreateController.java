@@ -44,7 +44,6 @@ public class ChannelCreateController extends HttpServlet {
                 channelCreateModel.getLimitAnonym(),
                 new Timestamp(System.currentTimeMillis())
         );
-
         boolean isExist = ChannelsDao.isExistChannel(channelsModel);
         boolean isCreatedChannel = ChannelsDao.createChannel(channelsModel);
         boolean isCreatedHashtag = ChannelsHashtagDao.insertHashtag(channelCreateModel);

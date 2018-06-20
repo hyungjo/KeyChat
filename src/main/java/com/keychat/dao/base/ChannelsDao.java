@@ -1,20 +1,20 @@
 package com.keychat.dao.base;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelJoinAuthModel;
+import com.keychat.dto.base.ChannelsJoinModel;
 import com.keychat.dto.base.ChannelsModel;
+import com.sun.org.apache.bcel.internal.generic.Type;
 
 /**
  * The interface Channels dao.
  */
 public class ChannelsDao {
     // CHANNELS에서 LEADER을 찾아 회원을 탈퇴 한다.
+
     public static boolean dropChannel(ChannelsModel channelsModel) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -71,6 +71,51 @@ public class ChannelsDao {
         return list;
     }
 
+    public static boolean isChannelAnonym(ChannelJoinAuthModel channelsModel) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        boolean success = false;
+        String query = "SELECT LIMIT_ANONYM FROM CHANNELS WHERE NAME=?";
+        try {
+            con = DBUtil.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, channelsModel.getChannelName());
+            rset = pstmt.executeQuery();
+            if (rset.next()) {
+                if(rset.getString(1).equals("T"))
+                    success = true;
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            DBUtil.close(pstmt, con);
+        }
+        return success;
+    }
+
+    public static boolean isChannelPassword(ChannelJoinAuthModel channelsModel) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        boolean success = false;
+        String query = "SELECT * FROM CHANNELS WHERE NAME=? AND PASSWORD IS NOT NULL";
+        try {
+            con = DBUtil.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, channelsModel.getChannelName());
+            rset = pstmt.executeQuery();
+            if (rset.next()) {
+                success = true;
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            DBUtil.close(pstmt, con);
+        }
+        return success;
+    }
+
     // CHANNELS에 NAME, PASSWORD, LIMIT_CAPACITY, LIMIT_TIME, LIMIT_ANONYM을 추가한다.
     public static boolean createChannel(ChannelsModel channelsModel) {
         Connection con = null;
@@ -83,7 +128,10 @@ public class ChannelsDao {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, channelsModel.getName());
             pstmt.setString(2, channelsModel.getLeader());
-            pstmt.setString(3, channelsModel.getPassword());
+            if(channelsModel.getPassword() == null)
+                pstmt.setString(3, null);
+            else
+                pstmt.setString(3, channelsModel.getPassword());
             pstmt.setInt(4, channelsModel.getLimitCapacity());
             pstmt.setInt(5, channelsModel.getLimitTime());
             pstmt.setString(6, channelsModel.getLimitAnonym());

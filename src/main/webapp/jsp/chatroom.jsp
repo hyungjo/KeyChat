@@ -348,7 +348,8 @@
         chatInit();
 
         //비밀번호 입력
-        $('#channelPasswordModal').modal({backdrop: 'static', keyboard: false});
+        canJoinChannel();
+
 
 
     });

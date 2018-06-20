@@ -29,7 +29,7 @@ public class JsonUtil {
         JsonElement element = parser.parse(builder.toString());
         String jsonRequest = element.getAsJsonObject().get("requestMsg").getAsJsonObject().toString();
 
-        Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").serializeNulls().create();
         Object object = gson.fromJson(jsonRequest, (Type)classOfT);
 
         return Primitives.wrap(classOfT).cast(object);
