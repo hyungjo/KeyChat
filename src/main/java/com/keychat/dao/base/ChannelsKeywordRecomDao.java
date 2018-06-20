@@ -11,9 +11,52 @@ import java.util.Map;
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelChatHistoryReadModel;
 import com.keychat.dto.base.ChannelsCategoriesModel;
+import com.keychat.dto.base.ChannelsEntitiesModel;
 import com.keychat.dto.base.ChannelsKeywordRecomModel;
 
 public class ChannelsKeywordRecomDao {
+	public static boolean saveEntity(ChannelsEntitiesModel channelsEntitiesModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "INSERT INTO CHANNELS_ENTITIES VALUES(CHANNELS_ENTITIES_ID_SEQ.nextval, ?, ?, SYSTIMESTAMP)";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelsEntitiesModel.getEntities());
+			pstmt.setString(2, channelsEntitiesModel.getChannel_name());
+			pstmt.executeUpdate();
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return true;
+	}
+
+	public static ArrayList<String> getEntitiesList(ChannelChatHistoryReadModel channelChatHistoryReadModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "SELECT ENTITY  FROM (SELECT ENTITY, CREATED_DATE FROM CHANNELS_ENTITIES WHERE CHANNEL_NAME = ? ORDER BY CREATED_DATE DESC)  WHERE ROWNUM <= 5";
+
+		ArrayList<String> entityList = new ArrayList<String>();
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelChatHistoryReadModel.getChannelName());
+//			pstmt.setInt(2, channelChatHistoryReadModel.getCount());
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				entityList.add(rset.getString(1));
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return entityList;
+	}
+
 	//키워드값을 받아와서 키워드테이블에 저장한다
 	public static boolean saveKeyword(ChannelsKeywordRecomModel channelsKeywordRecomModel) {
 		Connection con = null;
@@ -33,20 +76,22 @@ public class ChannelsKeywordRecomDao {
 		return true;
 	}
 
-	public static Map<String, Integer> getKeywordList(ChannelChatHistoryReadModel channelChatHistoryReadModel) {
+
+
+	public static ArrayList<String> getKeywordList(ChannelChatHistoryReadModel channelChatHistoryReadModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT KEYWORD, COUNT(*) FROM (SELECT KEYWORD, CREATED_DATETIME FROM CHANNELS_KEYWORD_RECOM WHERE CHANNEL_NAME = ? ORDER BY CREATED_DATETIME DESC) WHERE ROWNUM <= ? GROUP BY KEYWORD";
-		Map<String, Integer> keywordList = new LinkedHashMap<>();
+		String query = "SELECT KEYWORD FROM (SELECT KEYWORD, CREATED_DATETIME FROM CHANNELS_KEYWORD_RECOM WHERE CHANNEL_NAME = ? ORDER BY CREATED_DATETIME DESC) WHERE ROWNUM <= 5";
+
+		ArrayList<String> keywordList = new ArrayList<String>();
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, channelChatHistoryReadModel.getChannelName());
-			pstmt.setInt(2, channelChatHistoryReadModel.getCount());
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				keywordList.put(rset.getString(1), rset.getInt(2));
+				keywordList.add(rset.getString(1));
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();
@@ -99,12 +144,14 @@ public class ChannelsKeywordRecomDao {
 		return true;
 	}
 
-	public static Map<String, Integer> getCategoryList(ChannelChatHistoryReadModel channelChatHistoryReadModel) {
+	public static ArrayList<String[]> getCategoryList(ChannelChatHistoryReadModel channelChatHistoryReadModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT CATEGORIES, COUNT(*) FROM (SELECT CATEGORIES, DATETIME FROM CHANNELS_CATEGORIES WHERE CHANNEL_NAME = ? ORDER BY DATETIME DESC)  GROUP BY CATEGORIES";
-		Map<String, Integer> categoryList = new LinkedHashMap<>();
+		String query = "SELECT CATEGORIES, COUNT(CATEGORIES) FROM (SELECT CATEGORIES, DATETIME FROM CHANNELS_CATEGORIES WHERE CHANNEL_NAME = ? ORDER BY DATETIME DESC) GROUP BY CATEGORIES order by count(CATEGORIES) desc";
+
+		ArrayList<String[]> list = new ArrayList<String[]>();
+
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -112,14 +159,19 @@ public class ChannelsKeywordRecomDao {
 //			pstmt.setInt(2, channelChatHistoryReadModel.getCount());
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
-				categoryList.put(rset.getString(1), rset.getInt(2));
+				String a = rset.getString(1);
+				String b = rset.getString(2);
+				String[] li = new String[2];
+				li[0] = a;
+				li[1] = b;
+				list.add(li);
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
-		return categoryList;
+		return list;
 	}
 
 	//카테고리 불러오기

@@ -26,14 +26,41 @@ public class ChannelKeywordRecomListController extends HttpServlet {
 		ChannelChatHistoryReadModel channelChatHistoryReadModel = JsonUtil.getModelFromJsonRequest(request, ChannelChatHistoryReadModel.class);
 		ResponseModel responseModel = null;
 
-		Map<String, Integer> keywordAndEntityList = ChannelsKeywordRecomDao.getKeywordList(channelChatHistoryReadModel);
-		Map<String, Integer> categoryList = ChannelsKeywordRecomDao.getCategoryList(channelChatHistoryReadModel);
+		ArrayList<String> keywordList = ChannelsKeywordRecomDao.getKeywordList(channelChatHistoryReadModel);
+		ArrayList<String> entityList = ChannelsKeywordRecomDao.getEntitiesList(channelChatHistoryReadModel);
+		ArrayList<String[]> categoryList = new ArrayList<>();
+		ArrayList<String[]> tempategoryList = ChannelsKeywordRecomDao.getCategoryList(channelChatHistoryReadModel);
+
+		String[] categories1 = tempategoryList.get(0);
+		String category1 = categories1[0];
+		double num1 = (double)Integer.valueOf(categories1[1]);
+
+		String[] categories2 = tempategoryList.get(1);
+		String category2 = categories2[0];
+		double num2 = (double)Integer.valueOf(categories2[1]);
+
+		String[] categories3 = tempategoryList.get(2);
+		String category3 = categories3[0];
+		double num3 = (double)Integer.valueOf(categories3[1]);
+
+		double per1 = Math.floor(num1/(num1+num2+num3)*100);
+		double per2 = Math.floor(num2/(num1+num2+num3)*100);
+		double per3 = Math.floor(num3/(num1+num2+num3)*100);
+
+		String [] a = {category1, String.valueOf(per1)};
+		String [] b = {category2, String.valueOf(per2)};
+		String [] c = {category3, String.valueOf(per3)};
+
+		categoryList.add(a);
+		categoryList.add(b);
+		categoryList.add(c);
 
 		NLATotalResultModel nlaTotalResultModel = new NLATotalResultModel(
-				keywordAndEntityList,
+				keywordList,
+				entityList,
 				categoryList
 		);
-		System.out.println(new Gson().toJson(nlaTotalResultModel));
+
 		if(nlaTotalResultModel != null) {
 			responseModel = new ResponseModel(200, "success", nlaTotalResultModel);
 			response.setContentType("application/json");

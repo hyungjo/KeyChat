@@ -8,27 +8,37 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class NLATotalResultModel implements Serializable {
-    private Map<String, Integer> keywordAndEntity;
-    private Map<String, Integer> category;
+    private ArrayList<String> keyword;
+    private ArrayList<String> entity;
+    private ArrayList<String[]> category;
 
-    public NLATotalResultModel(Map<String, Integer> keywordAndEntity, Map<String, Integer> category) {
-        this.keywordAndEntity = keywordAndEntity;
+    public NLATotalResultModel(ArrayList<String> keyword, ArrayList<String> entity, ArrayList<String[]> category) {
+        this.keyword = keyword;
+        this.entity = entity;
         this.category = category;
     }
 
-    public Map<String, Integer> getKeywordAndEntity() {
-        return keywordAndEntity;
+    public ArrayList<String> getKeyword() {
+        return keyword;
     }
 
-    public void setKeywordAndEntity(Map<String, Integer> keywordAndEntity) {
-        this.keywordAndEntity = keywordAndEntity;
+    public void setKeyword(ArrayList<String> keyword) {
+        this.keyword = keyword;
     }
 
-    public Map<String, Integer> getCategory() {
+    public ArrayList<String> getEntity() {
+        return entity;
+    }
+
+    public void setEntity(ArrayList<String> entity) {
+        this.entity = entity;
+    }
+
+    public ArrayList<String[]> getCategory() {
         return category;
     }
 
-    public void setCategory(Map<String, Integer> category) {
+    public void setCategory(ArrayList<String[]> category) {
         this.category = category;
     }
 
@@ -41,7 +51,8 @@ public class NLATotalResultModel implements Serializable {
         NLATotalResultModel that = (NLATotalResultModel) o;
 
         return new EqualsBuilder()
-                .append(keywordAndEntity, that.keywordAndEntity)
+                .append(keyword, that.keyword)
+                .append(entity, that.entity)
                 .append(category, that.category)
                 .isEquals();
     }
@@ -49,7 +60,8 @@ public class NLATotalResultModel implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(keywordAndEntity)
+                .append(keyword)
+                .append(entity)
                 .append(category)
                 .toHashCode();
     }
@@ -57,7 +69,8 @@ public class NLATotalResultModel implements Serializable {
     @Override
     public String toString() {
         return "NLATotalResultModel{" +
-                "keywordAndEntity=" + keywordAndEntity +
+                "keyword=" + keyword +
+                ", entity=" + entity +
                 ", category=" + category +
                 '}';
     }

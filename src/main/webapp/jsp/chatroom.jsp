@@ -286,8 +286,8 @@
                             <td colspan="5" id="aa"><a id="bb">키워드를 클릭하시면 자동검색 페이지가 나옵니다.</a><br>&nbsp;</td>
                         </tr>
                         <tr class="keyword" id = "keywordList">
-                            <%--키워드 목록 표시--%>
-                        </tr>
+                        <%--키워드 목록 표시--%>
+                    </tr>
                         <tr><th>&nbsp;</th></tr>
                         <tr class="entity" id = "entityList">
                             <%--엔티티 목록 표시--%>
@@ -406,21 +406,6 @@
             success: function (response) {
                 console.log(response);
 
-                var keywordList = "";
-                keywordList += "<h5>키워드</h5>";
-                $.each(response.result.keyword, function (index, value) {
-                    keywordList += "<td><a target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
-                });
-                $("#keywordList").empty();
-                $("#keywordList").append(keywordList);
-
-                var entityList = "";
-                $.each(response.result.entity, function (index, value) {
-                    entityList += "<td><a target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
-                });
-                $("#entityList").empty();
-                $("#entityList").append(keywordList);
-
             },
             error: function (response) {
             }
@@ -443,13 +428,28 @@
             data: JSON.stringify(reqJson),
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
-                // $("#graph_keywordAndEntity").empty();
-                $("#graph_category").empty();
+                //표 안망가지게 전체 td 출력
                 console.log(response);
+                var keywordList = "";
+                keywordList += "<h5>키워드</h5>";
+                $.each(response.result.keyword, function (index, value) {
+                    keywordList += "<td><a target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
+                });
+                $("#keywordList").empty();
+                $("#keywordList").append(keywordList);
 
+                var entityList = "";
+                $.each(response.result.entity, function (index, value) {
+                    entityList += "<td><a target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
+                });
+                $("#entityList").empty();
+                $("#entityList").append(entityList);
+
+
+                $("#graph_category").empty();
                 var category = [];
                 $.each(response.result.category, function (index, value) {
-                    category.push({label: index, value: value});
+                    category.push({label: value[0], value: value[1]});
                 });
 
                 Morris.Donut({

@@ -1,7 +1,7 @@
 var socket;
 function chatInit(){
     var channelName = $("#channelRoom").val();
-    socket = new WebSocket("ws://localhost:9999/chat/" + channelName);
+    socket = new WebSocket("ws://192.168.236.81:9999/chat/" + channelName);
 
     socket.onerror = function(message){
         onError(message);

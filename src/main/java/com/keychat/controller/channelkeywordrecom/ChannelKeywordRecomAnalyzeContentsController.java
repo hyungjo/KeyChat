@@ -24,10 +24,7 @@ import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Ke
 import com.keychat.controller.util.JsonUtil;
 import com.keychat.dao.base.ChannelsChatHistoryDao;
 import com.keychat.dao.base.ChannelsKeywordRecomDao;
-import com.keychat.dto.base.ChannelChatHistoryReadModel;
-import com.keychat.dto.base.ChannelsCategoriesModel;
-import com.keychat.dto.base.ChannelsKeywordRecomModel;
-import com.keychat.dto.base.NLAResultModel;
+import com.keychat.dto.base.*;
 import com.keychat.dto.util.ResponseModel;
 
 @WebServlet(urlPatterns = "/channelKeywordRecom/analyzeContents", asyncSupported = true)
@@ -85,8 +82,8 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
 				ArrayList<String> entity = new ArrayList<String>();
 				for (int j = 0; j<size2; j++) {
 					entity.add(res.getEntities().get(j).getText());
-					ChannelsKeywordRecomModel channelsKeywordRecomModel2 = new ChannelsKeywordRecomModel(0, res.getEntities().get(j).getText(), channelChatHistoryReadModel.getChannelName(), null);
-					ChannelsKeywordRecomDao.saveKeyword(channelsKeywordRecomModel2);
+					ChannelsEntitiesModel channelsEntitiesModel = new ChannelsEntitiesModel(0, res.getEntities().get(j).getText(), channelChatHistoryReadModel.getChannelName(), null);
+					ChannelsKeywordRecomDao.saveEntity(channelsEntitiesModel);
 				}
 
             	int size3 = res.getCategories().size();
@@ -98,7 +95,7 @@ public class ChannelKeywordRecomAnalyzeContentsController extends HttpServlet {
 				}
 
 				NLAResultModel nlaResultModel = new NLAResultModel(keyword, entity, midCategory);
-				responseModel = new ResponseModel(200, "success", nlaResultModel);
+				responseModel = new ResponseModel(200, "success", "done");
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				try {
