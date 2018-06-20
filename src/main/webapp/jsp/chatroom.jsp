@@ -318,7 +318,7 @@
                                 <label for="input_file">업로드</label>
                                 <input type="file" id="input_file" class="upload-hidden" name="input_file">
 
-                                <input type="button" onclick="fileUpload()" value="올리기"/>
+                                <input type="button" onclick="fileUpload()" value="올리기"/> <br>
                                 <b> ※ exe는 올릴 수 없습니다. </b>
                             </div>
                         </form>
