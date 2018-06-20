@@ -37,7 +37,7 @@ public class ChannelsKeywordRecomDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT ENTITY  FROM (SELECT ENTITY, CREATED_DATE FROM CHANNELS_ENTITIES WHERE CHANNEL_NAME = ? ORDER BY CREATED_DATE DESC)  WHERE ROWNUM <= 5";
+		String query = "SELECT ENTITY FROM (SELECT ENTITY, CREATED_DATE FROM CHANNELS_ENTITIES WHERE CHANNEL_NAME = ? ORDER BY CREATED_DATE DESC)  WHERE ROWNUM <= 5";
 
 		ArrayList<String> entityList = new ArrayList<String>();
 		try {
