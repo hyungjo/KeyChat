@@ -147,7 +147,7 @@
                                 <input type="button" id="register" value="만들기" class="btn btn-block btn-lg" tabindex="7" onclick="createChannel()">
                             </div>
                             <div class="col-xs-12 col-md-6">
-                                <input type="reset" class="btn btn-block btn-lg" value="취소">
+                                <input type="reset" class="btn btn-block btn-lg" value="취소" data-dismiss="modal">
                             </div>
                         </div>
                     </form>
@@ -166,6 +166,9 @@
     <jsp:include page="/footer.jsp" flush="false"/>
     <%--<script type="text/javascript" src="http://johannburkard.de/resources/Johann/jquery.highlight-5.js"></script>--%>
     <script>
+        //태그 폼
+        $("#createChannelLmitHashtag").tokenfield();
+
         $( document ).ready( function() {
             getMyChannel();
             getChannels();

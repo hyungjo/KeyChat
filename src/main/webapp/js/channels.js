@@ -57,7 +57,7 @@ function createChannel() {
             limitCapacity: $("#createChannelLmitCapacity").val(),
             limitTime: $("#createChannelLmitTime").val(),
             limitAnonym: $("#createChannelLmitAnonym").val(),
-            hashtags: $("#createChannelLmitHashtag").val().split(", ")
+            hashtags: $("#createChannelLmitHashtag").val().split(",")
         }
     };
 
