@@ -25,7 +25,7 @@ public class ChannelJoinAuthController extends HttpServlet {
 
 		ChannelJoinAuthModel channelJoinAuthModel = JsonUtil.getModelFromJsonRequest(request, ChannelJoinAuthModel.class);
 		boolean isAuth = ChannelsDao.isChannelAuthUser(channelJoinAuthModel);
-
+		//TODO 비밀번호가 맞아야 다음 단계 진행하도록 수정
 		//참여하지 않은 방이였다면 참여 내역에 추가
 		boolean isExistChannelUser = ChannelsJoinDao.isExistChannelUser(channelJoinAuthModel, loginUser);
 		boolean isJoinChannel = false;
