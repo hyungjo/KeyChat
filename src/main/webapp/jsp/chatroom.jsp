@@ -18,6 +18,14 @@
     <link rel="stylesheet" href="../css/chatroom.css">
 </head>
 <body>
+<%--채팅 및 접속자 정보--%>
+<input type="hidden" id="channelRoom" value="<%=request.getAttribute("channelName")%>"/>
+<input type="hidden" id="username"
+       value="<%=((UsersModel)(session.getAttribute("loginUser"))).getNickname()%>"/>
+<input type="hidden" id="useremail"
+       value="<%=((UsersModel)(session.getAttribute("loginUser"))).getEmail()%>"/>
+<%--채팅 및 접속자 정보 끝--%>
+
 <div class="container">
     <div class="row">
         <div class="col-md-5">
@@ -143,7 +151,7 @@
                                 <input type="text" class="upload-name" disabled="disabled" style="width: 200px;">
 
                                 <label for="input_file">업로드</label>
-                                <input type="file" id="input_file" class="upload-hidden" name="input_file">
+                                <input type="file" id="input_file" name="input_file">
 
                                 <input type="button" onclick="fileUpload()" value="올리기"/>
                                 <b> ※ exe는 올릴 수 없습니다. </b>
@@ -291,7 +299,7 @@
     function fileUpload() {
         var formData = new FormData();
         formData.append('file', $('#input_file')[0].files[0]);
-        formData.append('userEmail', $('#useremail').val());
+        formData.append('channelRoom', $('#channelRoom').val());
 
         $.ajax({
             url : 'channelfilebox/create',

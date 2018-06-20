@@ -41,7 +41,7 @@ public class ChannelFileboxCreateController extends HttpServlet {
 
 			try{
 				mr = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-				String channel_name = mr.getParameter("channel_name");
+				String channel_name = mr.getParameter("channelRoom");
 
 				System.out.println(channel_name);
 				String filename = mr.getFilesystemName("input_file");
