@@ -71,7 +71,7 @@ function onMessage(event){
 }
 
 function onError(event){
-    alert("연결 에러");
+    alert("채팅에 연결할 수 없습니다.");
 }
 
 function onOpen(event){
@@ -135,11 +135,10 @@ function isAuthUser(){
         data: JSON.stringify(reqJson),
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
-            alert("채널 인증 성공");
             $("#channelPasswordModal").modal('hide');
         },
         error: function (response) {
-            alert("채널 인증 실패");
+            alert("비밀번호가 틀렸습니다.");
         }
     });
 }
@@ -162,7 +161,6 @@ function createChatHistory(msg){
         },
         error: function (response) {
             console.log(response);
-            alert("채팅 메시지 DB 입력 에러");
         }
     });
 }

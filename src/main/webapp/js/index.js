@@ -17,13 +17,12 @@ function login(){
             // $("#channelBtn").toggle();
             // $("#nicknameField").toggle();
             console.log(response);
-            alert("로그인 성공");
-            location.reload();
+            location.href="/jsp/channels.jsp";
             // setUserNickname();
         },
         error: function (response) {
             console.log(response);
-            alert("로그인 실패");
+            alert("이메일 혹은 비밀번호가 틀렸습니다.");
         }
     });
 }
@@ -40,11 +39,9 @@ function logout(){
             // $("#channelBtn").toggle();
             // $("#nicknameField").toggle();
 
-            alert("로그아웃 성공");
             window.location.replace("/");
         },
         error: function (response) {
-            alert("로그아웃 실패");
         }
     });
 }
