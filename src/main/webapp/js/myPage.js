@@ -40,7 +40,7 @@ function updateUserInfo() {
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(reqJson),
         success: function (response) {
-            alert("수정 성공");
+            alert("정보 수정을 성공하였습니다.");
             $("#modiEmail").text(response.result.email);
             $("#modiNickname").val(response.result.nickname);
             $("#modiPhone").val(response.result.phone);
@@ -50,7 +50,7 @@ function updateUserInfo() {
             console.log(response);
         },
         error: function (response) {
-            alert("수정 실패");
+            alert("정보 수정을 실패하였습니다.");
             console.log(response);
         }
     });

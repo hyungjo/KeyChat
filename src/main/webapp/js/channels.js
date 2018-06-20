@@ -42,11 +42,9 @@ function getMyChannel() {
             });
 
             $(".conversation-wrap").append(channelList);
-
-            alert("내 채널 불러오기 성공");
         },
         error: function (response) {
-            alert("내 채널 불러오기 실패");
+            alert("내 채널을 불러오는데 실패하였습니다.");
         }
     });
 }
@@ -72,13 +70,12 @@ function createChannel() {
         async: false,
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
-            alert("채널 생성 성공");
             location.reload();
             // setUserNickname();
         },
         error: function (response) {
             console.log(response);
-            alert("로그인 실패");
+            alert("채널을 생성하는데 실패하였습니다.");
         }
     });
 }
@@ -105,10 +102,9 @@ function getChannels() {
                     "            </tr>";
             });
             $("#channelsListRow").append(channelsListRow);
-            alert("채널 리스트 성공")
         },
         error: function (response) {
-            alert("채널 리스트 실패");
+            alert("채널을 불러오는데 실패하였습니다.");
         }
     });
 }
@@ -125,10 +121,9 @@ function getHotHashtags() {
                 hothashtagslist += "<a class=\"alert-link\" href=\"#\">" + index + "<span class=\"badge\">" + value + "</span></a>";
             });
             $("#hothashtagslist").append(hothashtagslist);
-            alert("핫 해시태그 리스트 성공")
         },
         error: function (response) {
-            alert("핫 해시태그 리스트 실패");
+            alert("핫 해시태그 리스트를 불러올 수 없습니다.");
         }
     });
 }
