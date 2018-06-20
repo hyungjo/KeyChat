@@ -15,214 +15,41 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <!--
-    <style>
-        #wrapper{
-            position: absolute;
-            padding: 10px;
-            top: 10px;
-            left: 50%;
-            margin-left: -680px;
-            overflow: hidden;
-        }
-
-        #content{
-            width: 450px;
-            float: left;
-            padding: 10px;
-        }
-
-        #sidebar{
-            width: 200px;
-            height: 567px;
-            float: left;
-            padding: 10px;
-            margin-top: 45px;
-            overflow: auto;
-            background-color: antiquewhite;
-        }
-
-        table caption{
-            font-weight: bold;
-            height: 50px;
-            margin-bottom: 15px;
-            line-height: 3.3;
-            background-color: white;
-        }
-
-        td{
-            padding-top: 5px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        #back {
-            width: 450px;
-            height: 600px;
-            background-color: antiquewhite;
-        }
-
-        #title {
-            padding-top: 5px;
-        }
-
-        h2 {
-            text-align: center
-        }
-
-        #content-box{
-            height: 75%;
-            background-color: white;
-            margin-left: 10px;
-            margin-right: 10px;
-            padding-left: 20px;
-            padding-right: 20px;
-            overflow: auto;
-        }
-
-        .inputmessage{
-            width: 60%;
-            height: 30px;
-            margin-top: 10px;
-            margin-left: 10px;
-        }
-
-        .sendbtn{
-
-            margin-left: 20px;
-            margin-top: 1px;
-            margin-right: 2px;
-        }
-
-        input#username, input#inputMessage{
-            margin-top: 10px;
-            margin-left: 10px;
-        }
-
-        div#contents {
-            margin-top: 10px;
-        }
-    </style>
-    -->
-    <!--
-    <style>
-        #title{
-            font-size: 16px;
-            font-weight: bold;
-            margin-right: 15px;
-        }
-
-        .panel-footer{
-            margin-top: 65px;
-
-        }
-
-        #btn-chat{
-            width: 75px;
-            height: 50px;
-        }
-
-        .panel{
-            height: 590px;
-        }
-
-        #back {
-            width: 450px;
-            height: 700px;
-        }
-
-        #content-box{
-            height: 75%;
-            background-color: azure;
-            margin-left: 10px;
-            margin-right: 10px;
-            padding-left: 20px;
-            padding-right: 20px;
-            overflow: auto;
-        }
-    </style>
-    -->
     <link rel="stylesheet" href="../css/chatroom.css">
 </head>
 <body>
-<!--
-    <div id="wrapper">
-        <div id="content">
-            <div>
-                <input id="username" style="width: 20%;" type="text"/>
-                <input type="submit" value="connect" onclick="onOpen('message');">
-            </div>
-            <div id="back">
-                <div id="title">
-                    <h2> 대화 창</h2>
-                </div>
-                <div id="content-box">
-                    <div id="contents">
-
-                    </div>
-                </div>
-                <input id="inputMessage" style="width: 30%;" type="text"/>
-                <input id="mybtn" type="submit" value="send" onclick="send();" />
-                <input type="submit" value="close" onclick="closeSocket();" />
-            </div>
-        </div>
-
-        <div id="sidebar">
-            <table style="width: 200px">
-                <caption>
-                    ● 채널 참여자 ●
-                </caption>
-            </table>
-            <div id="nickname">
-
-            </div>
-        </div>
-    </div>
--->
 <div class="container">
     <div class="row">
         <div class="col-md-5">
             <div class="panel">
                 <div class="panel-heading">
-                    <div id="dd">
-                        <%--<br>--%>
-                        <input type="hidden" id="channelRoom" value="<%=request.getAttribute("channelName")%>"/>
-                        <input type="hidden" id="username"
-                               value="<%=((UsersModel)(session.getAttribute("loginUser"))).getNickname()%>"/>
-                        <input type="hidden" id="useremail"
-                               value="<%=((UsersModel)(session.getAttribute("loginUser"))).getEmail()%>"/>
-                        <%--<input id="username" style="width: 20%;" type="text"/>--%>
-                        <%--<input id="channelName" style="width: 20%;" type="text" value="a"/>--%>
-                        <%--<input type="button" value="소켓 연결" onclick="chatInit();">--%>
-                        <%--<input id="con" type="submit" value="connect" onclick="onOpen('message');">--%>
-                        <%--<div id="aaa"> </div> <br>--%>
-                    </div>
-                    <nav class="navbar">
-                        <div id="title">
-                            Chat
-                        </div>
-                        <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기"
-                               aria-label="Search">
-                        <button id="btn_search" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-                        <button type="button" class="btn btn-ligh" onclick="closeSocket();">X</button>
-                    </nav>
                 </div>
                 <div id="back">
                     <div id="content-box">
+                        <nav class="navbar">
+                            <div id="title">
+                                Chat
+                            </div>
+                            <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기"
+                                   aria-label="Search">
+                            <button id="btn_search" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+                            <button type="button" class="btn btn-ligh" onclick="closeSocket();">X</button>
+                        </nav>
                         <div id="message-box">
 
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel-footer">
-                <div class="input-group">
-                    <input id="inputMessage" type="text" class="form-control input-sm" placeholder="메세지를 입력하세요"/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-warning btn-sm" id="btn-chat" onclick="send();">보내기</button>
-                    </span>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="inputMessage" type="text" class="form-control input-sm" placeholder="메세지를 입력하세요"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat" onclick="send();">보내기</button>
+                        </span>
+                    </div>
                 </div>
             </div>
+
         </div>
         <div class="col-md-2">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -273,28 +100,28 @@
                             </tbody>
                         </table>
                     </div>
+                    <h3>참여자 정보</h3>
                 </div>
                 <div class="tab-pane" id="recommend" role="tabpanel">
-                    <h3>채팅 분석 결과</h3>
-                    <input type="button" class="btn btn-primary" onclick="startRealTimeLAResult()" value="실시간 분석 시작">
-                    <input type="button" class="btn btn-danger" onclick="stopRealTimeLAResult()" value="실시간 분석 중지">
+                    <div style="text-align: center;">
+                        <input type="button" class="btn one" onclick="startRealTimeLAResult()" value="실시간 분석 시작">
+                        <input type="button" class="btn btn-danger" onclick="stopRealTimeLAResult()" value="실시간 분석 중지">
+                    </div>
                     <table id="key">
                         <tr>
-                            <th colspan="5"><h2>&#60;주요 키워드&#62;</h2></th>
+                            <th colspan="5" style="text-align: center"><h5><strong>&#60;주요 키워드&#62;</strong></h5></th>
                         </tr>
                         <tr>
                             <td colspan="5" id="aa"><a id="bb">키워드를 클릭하시면 자동검색 페이지가 나옵니다.</a><br>&nbsp;</td>
                         </tr>
                         <tr class="keyword" id = "keywordList">
-                        <%--키워드 목록 표시--%>
-                    </tr>
+                        </tr>
                         <tr><th>&nbsp;</th></tr>
                         <tr class="entity" id = "entityList">
-                            <%--엔티티 목록 표시--%>
                         </tr>
                         <tr><td colspan="5">&nbsp;<hr style="size:5px;">&nbsp;</td></tr>
                         <tr>
-                            <th colspan="5"><h2>&#60;대화 주제 TOP3&#62;</h2></th>
+                            <th colspan="5" style="text-align: center"><h5><strong>&#60;대화 주제 TOP3&#62;</strong></h5></th>
                         </tr>
                         <tr id="category">
                             <th colspan="5"><div id="graph_category"></div></th>
@@ -318,11 +145,10 @@
                                 <label for="input_file">업로드</label>
                                 <input type="file" id="input_file" class="upload-hidden" name="input_file">
 
-                                <input type="button" onclick="fileUpload()" value="올리기"/> <br>
+                                <input type="button" onclick="fileUpload()" value="올리기"/>
                                 <b> ※ exe는 올릴 수 없습니다. </b>
                             </div>
                         </form>
-                        <%--<input type="hidden" name="channel_name" value="<%=request.getAttribute("channelName")%>">--%>
                         <table id="file-table">
                             <tr>
                                 <th> #</th>
@@ -338,7 +164,6 @@
         </div>
     </div>
 </div>
-
 <%--ChannelPasswordModal--%>
 <div class="modal fade" id="channelPasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -431,16 +256,15 @@
                 //표 안망가지게 전체 td 출력
                 console.log(response);
                 var keywordList = "";
-                keywordList += "<h5>키워드</h5>";
                 $.each(response.result.keyword, function (index, value) {
-                    keywordList += "<td><a target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
+                    keywordList += "<td><a id='keywords2' target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
                 });
                 $("#keywordList").empty();
                 $("#keywordList").append(keywordList);
 
                 var entityList = "";
                 $.each(response.result.entity, function (index, value) {
-                    entityList += "<td><a target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
+                    entityList += "<td><a id='keywords2' target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
                 });
                 $("#entityList").empty();
                 $("#entityList").append(entityList);
