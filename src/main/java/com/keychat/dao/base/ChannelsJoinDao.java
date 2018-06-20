@@ -100,6 +100,7 @@ public class ChannelsJoinDao  {
 	}
 
 	public static boolean joinChannelUser(ChannelJoinAuthModel channelJoinAuthModel, UsersModel usersModel) {
+		System.out.println("ok");
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "INSERT INTO CHANNELS_JOIN VALUES(CHANNELS_JOIN_ID_SEQ.nextval, ?, ?, systimestamp)";
@@ -112,6 +113,7 @@ public class ChannelsJoinDao  {
 			pstmt.setString(2, usersModel.getEmail());
 			pstmt.executeUpdate();
 			success = true;
+			System.out.println("ok");
 		} catch (SQLException s) {
 			s.printStackTrace();
 		} finally {

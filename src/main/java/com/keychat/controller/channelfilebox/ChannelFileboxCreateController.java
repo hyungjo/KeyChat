@@ -2,6 +2,7 @@ package com.keychat.controller.channelfilebox;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,10 +42,11 @@ public class ChannelFileboxCreateController extends HttpServlet {
 
 			try{
 				mr = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+				Enumeration files = mr.getFileNames();
+				String file = (String) files.nextElement();
+				String filename = mr.getFilesystemName(file);
 				String channel_name = mr.getParameter("channelRoom");
-
-				System.out.println(channel_name);
-				String filename = mr.getFilesystemName("input_file");
+				System.out.println(filename);
 				String file_path = savePath + "/" + filename;
 
 				if(ChannelsFileboxDao.insertFile(loginUser.getEmail(), file_path, channel_name)){

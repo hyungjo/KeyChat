@@ -13,8 +13,29 @@ import com.sun.org.apache.bcel.internal.generic.Type;
  * The interface Channels dao.
  */
 public class ChannelsDao {
-    // CHANNELS에서 LEADER을 찾아 회원을 탈퇴 한다.
+    public static boolean canJoinChannel(ChannelJoinAuthModel channelsModel) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        boolean success = false;
+        String query = "SELECT * FROM CHANNELS WHERE NAME=? AND PASSWORD IS NOT NULL";
+        try {
+            con = DBUtil.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, channelsModel.getChannelName());
+            rset = pstmt.executeQuery();
+            if (rset.next()) {
+                success = true;
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            DBUtil.close(pstmt, con);
+        }
+        return success;
+    }
 
+    // CHANNELS에서 LEADER을 찾아 회원을 탈퇴 한다.
     public static boolean dropChannel(ChannelsModel channelsModel) {
         Connection con = null;
         PreparedStatement pstmt = null;

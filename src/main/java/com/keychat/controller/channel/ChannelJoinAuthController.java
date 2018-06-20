@@ -26,14 +26,13 @@ public class ChannelJoinAuthController extends HttpServlet {
 		ChannelJoinAuthModel channelJoinAuthModel = JsonUtil.getModelFromJsonRequest(request, ChannelJoinAuthModel.class);
 		boolean isAuth = ChannelsDao.isChannelAuthUser(channelJoinAuthModel);
 
-
 		System.out.println(isAuth);
 
 		if(loginUser != null && isAuth) {
-			res = new ResponseModel(200, "success", loginUser);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(new Gson().toJson(res));
+				res = new ResponseModel(200, "success", loginUser);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(new Gson().toJson(res));
 		}
 		else {
 			response.sendError(500, new Gson().toJson(new ResponseModel(500, "fail", "Cannot join channel").toString()));
