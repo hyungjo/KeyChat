@@ -172,7 +172,7 @@
                                 <input type="text" class="upload-name" disabled="disabled" style="width: 200px;">
 
                                 <label for="input_file">업로드</label>
-                                <input type="file" id="input_file" name="input_file">
+                                <input type="file" id="input_file" class="upload-hidden" name="input_file">
 
                                 <input type="button" onclick="fileUpload()" value="올리기"/>
                                 <b> ※ exe는 올릴 수 없습니다. </b>
@@ -242,6 +242,21 @@
         //채널 정보 가져오기
         getChannelInfo();
 
+        var fileTarget = $('.filebox .upload-hidden');
+
+        fileTarget.on('change', function(){
+            if(window.FileReader){
+                // 파일명 추출
+                var filename = $(this)[0].files[0].name;
+            }
+
+            else {
+                // Old IE 파일명 추출
+                var filename = $(this).val().split('/').pop().split('\\').pop();
+            };
+
+            $(this).siblings('.upload-name').val(filename);
+        });
     });
 
     var realTimeResultUpdate;
@@ -308,7 +323,7 @@
                 $.each(response.result, function (index, value) {
                     var fileName = value.split("/").reverse()[0];
                     fileList += "<tr> <th>" + count++ + "</th> " +
-                        "<th><a href='jsp/channelfilebox/download?name='+ value +'> " + fileName + "</th> </tr>";
+                        " <th><a href='jsp/channelfilebox/download?name=" +  fileName + "'>" + fileName + "</th></tr>";
                 });
                 $("#file-table").empty();
                 $("#file-table").append(fileList);
@@ -320,7 +335,6 @@
     }
 
     function getChannelInfo(){
-
 
         var reqJson = {
             requestMsg: {
