@@ -9,7 +9,6 @@ import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelJoinAuthModel;
 import com.keychat.dto.base.ChannelsJoinModel;
 import com.keychat.dto.base.ChannelsModel;
-import com.sun.org.apache.bcel.internal.generic.Type;
 
 /**
  * The interface Channels dao.

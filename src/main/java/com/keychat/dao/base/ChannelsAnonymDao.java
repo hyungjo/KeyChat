@@ -52,7 +52,7 @@ public class ChannelsAnonymDao {
 			pstmt.setString(2, usersModel.getEmail());
 			rset = pstmt.executeQuery();
 			if(rset.next()){
-				anonymName = rset.getString(2);
+				anonymName = rset.getString(1);
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();

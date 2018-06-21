@@ -1,7 +1,7 @@
 var socket;
 function chatInit(){
     var channelName = $("#channelRoom").val();
-    socket = new WebSocket("ws://192.168.236.72:9999/chat/" + channelName);
+    socket = new WebSocket("ws://192.168.0.101:9999/chat/" + channelName);
 
     socket.onerror = function(message){
         onError(message);
@@ -38,7 +38,7 @@ $('#btn_search').click(function(){
 })
 
 function closeSocket(){
-    var user = document.getElementById("username").value.trim();
+    var user = document.getElementById("userRepName").value.trim();
     if(user){
         var jsonObj = {"user1" : user, "close" : "님이 방에 나갔습니다."};
         socket.send(JSON.stringify(jsonObj));
@@ -75,8 +75,8 @@ function onError(event){
 }
 
 function onOpen(event){
-    var user = document.getElementById("username").value.trim();
-    var user2 = document.getElementById("username");
+    var user = document.getElementById("userRepName").value.trim();
+    var user2 = document.getElementById("userRepName");
     var btn_con = document.getElementById("con");
 
     if(user == ""){
@@ -93,7 +93,7 @@ function onOpen(event){
 }
 
 function send(){
-    var user = document.getElementById("username").value.trim();
+    var user = document.getElementById("userRepName").value.trim();
     var sendmessage = document.getElementById("inputMessage");
     var msg1 = sendmessage.value.trim();
     var day = new Date();
@@ -165,6 +165,27 @@ function isAuthUser(){
     });
 }
 
+function getUserRepName(){
+    var reqJson = {requestMsg: {
+            channelName: $("#channelRoom").val(),
+            password: null
+        }};
+
+    $.ajax({
+        type: 'POST',
+        url: '/user/repname',
+        data: JSON.stringify(reqJson),
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            console.log(response);
+            $("#userRepName").val(response.result.userRepName);
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+
+}
 function createChatHistory(msg){
     var reqJson = {requestMsg: {
             email: $("#useremail").val(),

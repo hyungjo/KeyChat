@@ -23,6 +23,7 @@
        value="<%=((UsersModel)(session.getAttribute("loginUser"))).getNickname()%>"/>
 <input type="hidden" id="useremail"
        value="<%=((UsersModel)(session.getAttribute("loginUser"))).getEmail()%>"/>
+<input type="hidden" id="userRepName" value=""/>
 <%--채팅 및 접속자 정보 끝--%>
 
 <div class="container">
@@ -236,6 +237,9 @@
 
         //비밀번호 입력
         canJoinChannel();
+
+        //사용자 표현 이름 가져오기
+        getUserRepName();
 
         //채널 정보 가져오기
         getChannelInfo();
