@@ -204,7 +204,6 @@ public class UsersDao {
 		PreparedStatement pstmt = null;
 		String query = "DELETE FROM USERS WHERE EMAIL=?";
 		boolean success = false;
-
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -216,7 +215,6 @@ public class UsersDao {
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
-
 		return success;
 	}
 
@@ -246,30 +244,27 @@ public class UsersDao {
 		return success;
 	}
 
-	public static boolean isExistUser(UsersModel usersModel) {
+	public static String isExistUser(String email) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		String query = "SELECT EMAIL FROM USERS WHERE EMAIL=?";
-		boolean success = false;
-		int rowCount = 0;
-
+		String existUser = null;
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, usersModel.getEmail());
-			ResultSet rset = pstmt.executeQuery();
+			pstmt.setString(1, email);
+			rset = pstmt.executeQuery();
 			if(rset.next()){
-				String existUser = rset.getString(1);
-				if(existUser != null || !existUser.equals(""))
-					success = true;
+				existUser = rset.getString(1);
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();
 		} finally {
-			DBUtil.close(pstmt, con);
+			DBUtil.close(rset, pstmt, con);
 		}
 
-		return success;
+		return existUser;
 	}
 
     public static boolean isExistNickname(UsersModel usersModel) {

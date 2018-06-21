@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<script>
+function emailCheck(data) {
+	 var xhttp = new XMLHttpRequest();
+	 
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	     	document.getElementById("emailCheckView").innerHTML = "<font color='red'>" +this.responseText + "</font>";
+	    }
+	  };
+	  xhttp.open("POST", "/user/signup", true);
+	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	  xhttp.send("command=emailCheck&email="+data);
+	}
 
+</script>
 <jsp:include page="/header.jsp" flush="false" />
 
 	<div class="container" style="min-height: 815px;">
@@ -10,30 +24,13 @@
 				<form role="form" action="${pageContext.request.contextPath}/user/signup" method="POST">
 					<h2>회원가입</h2>
 					<hr class="colorgraph">
-					<div class="row">
-						<div class="col-xs-12 col-sm-6 col-md-6">
-							<div class="form-group">
-								<input type="text" name="email" id="email"
-									class="form-control input-lg" placeholder="이메일" tabindex="1">
-							</div>
+						<div class="form-group">
+							<input type="text" name="email" id="email" class="form-control input-lg" placeholder="이메일" tabindex="1" onblur="emailCheck(this.value)">
 						</div>
-						<div class="col-xs-12 col-sm-6 col-md-6">
-							<div class="form-group">
-								<button type="button" class="btn" data-color="info" tabindex="2">중복</button>
-							</div>
+						<div id="emailCheckView"></div>
+						<div class="form-group">
+							<input type="text" name="nickname" id="nickname" class="form-control input-lg" placeholder="닉네임" tabindex="3">
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12 col-sm-6 col-md-6">
-							<div class="form-group">
-								<input type="text" name="nickname" id="nickname"
-									class="form-control input-lg" placeholder="닉네임" tabindex="3">
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-6">
-							<div class="form-group"></div>
-						</div>
-					</div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-6">
 							<div class="form-group">

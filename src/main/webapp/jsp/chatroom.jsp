@@ -123,7 +123,7 @@
                       <div class="card">
                         <div class="card-header" id="headingOne">
                           <h5 class="mb-0">
-                            <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style=" background-color: rgba( 255, 255, 255, 0 );">
+                            <button id="keyStartbtn" class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style=" background-color: rgba( 255, 255, 255, 0 );">
                               <a id="keyStart">키워드 분석 시작하기</a>
                             </button>
                           </h5>

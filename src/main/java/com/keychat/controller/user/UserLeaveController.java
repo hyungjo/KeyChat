@@ -22,14 +22,9 @@ import java.sql.SQLException;
 public class UserLeaveController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-		 HttpSession session = request.getSession();
-	        UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
-		ResponseModel res;
+		HttpSession session = request.getSession();
+	    UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
 		if (loginUser != null) {
-//			res = new ResponseModel(200, "success", loginUser);
-//			response.setContentType("application/json");
-//			response.setCharacterEncoding("UTF-8");
-//			response.getWriter().write(new Gson().toJson(res));
 			try {
 				UsersDao.dropUser(loginUser);
 				session.invalidate();
@@ -40,19 +35,5 @@ public class UserLeaveController extends HttpServlet {
 		} else {
 			response.sendError(500, new ResponseModel(500, "fail", "Cannot get user info").toString());
 		}
-        /*ResponseModel res;
-        UsersModel usersModel = JsonUtil.getModelFromJsonRequest(request, UsersModel.class);
-        SignModel signModel = new SignModel(usersModel.getEmail(), usersModel.getPassword());
-        boolean isExist = UsersDao.isExactPassword(signModel);
-        boolean isUpdated = UsersDao.dropUser(usersModel);
-
-        if(isExist && isUpdated)
-            res = new ResponseModel(200, "success", usersModel);
-        else
-            res = new ResponseModel(500, "fail", "Cannot create user");
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(new Gson().toJson(res));*/
     }
 }

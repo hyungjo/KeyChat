@@ -37,7 +37,7 @@ public class ChannelsDao {
         return success;
     }
 
-    // CHANNELS에서 LEADER을 찾아 회원을 탈퇴 한다.
+    // CHANNELS에서 LEADER을 찾아 채널을 지운다.
     public static boolean dropChannel(ChannelsModel channelsModel) {
         Connection con = null;
         PreparedStatement pstmt = null;
