@@ -67,7 +67,7 @@ public class ChannelsHashtagDao {
 	}
 
 	//채널이름으로 hashtag들을 검색한다
-	public static ArrayList<String> findHashes(String channel_name) throws SQLException {
+	public static ArrayList<String> findHashes(String channel_name) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -83,12 +83,12 @@ public class ChannelsHashtagDao {
 			}
 		} catch (SQLException s) {
 			s.printStackTrace();
-			throw s;
 		} finally {
 			DBUtil.close(pstmt, con);
 		}
 		return list;
 	}
+
 	//where 절에 모든 조건을 만족하면 update문 쿼리 발생 (방장만 수정 가능)
 	public static void deleteHashtag(ChannelsHashtagModel user) throws SQLException {
 		Connection con = null;
