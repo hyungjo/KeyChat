@@ -82,7 +82,7 @@
 
     border-top-left-radius: .25rem;
     border-top-right-radius: .25rem;
-    background-color: #787878;
+    background-color: #1a1a1a;
 }
 
 .nav-tabs .nav-link.active {
@@ -143,12 +143,15 @@
 }
 
 #Search{
-    width: 215px;
+    width: 250px;
 }
 
 #btn-chat{
     width: 75px;
     height: 50px;
+    background-color: #00004d;
+    color: white;
+    border: solid 0px #00004d;
 }
 
 .panel{
@@ -166,7 +169,7 @@
 
 #content-box{
     height: 88%;
-    background-color: azure;
+    background-color: #f2f2f2;
     margin-top: 55px;
     margin-left: 10px;
     margin-right: 10px;
@@ -182,7 +185,7 @@
 }
 
 #inputMessage{
-    margin-left: 10px;
+    margin-left: 11px;
 }
 
 #chat-user-message{
@@ -230,6 +233,11 @@
     color: white;
     background-color: black;
 }
+
+#btn_search{
+    border: none;
+    background-color: f2f2f2;
+    }
 
 @media screen and (max-width:476px){
 
@@ -307,4 +315,23 @@ tr.entity td {
 #bb {
     font-size: small;
     color: gray;
+}
+#keyStart {
+    text-decoration: none;
+    color: white;
+}
+#keyStart:link {
+    color: white;
+}
+#keyStart:hover {
+    font-weight: bold;
+    color: white;
+}
+#keyStart:active{
+    color: white;
+}
+.card-header {
+    background-color: #00004d;
+    text-align: center;
+    border: solid 1px #00004d;
 }

@@ -134,9 +134,10 @@
         <div class="row">
             <div class="col-lg-8 mx-auto">
             	<h2>도움 주신 분들</h2>
-			         <p class="lead" style="padding-right: 20px;">김혜경 강사님</p>
-			         <p style="font-size: medium; padding-right: 20px;">김호중</p>
-			         <p style="font-size: medium; padding-right: 20px;">나경원</p>
+            	<p class="lead" style="padding-right: 20px;">김혜경 강사님</p>
+            	<p style="font-size: medium; padding-right: 20px;">김호중</p>
+            	<p style="font-size: medium; padding-right: 20px;">나경원</p>
+            	<p style="font-size: medium; padding-right: 20px;">이새롬</p>
             </div>
         </div>
     </div>

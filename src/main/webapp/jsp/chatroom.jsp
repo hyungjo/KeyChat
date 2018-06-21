@@ -13,8 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/filebox.css">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/chatroom.css">
 </head>
 <body>
@@ -38,10 +37,10 @@
                             <div id="title">
                                 Chat
                             </div>
-                            <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기"
-                                   aria-label="Search">
-                            <button id="btn_search" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-                            <button type="button" class="btn btn-ligh" onclick="closeSocket();">X</button>
+                            <input id="Search" class="form-control mr-sm-2" type="search" placeholder="검색하기" aria-label="Search">
+                            <button id="btn_search" class="btn" type="submit">
+                                <img src="${pageContext.request.contextPath}/img/search.png" width="22px" height="22px">
+                            </button>
                         </nav>
                         <div id="message-box">
 
@@ -119,40 +118,54 @@
                     <h3>참여자 정보</h3>
                 </div>
                 <div class="tab-pane" id="recommend" role="tabpanel">
-                    <div style="text-align: center;">
-                        <input type="button" class="btn one" onclick="startRealTimeLAResult()" value="실시간 분석 시작">
-                        <input type="button" class="btn btn-danger" onclick="stopRealTimeLAResult()" value="실시간 분석 중지">
+                    
+                    <div id="accordion" style="margin-right: -5">
+                      <div class="card">
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style=" background-color: rgba( 255, 255, 255, 0 );">
+                              <a id="keyStart">키워드 분석 시작하기</a>
+                            </button>
+                          </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                          <div class="card-body" style="padding-right: 0px; padding-left: 0px;">
+                            <table id="key" style="border-collapse: unset;">
+                                <tr>
+                                    <th colspan="5" style="text-align: center"><h5><strong>&#60;주요 키워드&#62;</strong></h5></th>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="aa"><a id="bb">키워드를 클릭하시면 자동검색 페이지가 나옵니다.</a><br>&nbsp;</td>
+                                </tr>
+                                <tr class="keyword" id = "keywordList">
+                                </tr>
+                                <tr><th>&nbsp;</th></tr>
+                                <tr class="entity" id = "entityList">
+                                </tr>
+                                <tr><td colspan="5">&nbsp;<hr style="size:5px;">&nbsp;</td></tr>
+                                <tr>
+                                    <th colspan="5" style="text-align: center"><h5><strong>&#60;대화 주제 TOP3&#62;</strong></h5></th>
+                                </tr>
+                                <tr id="category">
+                                    <th colspan="5"><div id="graph_category"></div></th>
+                                </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <table id="key">
-                        <tr>
-                            <th colspan="5" style="text-align: center"><h5><strong>&#60;주요 키워드&#62;</strong></h5></th>
-                        </tr>
-                        <tr>
-                            <td colspan="5" id="aa"><a id="bb">키워드를 클릭하시면 자동검색 페이지가 나옵니다.</a><br>&nbsp;</td>
-                        </tr>
-                        <tr class="keyword" id = "keywordList">
-                        </tr>
-                        <tr><th>&nbsp;</th></tr>
-                        <tr class="entity" id = "entityList">
-                        </tr>
-                        <tr><td colspan="5">&nbsp;<hr style="size:5px;">&nbsp;</td></tr>
-                        <tr>
-                            <th colspan="5" style="text-align: center"><h5><strong>&#60;대화 주제 TOP3&#62;</strong></h5></th>
-                        </tr>
-                        <tr id="category">
-                            <th colspan="5"><div id="graph_category"></div></th>
-                        </tr>
-                    </table>
+                    
                 </div>
                 <div class="tab-pane" id="schedule" role="tabpanel">
                     <h3>일정 관리 / 메모</h3>
                     <div class="row">
-
+                    
                     </div>
                 </div>
                 <div class="tab-pane" id="filebox" role="tabpanel">
                     <h3>파일 박스</h3>
-                    <div class="row">
+                    <div class="row" style="padding: 10px;">
                         <form id="fileUploadForm">
                             <div class="filebox bs3-primary preview-image">
 
@@ -165,8 +178,8 @@
                                 <b> ※ exe는 올릴 수 없습니다. </b>
                             </div>
                         </form>
-                        <table id="file-table">
-                            <tr>
+                        <table id="file-table" style="width: 100%;">
+                            <tr style=" text-align: center;">
                                 <th> #</th>
                                 <th> Name</th>
                                 <th> Size</th>
@@ -381,12 +394,21 @@
                 //표 안망가지게 전체 td 출력
                 console.log(response);
                 var keywordList = "";
+                var total = response.result.keyword.length;
+                var i = 1;
                 $.each(response.result.keyword, function (index, value) {
-                    keywordList += "<td><a id='keywords2' target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
+                	if(i <= total ){
+                		keywordList += "<td><a id='keywords2' target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
+                	}else if (i > total){
+                		keywordList += "<td><a id='keywords2'></a></td>";
+                	}else if (i == 6){
+                		return false;
+                	}i++;
                 });
                 $("#keywordList").empty();
                 $("#keywordList").append(keywordList);
-
+                
+                
                 var entityList = "";
                 $.each(response.result.entity, function (index, value) {
                     entityList += "<td><a id='keywords2' target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
