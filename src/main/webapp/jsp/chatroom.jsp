@@ -178,14 +178,16 @@
                                 <b> ※ exe는 올릴 수 없습니다. </b>
                             </div>
                         </form>
-                        <table id="file-table" style="width: 100%;">
-                            <tr style=" text-align: center;">
-                                <th> #</th>
-                                <th> Name</th>
-                                <th> Size</th>
-                                <th> Email</th>
-                                <th> Delete</th>
-                            </tr>
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr style=" text-align: center;">
+                                    <th> no </th>
+                                    <th> 파일명 </th>
+                                </tr>
+                            </thead>
+                            <tbody id="file-table" >
+
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -305,14 +307,8 @@
             success: function (response) {
                 $.each(response.result, function (index, value) {
                     var fileName = value.split("/").reverse()[0];
-                    fileList += "<table id=\"file-table\">\n" +
-                        "                    <tr>" +
-                        "                    <th>" + count++ + "</th>" +
-                        "                <th><a href=\'" + value + "\'> " + fileName + "</th>" +
-                        "                <th> </th>" +
-                        "                <th> </th>" +
-                        "                <th> </th>" +
-                        "                </tr>";
+                    fileList += "<tr> <th>" + count++ + "</th> " +
+                        "<th><a href='jsp/channelfilebox/download?name='+ value +'> " + fileName + "</th> </tr>";
                 });
                 $("#file-table").empty();
                 $("#file-table").append(fileList);
