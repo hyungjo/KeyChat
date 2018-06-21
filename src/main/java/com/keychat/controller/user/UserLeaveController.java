@@ -26,12 +26,13 @@ public class UserLeaveController extends HttpServlet {
 	        UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
 		ResponseModel res;
 		if (loginUser != null) {
-			res = new ResponseModel(200, "success", loginUser);
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(new Gson().toJson(res));
+//			res = new ResponseModel(200, "success", loginUser);
+//			response.setContentType("application/json");
+//			response.setCharacterEncoding("UTF-8");
+//			response.getWriter().write(new Gson().toJson(res));
 			try {
 				UsersDao.dropUser(loginUser);
+				session.invalidate();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
