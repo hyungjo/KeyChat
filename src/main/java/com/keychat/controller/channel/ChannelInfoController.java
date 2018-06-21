@@ -27,14 +27,15 @@ public class ChannelInfoController extends HttpServlet {
         ChannelsModel existChannelModel = ChannelsDao.getChannelInfoByName(channelJoinAuthModel.getChannelName());
         ArrayList<String> channelHashtag = ChannelsHashtagDao.findHashes(channelJoinAuthModel.getChannelName());
         ChannelInfoModel channelInfoModel = new ChannelInfoModel(existChannelModel, channelHashtag);
+
         if(existChannelModel != null) {
             res = new ResponseModel(200, "success", channelInfoModel);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(new Gson().toJson(res));
-        } else
-            res = new ResponseModel(500, "fail", "Cannot get channel info");
-
+        } else {
+            response.sendError(500, new ResponseModel(500, "fail", "Cannot get channel info").toString());
+        }
     }
 
 }

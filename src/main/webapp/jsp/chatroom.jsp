@@ -87,23 +87,31 @@
                             <tbody>
                             <tr>
                                 <td>채널 명:</td>
-                                <td id="">Programming</td>
+                                <td id="channelNameInfo"></td>
+                            </tr>
+                            <tr>
+                                <td>공개 여부:</td>
+                                <td id="channelSecretInfo"></td>
                             </tr>
                             <tr>
                                 <td>최대 참여자 수</td>
-                                <td>06/23/2013</td>
+                                <td id="channelCapacityInfo"></td>
                             </tr>
                             <tr>
                                 <td>최대 유지 시간</td>
-                                <td>01/24/1988</td>
+                                <td id="channelTimeInfo"></td>
                             </tr>
                             <tr>
                                 <td>익명 여부</td>
-                                <td>Female</td>
+                                <td id="channelAnonymInfo"></td>
                             </tr>
                             <tr>
                                 <td>채널 생성 시간</td>
-                                <td>Kathmandu,Nepal</td>
+                                <td id="channelCreatedTimeInfo"></td>
+                            </tr>
+                            <tr>
+                                <td>채널 해시 태그</td>
+                                <td id="channelHashtagInfo"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -209,6 +217,18 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/chatroom.js"></script>
 <script>
+    $(document).ready(function () {
+        //채널 접속
+        chatInit();
+
+        //비밀번호 입력
+        canJoinChannel();
+
+        //채널 정보 가져오기
+        getChannelInfo();
+
+    });
+
     var realTimeResultUpdate;
 
     function startRealTimeLAResult() {
@@ -286,6 +306,60 @@
             },
             error: function (response) {
                 alert("비밀번호가 틀렸습니다.");
+            }
+        });
+    }
+
+    function getChannelInfo(){
+
+
+        var reqJson = {
+            requestMsg: {
+                channelName: $("#channelRoom").val(), //값을 못가져옴 화면이 로딩되기 전이기 때문
+                password: null
+            }
+        };
+
+        $.ajax({
+            url : '/channel/info',
+            type : 'POST',
+            data : JSON.stringify(reqJson),
+            contentType: 'application/json; charset=utf-8',
+            success: function(data) {
+                console.log(data);
+
+                $("#channelNameInfo").text(data.result.channelsModel.name);
+
+                if(data.result.channelsModel.limitCapacity == 0)
+                    $("#channelCapacityInfo").text("제한 없음");
+                else
+                    $("#channelCapacityInfo").text(data.result.channelsModel.limitCapacity);
+
+                if(data.result.channelsModel.password === undefined)
+                    $("#channelSecretInfo").text("공개 채널");
+                else
+                    $("#channelSecretInfo").text("비공개 채널");
+
+                if(data.result.channelsModel.limitTime == 0)
+                    $("#channelTimeInfo").text("제한 없음");
+                else
+                    $("#channelTimeInfo").text(data.result.channelsModel.limitTime);
+
+                if(data.result.channelsModel.limitAnonym == "T" || data.result.channelsModel.limitAnonym == "t")
+                    $("#channelAnonymInfo").text("익명 사용");
+                else
+                    $("#channelAnonymInfo").text("닉네임 사용");
+
+                $("#channelCreatedTimeInfo").text(data.result.channelsModel.createdDatetime);
+
+                var channelsHashtagList = "";
+                $.each(data.result.channelsHashtags, function(index, value){
+                    channelsHashtagList += value + " ";
+                });
+                $("#channelHashtagInfo").text(channelsHashtagList);
+            },
+            error: function(response) {
+                console.log(response);
             }
         });
     }
@@ -376,16 +450,7 @@
 
     document.onkeydown = noEvent;
 
-    $(document).ready(function () {
-        //채널 접속
-        chatInit();
 
-        //비밀번호 입력
-        canJoinChannel();
-
-
-
-    });
 
     $(function () {
         $('#Search').bind('keyup change', function (ev) {
