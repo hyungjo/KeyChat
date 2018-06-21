@@ -17,51 +17,52 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/jsp/channelfilebox/download")
 public class ChannelFileboxDownloadController extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("dddd");
+
+        // ① 파일명 가져오기
         String fileName = request.getParameter("name").trim();
 
+        // ② 경로 가져오기
+        String saveDir = this.getServletContext().getRealPath("/Upload/");
+        File file = new File(saveDir + "/" + fileName);
+        System.out.println("파일명 : " + fileName);
 
-        String savePath = "Upload";
-        ServletContext context = getServletContext();
 
-        String downloadPath = context.getRealPath(savePath);
+        // ③ MIMETYPE 설정하기
+        String mimeType = getServletContext().getMimeType(file.toString());
+        if(mimeType == null)
+        {
+            response.setContentType("application/octet-stream");
+        }
 
-        System.out.println("다운로드 위치 >> " + downloadPath);
+        // ④ 다운로드용 파일명을 설정
+        String downName = null;
+        if(request.getHeader("user-agent").indexOf("MSIE") == -1)
+        {
+            downName = new String(fileName.getBytes("UTF-8"), "8859_1");
+        }
+        else
+        {
+            downName = new String(fileName.getBytes("EUC-KR"), "8859_1");
+        }
 
-        String sFilePath = downloadPath + "\\" + fileName;
+        // ⑤ 무조건 다운로드하도록 설정
+        response.setHeader("Content-Disposition","attachment;filename=\"" + downName + "\";");
 
-        File oFile = new File(sFilePath);
+        // ⑥ 요청된 파일을 읽어서 클라이언트쪽으로 저장한다.
+        FileInputStream fileInputStream = new FileInputStream(file);
+        ServletOutputStream servletOutputStream = response.getOutputStream();
+
         byte[] b = new byte[100*1024*1024]; // 100mb 초과 x
+        int data = 0;
 
-        FileInputStream in = new FileInputStream(oFile);
-
-        String sMimeType = getServletContext().getMimeType(sFilePath);
-        System.out.println("유형 : " + sMimeType);
-
-        if(sMimeType == null){
-            sMimeType = "application.octec-stream";
+        while((data=(fileInputStream.read(b, 0, b.length))) != -1)
+        {
+            servletOutputStream.write(b, 0, data);
         }
 
-        response.setContentType(sMimeType);
+        servletOutputStream.flush();
+        servletOutputStream.close();
+        fileInputStream.close();
 
-        String A = new String(fileName.getBytes("euc-kr"),"8859_1");
-        String B = "utf-8";
-        String sEncoding = URLEncoder.encode(A, B);
-
-        String AA = "Content-Disposition";
-        String BB = "attachment; filename=" + sEncoding;
-        response.setHeader(AA, BB);
-
-        ServletOutputStream out = response.getOutputStream();
-
-        int numRead = 0;
-
-        while((numRead=in.read(b, 0, b.length))!=-1){
-            out.write(b, 0, numRead);
-        }
-
-        out.flush();
-        out.close();
-        in.close();
     }
 }
