@@ -12,6 +12,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsersDao {
+	// USERS 테이블에서 전체 정보 가져오기
+	public static ArrayList<UsersModel> getUserList() {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = "SELECT * FROM USERS";
+		ArrayList<UsersModel> UserList = new ArrayList<UsersModel>();
+		try {
+			conn = DBUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				UserList.add(new UsersModel(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4),rset.getString(5)));
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			DBUtil.close(rset, pstmt, conn);
+		}
+		return UserList;
+	}
 	// USERS 테이블에서 NICKNAME과 PHONE으로 EMAIL을 출력한다 insert(CustomerVo cvo).
 	public static ArrayList<String> findEmail(String nickname, String phone) throws SQLException {
 		Connection con = null;
