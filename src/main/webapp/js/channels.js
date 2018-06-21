@@ -98,7 +98,31 @@ function getChannels() {
                     "            </td>\n" +
                     "            </tr>";
             });
+            $("#channelsListRow").empty();
             $("#channelsListRow").append(channelsListRow);
+        },
+        error: function (response) {
+            alert("채널을 불러오는데 실패하였습니다.");
+        }
+    });
+}
+
+function getChannelByHashtag() {
+    $.ajax({
+        type: 'POST',
+        url: '/channel/list/hashtag',
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            console.log(response);
+            var channelsListRow = "";
+            $.each(response.result, function (index, value) {
+                channelsListRow += "<tr><td><a href='#' onclick='openChatroom(this)'>" + index + "</a></td>" +
+                    "            <td>" + value + "</td></tr>";
+                alert(channelsListRow);
+            });
+
+            $("#channelsByTagsListRow").empty();
+            $("#channelsByTagsListRow").append(channelsListRow);
         },
         error: function (response) {
             alert("채널을 불러오는데 실패하였습니다.");

@@ -2,6 +2,8 @@ package com.keychat.dao.base;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelJoinAuthModel;
@@ -115,6 +117,28 @@ public class ChannelsDao {
         return success;
     }
 
+    public static Map<String, String> getChannelListByHashtag() {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        Map<String, String> channelListByHashtag = new LinkedHashMap<>();
+
+        String query = "select channel_name, listagg(hashtag, ',') within group (order by hashtag) csv from channels_hashtag group by channel_name";
+        try {
+            con = DBUtil.getConnection();
+            pstmt = con.prepareStatement(query);
+            rset = pstmt.executeQuery();
+            while (rset.next()) {
+                channelListByHashtag.put(rset.getString(1), rset.getString(2));
+            }
+        } catch (SQLException s) {
+            s.printStackTrace();
+        } finally {
+            DBUtil.close(pstmt, con);
+        }
+        return channelListByHashtag;
+    }
+
     public static boolean isChannelPassword(ChannelJoinAuthModel channelsModel) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -136,6 +160,7 @@ public class ChannelsDao {
         }
         return success;
     }
+
 
     // CHANNELS에 NAME, PASSWORD, LIMIT_CAPACITY, LIMIT_TIME, LIMIT_ANONYM을 추가한다.
     public static boolean createChannel(ChannelsModel channelsModel) {

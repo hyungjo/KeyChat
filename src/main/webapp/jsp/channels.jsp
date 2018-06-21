@@ -98,7 +98,19 @@
                                 </ul>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="profile">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+                        <div role="tabpanel" class="tab-pane" id="profile">
+                            <table class="table table-striped table-hover table-bordered" id="channelTable">
+                                <thead>
+                                <tr>
+                                    <th>Name <i class="fa fa-sort"></i></th>
+                                    <th>Tags <i class="fa fa-sort"></i></th>
+                                </tr>
+                                </thead>
+                                <tbody id="channelsByTagsListRow">
+                                <%--Will Add Channels List --%>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,7 +118,7 @@
     </div>
 </div>
 
-    <!-- Login Modal -->
+    <!-- 채널 생성 Modal -->
     <div class="modal fade" id="createChannelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -172,6 +184,7 @@
         $( document ).ready( function() {
             getMyChannel();
             getChannels();
+            getChannelByHashtag();
             getHotHashtags();
         });
 
@@ -184,6 +197,12 @@
         $('#channel-search2').keyup(function(event){
             if(event.which==13) {
                 myFunction2();
+            }
+        });
+
+        $('#channel-search1').keyup(function(event){
+            if(event.which==13) {
+                myFunction3();
             }
         });
         
@@ -214,6 +233,7 @@
                     }
                 }
             }
+
         }
 
         function myFunction2() {
@@ -232,6 +252,24 @@
                     } else {
                         tr1[i].style.display = "none";
                         tr2[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function myFunction3() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("channel-search1");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("channelTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
                     }
                 }
             }
@@ -265,6 +303,22 @@
                 if ( searchTerm ) {
                     // highlight the new term
                     $('.channel-title').highlight( searchTerm );
+                }
+            });
+        });
+
+        $(function() {
+            $('#channel-search1').bind('keyup change', function(ev) {
+                // pull in the new value
+                var searchTerm = $('#channel-search1').val();
+
+                // remove any old highlighted terms
+                $('.channel-name').removeHighlight();
+
+                // disable highlighting if empty
+                if ( searchTerm ) {
+                    // highlight the new term
+                    $('.channel-name').highlight( searchTerm );
                 }
             });
         });

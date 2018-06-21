@@ -134,4 +134,7 @@ public class ChannelsChatHistoryDao {
 
 		return contentsList.toString();
 	}
+
+
+//	select * from channels_chat_history where channel_name='남북회담' and sent_datetime <= systimestamp order by sent_datetime
 }
