@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.keychat.controller.util.DBUtil;
 import com.keychat.dto.base.ChannelChatHistoryReadModel;
@@ -135,6 +137,36 @@ public class ChannelsChatHistoryDao {
 		return contentsList.toString();
 	}
 
+	public static LinkedList<ChannelsChatHistoryModel> getHistoryFromNow(ChannelChatHistoryReadModel channelChatHistoryReadModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		StringBuilder contentsList = new StringBuilder();
+		LinkedList<ChannelsChatHistoryModel> channelsChatHistoryModels = new LinkedList<>();
 
-//	select * from channels_chat_history where channel_name='남북회담' and sent_datetime <= systimestamp order by sent_datetime
+		String query = "select * from channels_chat_history where channel_name=? and sent_datetime <= systimestamp order by sent_datetime";
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelChatHistoryReadModel.getChannelName());
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				channelsChatHistoryModels.add(new ChannelsChatHistoryModel(
+					rset.getString(2),
+						rset.getString(3),
+						rset.getString(4),
+						rset.getTimestamp(5)
+				));
+			}
+
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+
+		return channelsChatHistoryModels;
+	}
+
+
 }

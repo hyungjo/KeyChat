@@ -13,6 +13,29 @@ import com.keychat.dto.base.ChannelsModel;
 import com.keychat.dto.base.UsersModel;
 
 public class ChannelsAnonymDao {
+	public static boolean isExistAnonym(ChannelJoinAuthModel channelJoinAuthModel, UsersModel usersModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "SELECT * FROM CHANNELS_ANONYM WHERE CHANNEL_NAME=? AND EMAIL=?";
+		boolean success = false;
+		ResultSet rset = null;
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelJoinAuthModel.getChannelName());
+			pstmt.setString(2, usersModel.getEmail());
+			rset = pstmt.executeQuery();
+			if(rset.next())
+				success = true;
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return success;
+	}
+
 	// CHANNELS_ANONYM에서 EMAIL을 찾아 회원을 탈퇴 한다.
 	public static void dropChannelsAnonym(String email) throws SQLException {
 		Connection con = null;
@@ -54,21 +77,21 @@ public class ChannelsAnonymDao {
 		return success;
 	}
 
-	public static String isExistAnonymName(String anonymName, ChannelJoinAuthModel channelJoinAuthModel) {
+	public static boolean isExistAnonymName(String anonym, ChannelJoinAuthModel channelJoinAuthModel) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String searchAnonym = null;
+		boolean success = false;
 
-		String query = "SELECT ANONYM_NAME FROM CHANNELS_ANONYM WHERE ANONYM_NAME = ? AND CHANNEL_NAME = ?";
+		String query = "SELECT ANONYM_NAME FROM CHANNELS_ANONYM WHERE CHANNEL_NAME = ? AND ANONYM_NAME=?";
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, anonymName);
-			pstmt.setString(2, channelJoinAuthModel.getChannelName());
+			pstmt.setString(1, channelJoinAuthModel.getChannelName());
+			pstmt.setString(2, anonym);
 			rset = pstmt.executeQuery();
 			if(rset.next()){
-				searchAnonym = rset.getString(1);
+				success = true;
 			}
 
 		} catch (SQLException s) {
@@ -77,7 +100,7 @@ public class ChannelsAnonymDao {
 			DBUtil.close(pstmt, con);
 		}
 
-		return searchAnonym;
+		return success;
 	}
 	// 조회 후 if 조건식으로 T일 경우 익명 테이블 생성 / F일 경우 익명 테이블 거치지 않고 방 생성
 	public static void insertAnonym(int n, String email) throws SQLException {

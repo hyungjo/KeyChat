@@ -13,10 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.keychat.controller.util.JsonUtil;
-import com.keychat.dao.base.ChannelsDao;
-import com.keychat.dao.base.ChannelsJoinDao;
-import com.keychat.dao.base.ChannelsJoinJoinChannelsAnonym;
-import com.keychat.dao.base.UsersJoinChannelsJoin;
+import com.keychat.dao.base.*;
 import com.keychat.dto.base.*;
 import com.keychat.dto.util.ResponseModel;
 
@@ -27,14 +24,36 @@ public class ChannelAttendantsController extends HttpServlet {
 		ChannelJoinAuthModel channelJoinAuthModel = JsonUtil.getModelFromJsonRequest(request, ChannelJoinAuthModel.class);
 		ResponseModel res = null;
 
-		HttpSession session = request.getSession();
-		UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
-
+//		HttpSession session = request.getSession();
+//		UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
+        UsersModel loginUser = new UsersModel(
+                "hyungjo@gmail.com",
+                "1234",
+                "hello",
+                "학생",
+                "010-111-1111"
+        );
 		//비밀 채널 체크
 		boolean isChannelPassword = false;
 		if(channelJoinAuthModel != null)
 			isChannelPassword = ChannelsDao.isChannelPassword(channelJoinAuthModel);
 
+//		boolean isAnonymChannel = false;
+//		ChannelsModel channelsModel = ChannelsDao.getChannelInfoByName(channelJoinAuthModel.getChannelName());
+//
+//		//익명 이름 생성
+//		if(channelsModel != null && channelsModel.getLimitAnonym().equals("T") && !ChannelsAnonymDao.isExistAnonym(channelJoinAuthModel, loginUser)){
+//			while(true){
+//				String anonym = String.valueOf((int) (Math.random() * 1000)) + 1;
+//				System.out.print(anonym);
+//				if(!ChannelsAnonymDao.isExistAnonymName(anonym, channelJoinAuthModel)){
+//					ChannelsAnonymDao.createAnonym(anonym, loginUser, channelJoinAuthModel);
+//					System.out.println(anonym);
+//					break;
+//				}
+//			}
+//		}
+//
 		if(isChannelPassword){
 			if(ChannelsJoinDao.joinChannelUser(channelJoinAuthModel, loginUser)) {
 				res = new ResponseModel(200, "success", "secret");
@@ -50,7 +69,8 @@ public class ChannelAttendantsController extends HttpServlet {
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(new Gson().toJson(res));
 			}else
-				response.sendError(500, new ResponseModel(500, "fail", "Cannot create channel").toString());
+				response.sendError(500, new ResponseModel(500, "fail", "채널에 참가할 수 없습니다.").toString());
 		}
+		System.out.println("---------------------------");
 	}
 }
