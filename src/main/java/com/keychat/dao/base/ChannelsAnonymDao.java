@@ -36,6 +36,32 @@ public class ChannelsAnonymDao {
 		return success;
 	}
 
+	public static String getExistAnonym(ChannelJoinAuthModel channelJoinAuthModel, UsersModel usersModel) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String query = "SELECT ANONYM_NAME FROM CHANNELS_ANONYM WHERE CHANNEL_NAME=? AND EMAIL=?";
+		boolean success = false;
+		ResultSet rset = null;
+
+		String anonymName = null;
+
+		try {
+			con = DBUtil.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, channelJoinAuthModel.getChannelName());
+			pstmt.setString(2, usersModel.getEmail());
+			rset = pstmt.executeQuery();
+			if(rset.next()){
+				anonymName = rset.getString(2);
+			}
+		} catch (SQLException s) {
+			s.printStackTrace();
+		} finally {
+			DBUtil.close(pstmt, con);
+		}
+		return anonymName;
+	}
+
 	// CHANNELS_ANONYM에서 EMAIL을 찾아 회원을 탈퇴 한다.
 	public static void dropChannelsAnonym(String email) throws SQLException {
 		Connection con = null;

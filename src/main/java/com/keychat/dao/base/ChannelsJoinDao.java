@@ -28,6 +28,7 @@ public class ChannelsJoinDao  {
 			DBUtil.close(pstmt, con);
 		}return true;
 	}
+
 	//시청인원순 출력
 	public static ArrayList<ChannelsJoinModel> descChannelName() throws SQLException {
 		Connection conn = null;
@@ -104,7 +105,7 @@ public class ChannelsJoinDao  {
 		PreparedStatement pstmt = null;
 		String query = "INSERT INTO CHANNELS_JOIN VALUES(CHANNELS_JOIN_ID_SEQ.nextval, ?, ?, systimestamp)";
 		boolean success = false;
-
+		System.out.println("joinChannelUser");
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -237,14 +238,15 @@ public class ChannelsJoinDao  {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String query = "SELECT * FROM CHANNELS_JOIN WHERE CHANNEL_NAME = ? AND EMAIL = ?";
+		ResultSet rset;
 		boolean success = false;
-
+		System.out.println("isExistChannelUser");
 		try {
 			con = DBUtil.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, channelJoinAuthModel.getChannelName());
 			pstmt.setString(2, usersModel.getEmail());
-			ResultSet rset = pstmt.executeQuery();
+			rset = pstmt.executeQuery();
 			if(rset.next())
 				success = true;
 		} catch (SQLException s) {

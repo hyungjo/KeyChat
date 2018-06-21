@@ -24,53 +24,47 @@ public class ChannelAttendantsController extends HttpServlet {
 		ChannelJoinAuthModel channelJoinAuthModel = JsonUtil.getModelFromJsonRequest(request, ChannelJoinAuthModel.class);
 		ResponseModel res = null;
 
-//		HttpSession session = request.getSession();
-//		UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
-        UsersModel loginUser = new UsersModel(
-                "hyungjo@gmail.com",
-                "1234",
-                "hello",
-                "학생",
-                "010-111-1111"
-        );
+		HttpSession session = request.getSession();
+		UsersModel loginUser = (UsersModel)session.getAttribute("loginUser");
+//        UsersModel loginUser = new UsersModel(
+//                "hyungjo@gmail.com",
+//                "1234",
+//                "hello",
+//                "학생",
+//                "010-111-1111"
+//        );
+
 		//비밀 채널 체크
 		boolean isChannelPassword = false;
 		if(channelJoinAuthModel != null)
 			isChannelPassword = ChannelsDao.isChannelPassword(channelJoinAuthModel);
 
-//		boolean isAnonymChannel = false;
-//		ChannelsModel channelsModel = ChannelsDao.getChannelInfoByName(channelJoinAuthModel.getChannelName());
+		boolean isAnonymChannel = false;
+		ChannelsModel channelsModel = ChannelsDao.getChannelInfoByName(channelJoinAuthModel.getChannelName());
 //
 //		//익명 이름 생성
-//		if(channelsModel != null && channelsModel.getLimitAnonym().equals("T") && !ChannelsAnonymDao.isExistAnonym(channelJoinAuthModel, loginUser)){
-//			while(true){
-//				String anonym = String.valueOf((int) (Math.random() * 1000)) + 1;
-//				System.out.print(anonym);
-//				if(!ChannelsAnonymDao.isExistAnonymName(anonym, channelJoinAuthModel)){
-//					ChannelsAnonymDao.createAnonym(anonym, loginUser, channelJoinAuthModel);
-//					System.out.println(anonym);
-//					break;
-//				}
-//			}
-//		}
-//
-		if(isChannelPassword){
-			if(ChannelsJoinDao.joinChannelUser(channelJoinAuthModel, loginUser)) {
-				res = new ResponseModel(200, "success", "secret");
-				response.setContentType("application/json");
-				response.setCharacterEncoding("UTF-8");
-				response.getWriter().write(new Gson().toJson(res));
-			}else
-				response.sendError(500, new ResponseModel(500, "fail", "채널에 참가할 수 없습니다.").toString());
-		}else {
-			if(ChannelsJoinDao.joinChannelUser(channelJoinAuthModel, loginUser)) {
-				res = new ResponseModel(200, "success", "nonesecret");
-				response.setContentType("application/json");
-				response.setCharacterEncoding("UTF-8");
-				response.getWriter().write(new Gson().toJson(res));
-			}else
-				response.sendError(500, new ResponseModel(500, "fail", "채널에 참가할 수 없습니다.").toString());
+		if(channelsModel != null && channelsModel.getLimitAnonym().equals("T") && !ChannelsAnonymDao.isExistAnonym(channelJoinAuthModel, loginUser)){
+			while(true){
+				String anonym = String.valueOf((int) (Math.random() * 1000)) + 1;
+				System.out.print(anonym);
+				if(!ChannelsAnonymDao.isExistAnonymName(anonym, channelJoinAuthModel)){
+					ChannelsAnonymDao.createAnonym(anonym, loginUser, channelJoinAuthModel);
+					System.out.println(anonym);
+					break;
+				}
+			}
 		}
-		System.out.println("---------------------------");
+
+		if(!ChannelsJoinDao.isExistChannelUser(channelJoinAuthModel, loginUser))
+			ChannelsJoinDao.joinChannelUser(channelJoinAuthModel, loginUser);
+
+		if(isChannelPassword)
+			res = new ResponseModel(200, "success", "secret");
+		else
+			res = new ResponseModel(200, "success", "nonesecret");
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(new Gson().toJson(res));
 	}
 }
