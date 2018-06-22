@@ -10,7 +10,7 @@
             </div>
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" data-toggle="modal" data-target="#createChannelModal">새 채널 생성</span>
+                    <button class="input-group-text" data-toggle="modal" data-target="#createChannelModal">새 채널 생성</button>
                 </div>
                 <input type="text" id="channel-search2" class="form-control" placeholder="Search ... ">
             </div>
