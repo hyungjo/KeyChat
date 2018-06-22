@@ -18,18 +18,24 @@ public class UsersDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = "SELECT * FROM USERS";
-		ArrayList<UsersModel> UserList = new ArrayList<UsersModel>();
+		ArrayList<UsersModel> UserList = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
-			if (rset.next()) {
-				UserList.add(new UsersModel(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4),rset.getString(5)));
+			while (rset.next()) {
+				UserList.add(new UsersModel(
+						rset.getString(1), 
+						rset.getString(2), 
+						rset.getString(3), 
+						rset.getString(4), 
+						rset.getString(5)
+				));
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} finally {
-			DBUtil.close(rset, pstmt, conn);
+			DBUtil.close(pstmt, conn);
 		}
 		return UserList;
 	}

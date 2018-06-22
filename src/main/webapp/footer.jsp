@@ -1,8 +1,8 @@
 
 <!-- Footer -->
 <footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; © 2018 SIAT 2.0 KeyChat 2018</p>
+    <div style="text-align: center;" class="container">
+        <a href="${pageContext.request.contextPath}/jsp/admin.jsp" class="m-0 text-center text-white">Copyright &copy; © 2018 SIAT 2.0 KeyChat 2018</a>
     </div>
     <!-- /.container -->
 </footer>
