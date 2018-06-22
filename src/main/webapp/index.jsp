@@ -16,33 +16,15 @@
     </div>
 </section>
 
-
-<!-- Content section -->
-<section id="contact">
+<section class="py-5 bg-not">
     <div class="container">
-        <div class="row">
-        	<table width="100%">
-        		<tr>
-        			<td style="text-align: center;">
-        			<img src="${pageContext.request.contextPath}/img/channelsRoom_Text.jpg" width="1200px" height="500px">
-        			</td>
-        		</tr>
-        	</table>
-        </div>
+        <img src="img/channelsRoom_Text.jpg" width="100%" height="500px">
     </div>
 </section>
 
-<section id="services" class="bg-light2">
+<section class="py-5 bg-not">
     <div class="container">
-        <div class="row">
-        	<table width="100%">
-        		<tr>
-        			<td style="text-align: center;">
-	        		<img src="${pageContext.request.contextPath}/img/chating_Text.png" width="1200px" height="600px">
-	        		</td>
-        		</tr>
-        	</table>
-        </div>
+        <img src="img/chating_Text.png" width="100%" height="500px">
     </div>
 </section>
 
