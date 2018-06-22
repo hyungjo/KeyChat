@@ -16,34 +16,11 @@
     </div>
 </section>
 
-
-<!-- Content section -->
-<section id="contact">
-    <div class="container">
-        <div class="row">
-        	<table width="100%">
-        		<tr>
-        			<td style="text-align: center;">
-        			<img src="${pageContext.request.contextPath}/img/channelsRoom_Text.jpg" width="1200px" height="500px">
-        			</td>
-        		</tr>
-        	</table>
-        </div>
-    </div>
-</section>
-
-<section id="services" class="bg-light2">
-    <div class="container">
-        <div class="row">
-        	<table width="100%">
-        		<tr>
-        			<td style="text-align: center;">
-	        		<img src="${pageContext.request.contextPath}/img/chating_Text.png" width="1200px" height="600px">
-	        		</td>
-        		</tr>
-        	</table>
-        </div>
-    </div>
-</section>
+<header class="py-5 bg-image-full" style="background-image: url('${pageContext.request.contextPath}/img/channelsRoom_Text.jpg');">
+    <div class="img-fluid d-block mx-auto" style="height: 500px;"></div>
+</header>
+<header class="py-5 bg-image-full" style="background-image: url('${pageContext.request.contextPath}/img/chating_Text.png');">
+    <div class="img-fluid d-block mx-auto" style="height: 500px;"></div>
+</header>
 
 <jsp:include page="footer.jsp" flush="false"/>
