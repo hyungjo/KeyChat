@@ -87,31 +87,31 @@
                         <table class="table table-user-information">
                             <tbody>
                             <tr>
-                                <td>채널 명:</td>
+                                <td style="text-align: right; font-weight: bold;">채널 명</td>
                                 <td id="channelNameInfo"></td>
                             </tr>
                             <tr>
-                                <td>공개 여부:</td>
+                                <td style="text-align: right; font-weight: bold;">공개 여부</td>
                                 <td id="channelSecretInfo"></td>
                             </tr>
                             <tr>
-                                <td>최대 참여자 수</td>
+                                <td style="text-align: right; font-weight: bold;">최대 참여자 수</td>
                                 <td id="channelCapacityInfo"></td>
                             </tr>
                             <tr>
-                                <td>최대 유지 시간</td>
+                                <td style="text-align: right; font-weight: bold;">최대 유지 시간</td>
                                 <td id="channelTimeInfo"></td>
                             </tr>
                             <tr>
-                                <td>익명 여부</td>
+                                <td style="text-align: right; font-weight: bold;">익명 여부</td>
                                 <td id="channelAnonymInfo"></td>
                             </tr>
                             <tr>
-                                <td>채널 생성 시간</td>
+                                <td style="text-align: right; font-weight: bold;">채널 생성 시간</td>
                                 <td id="channelCreatedTimeInfo"></td>
                             </tr>
                             <tr>
-                                <td>채널 해시 태그</td>
+                                <td style="text-align: right; font-weight: bold;">채널 해시 태그</td>
                                 <td id="channelHashtagInfo"></td>
                             </tr>
                             </tbody>
@@ -126,7 +126,7 @@
                         <div class="card-header" id="headingOne">
                           <h5 class="mb-0">
                             <button id="keyStartbtn" class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style=" background-color: rgba( 255, 255, 255, 0 );">
-                              <a id="keyStart">키워드 분석 시작하기</a>
+                              <a id="keyStart" onclick="startRealTimeLAResult()">키워드 분석 시작하기</a>
                             </button>
                           </h5>
                         </div>
@@ -340,7 +340,6 @@
     }
 
     function getChannelInfo(){
-
         var reqJson = {
             requestMsg: {
                 channelName: $("#channelRoom").val(), //값을 못가져옴 화면이 로딩되기 전이기 때문

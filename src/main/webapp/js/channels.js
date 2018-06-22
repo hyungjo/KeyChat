@@ -139,7 +139,7 @@ function getHotHashtags() {
             var hothashtagslist = "";
             $.each(response.result, function (index, value) {
                 console.log(index + " " + value);
-                hothashtagslist += "<a class=\"alert-link\" href=\"#\">" + index + "<span class=\"badge\">" + value + "</span></a>";
+                hothashtagslist += "<a class=\"alert-link\" href=\"#\">" + index + "</span></a>&nbsp;&nbsp;&nbsp;&nbsp;  ";
             });
             $("#hothashtagslist").append(hothashtagslist);
         },
