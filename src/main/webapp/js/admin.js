@@ -14,7 +14,7 @@ function getUsers() {
                     "            </tr>";
             });
             $("#usersListRow").empty();
-            $("#usersListRow").append(channelsListRow);
+            $("#usersListRow").append(usersListRow);
         },
         error: function (response) {
             alert("사용자를 불러오는데 실패하였습니다.");
