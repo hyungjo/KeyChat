@@ -16,16 +16,11 @@
     </div>
 </section>
 
-<section class="py-5 bg-not">
-    <div class="container">
-        <img src="img/channelsRoom_Text.jpg" width="100%" height="500px">
-    </div>
-</section>
-
-<section class="py-5 bg-not">
-    <div class="container">
-        <img src="img/chating_Text.png" width="100%" height="500px">
-    </div>
-</section>
+<header class="py-5 bg-image-full" style="background-image: url('${pageContext.request.contextPath}/img/channelsRoom_Text.jpg');">
+    <div class="img-fluid d-block mx-auto" style="height: 500px;"></div>
+</header>
+<header class="py-5 bg-image-full" style="background-image: url('${pageContext.request.contextPath}/img/chating_Text.png');">
+    <div class="img-fluid d-block mx-auto" style="height: 500px;"></div>
+</header>
 
 <jsp:include page="footer.jsp" flush="false"/>
