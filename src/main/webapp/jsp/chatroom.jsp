@@ -8,7 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta charset="EUC-KR">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <title>Insert title here</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/filebox.css">
@@ -173,20 +174,22 @@
                                 <input type="text" class="upload-name" disabled="disabled" style="width: 200px;">
 
                                 <label for="input_file">업로드</label>
-                                <input type="file" id="input_file" name="input_file">
+                                <input type="file" id="input_file" class="upload-hidden" name="input_file">
 
                                 <input type="button" onclick="fileUpload()" value="올리기"/>
                                 <b> ※ exe는 올릴 수 없습니다. </b>
                             </div>
                         </form>
-                        <table id="file-table" style="width: 100%;">
-                            <tr style=" text-align: center;">
-                                <th> #</th>
-                                <th> Name</th>
-                                <th> Size</th>
-                                <th> Email</th>
-                                <th> Delete</th>
-                            </tr>
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr style=" text-align: center;">
+                                    <th> no </th>
+                                    <th> 파일명 </th>
+                                </tr>
+                            </thead>
+                            <tbody id="file-table" >
+
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -244,6 +247,21 @@
         //채널 정보 가져오기
         getChannelInfo();
 
+        var fileTarget = $('.filebox .upload-hidden');
+
+        fileTarget.on('change', function(){
+            if(window.FileReader){
+                // 파일명 추출
+                var filename = $(this)[0].files[0].name;
+            }
+
+            else {
+                // Old IE 파일명 추출
+                var filename = $(this).val().split('/').pop().split('\\').pop();
+            };
+
+            $(this).siblings('.upload-name').val(filename);
+        });
     });
 
     var realTimeResultUpdate;
@@ -309,14 +327,8 @@
             success: function (response) {
                 $.each(response.result, function (index, value) {
                     var fileName = value.split("/").reverse()[0];
-                    fileList += "<table id=\"file-table\">\n" +
-                        "                    <tr>" +
-                        "                    <th>" + count++ + "</th>" +
-                        "                <th><a href=\'" + value + "\'> " + fileName + "</th>" +
-                        "                <th> </th>" +
-                        "                <th> </th>" +
-                        "                <th> </th>" +
-                        "                </tr>";
+                    fileList += "<tr> <th>" + count++ + "</th> " +
+                        " <th><a href='jsp/channelfilebox/download?name=" +  fileName + "'>" + fileName + "</th></tr>";
                 });
                 $("#file-table").empty();
                 $("#file-table").append(fileList);
@@ -328,7 +340,6 @@
     }
 
     function getChannelInfo(){
-
 
         var reqJson = {
             requestMsg: {
