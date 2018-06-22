@@ -120,42 +120,32 @@
                     <h3>참여자 정보</h3>
                 </div>
                 <div class="tab-pane" id="recommend" role="tabpanel">
-                    
-                    <div id="accordion" style="margin-right: -5">
-                      <div class="card">
-                        <div class="card-header" id="headingOne">
-                          <h5 class="mb-0">
-                            <button id="keyStartbtn" class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style=" background-color: rgba( 255, 255, 255, 0 );">
-                              <a id="keyStart" onclick="startRealTimeLAResult()">키워드 분석 시작하기</a>
-                            </button>
-                          </h5>
-                        </div>
 
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                          <div class="card-body" style="padding-right: 0px; padding-left: 0px;">
-                            <table id="key" style="border-collapse: unset;">
-                                <tr>
-                                    <th colspan="5" style="text-align: center"><h5><strong>&#60;주요 키워드&#62;</strong></h5></th>
-                                </tr>
-                                <tr>
-                                    <td colspan="5" id="aa"><a id="bb">키워드를 클릭하시면 자동검색 페이지가 나옵니다.</a><br>&nbsp;</td>
-                                </tr>
-                                <tr class="keyword" id = "keywordList">
-                                </tr>
-                                <tr><th>&nbsp;</th></tr>
-                                <tr class="entity" id = "entityList">
-                                </tr>
-                                <tr><td colspan="5">&nbsp;<hr style="size:5px;">&nbsp;</td></tr>
-                                <tr>
-                                    <th colspan="5" style="text-align: center"><h5><strong>&#60;대화 주제 TOP3&#62;</strong></h5></th>
-                                </tr>
-                                <tr id="category">
-                                    <th colspan="5"><div id="graph_category"></div></th>
-                                </tr>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
+                    <div style="text-align: center;">
+                        <input type="button" class="btn one" onclick="startRealTimeLAResult()" value="실시간 분석 시작">
+                        <input type="button" class="btn btn-danger" onclick="stopRealTimeLAResult()" value="실시간 분석 중지">
+
+                        <table id="key" style="border-collapse: unset;">
+                            <tr>
+                                <th colspan="5" style="text-align: center"><h5><strong>&#60;주요 키워드&#62;</strong></h5></th>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="aa"><a id="bb">키워드를 클릭하시면 자동검색 페이지가 나옵니다.</a><br>&nbsp;</td>
+                            </tr>
+                            <tr class="keyword" id = "keywordList">
+                            </tr>
+                            <tr><th>&nbsp;</th></tr>
+                            <tr class="entity" id = "entityList">
+                            </tr>
+                            <tr><td colspan="5">&nbsp;<hr style="size:5px;">&nbsp;</td></tr>
+                            <tr>
+                                <th colspan="5" style="text-align: center"><h5><strong>&#60;대화 주제 TOP3&#62;</strong></h5></th>
+                            </tr>
+                            <tr id="category">
+                                <th colspan="5"><div id="graph_category"></div></th>
+                            </tr>
+                        </table>
+
                     </div>
                     
                 </div>
@@ -421,11 +411,18 @@
                 });
                 $("#keywordList").empty();
                 $("#keywordList").append(keywordList);
-                
-                
+
+                var j = 1;
                 var entityList = "";
+                var total2 = response.result.entity.length;
                 $.each(response.result.entity, function (index, value) {
-                    entityList += "<td><a id='keywords2' target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
+                    if(j <= total2) {
+                        entityList += "<td><a id='keywords2' target=\"_blank\"  href=\'https://www.google.co.kr/search?q=" + value +  "\'>" + value + "</a></td>";
+                    }else if (j > total2) {
+                        entityList += "<td><a id='keywords2'></a></td>";
+                    }else if (j == 6 ) {
+                        return false;
+                    }j++;
                 });
                 $("#entityList").empty();
                 $("#entityList").append(entityList);

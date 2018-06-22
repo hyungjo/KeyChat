@@ -118,7 +118,7 @@ function getChannelByHashtag() {
             $.each(response.result, function (index, value) {
                 channelsListRow += "<tr><td><a href='#' onclick='openChatroom(this)'>" + index + "</a></td>" +
                     "            <td>" + value + "</td></tr>";
-                alert(channelsListRow);
+
             });
 
             $("#channelsByTagsListRow").empty();
